@@ -30,8 +30,6 @@ if has("autocmd")
     au filetype dern set autoindent
 endif
 
-set t_Co=32
-
 "Find files from subdirectories
 set complete+=k**/*
 
