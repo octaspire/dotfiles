@@ -1,0 +1,19 @@
+set columns=100
+
+set autoindent
+set tabstop=4
+set shiftwidth=4
+
+map! jk 
+map ö :
+
+set number
+set ruler
+
+set errorbells
+set flash
+set verbose
+
+abbr ocus octaspire_container_utf8_string_
+abbr odvm octaspire_dern_vm_
+abbr odva octaspire_dern_va_

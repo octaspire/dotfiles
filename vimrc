@@ -1,4 +1,6 @@
 "-----------------------------------------------------------------------------
+" This license doesn't apply to the bottom part of this file
+"-----------------------------------------------------------------------------
 "  Octaspire dotfiles - Various configuration files
 "  Copyright 2017 www.octaspire.com
 "
@@ -18,12 +20,6 @@ set cst
 
 set fileencodings=utf-8
 
-"From stackoverflow
-func EatChar(pat)
-    let c = nr2char(getchar(0))
-    return (c =~ a:pat) ? '' : c
-endfunc
-
 if has("autocmd")
     au BufNewFile,BufRead *.dern set filetype=dern
     au filetype dern set lisp
@@ -34,8 +30,9 @@ endif
 set complete+=k**/*
 
 syntax enable
-colorscheme desert
+set t_Co=256
 set background=dark
+colorscheme molokai
 
 set tabstop=4
 set shiftwidth=4
@@ -111,6 +108,7 @@ autocmd FileType c          :iabbr <silent> printf printf("\n",);jk5hi<c-r>=EatC
 
 autocmd FileType c          :iabbr <silent> ocve  octaspire_container_vector_<c-r>=EatChar('\m\s\<bar>/')<cr>
 autocmd FileType c          :iabbr <silent> ocus  octaspire_container_utf8_string_<c-r>=EatChar('\m\s\<bar>/')<cr>
+autocmd FileType c          :iabbr <silent> oden  octaspire_dern_environment_<c-r>=EatChar('\m\s\<bar>/')<cr>
 autocmd FileType c          :iabbr <silent> ochm  octaspire_container_hash_map_<c-r>=EatChar('\m\s\<bar>/')<cr>
 autocmd FileType c          :iabbr <silent> ochme octaspire_container_hash_map_element_<c-r>=EatChar('\m\s\<bar>/')<cr>
 autocmd FileType c          :iabbr <silent> ocv   octaspire_container_vector_<c-r>=EatChar('\m\s\<bar>/')<cr>
@@ -143,8 +141,43 @@ set secure
 
 set nopaste
 
-set cindent
-set cinoptions=(sw
+autocmd FileType c set cindent
+autocmd FileType c set cinoptions=(sw
 
 set ruler
+
+set tags=CTAGS;
+
+set spellfile=~/.vim/spell/en.utf-8.add
+
+
+
+
+"-----------------------------------------------------------------------------
+" Below this point code is not by www.octaspire.com
+"-----------------------------------------------------------------------------
+
+"This function is copied from
+"stackoverflow.com/questions/13634826/vim-show-function-name-in-status-line
+"fun! ShowFuncName()
+"    echohl ModeMsg
+"    echo getline(search("^[^ \t#/]\\{2}.*[^:]\s*$", 'bWn'))
+"    echohl None
+"endfun
+fun! ShowFuncName()
+    let lnum = line(".")
+    let col  = col(".")
+    echohl ModeMsg
+    echo getline(search("^[^ \t#/]\\{2}.*[^:]\s*$", 'bW'))
+    echohl None
+    call search("\\%" . lnum . "l" . "\\%" . col . "c")
+endfun
+nnoremap f :call ShowFuncName() <CR>
+
+
+"From stackoverflow
+func EatChar(pat)
+    let c = nr2char(getchar(0))
+    return (c =~ a:pat) ? '' : c
+endfunc
 

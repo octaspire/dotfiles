@@ -21,12 +21,12 @@ ZSH_THEME="robbyrussell"
 
 plugins=(git per-directory-history)
 
-export PATH="$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games"
-
 source $ZSH/oh-my-zsh.sh
 
+export PATH="$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games"
+
 export EDITOR='vim'
-export TERM='xterm-256color'
+export TERM='screen-256color'
 
 alias emacs="emacs -nw"
 function quit() {
@@ -40,6 +40,9 @@ typeset -Ag abbrevations
 abbrevations=(
     "ocve" "octaspire_container_vector"
     "ocus" "octaspire_container_utf8_string"
+    "odva" "octaspire_dern_value"
+    "odvm" "octaspire_dern_vm"
+    "ochm" "octaspire_container_hash_map"
     )
 magic-abbrev-expand() {
     local MATCH
@@ -55,3 +58,4 @@ zle -N no-magic-abbrev-expand
 bindkey " " magic-abbrev-expand
 bindkey "^x " no-magic-abbrev-expand
 bindkey -M isearch " " self-insert
+

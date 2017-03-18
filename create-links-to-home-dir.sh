@@ -16,7 +16,7 @@
 #-----------------------------------------------------------------------------
 
 echo "Check that the path below is correct before continuing. That directory should contain the dotfiles to be linked\n$(dirname $0)/"
-echo -n "Continue and really overwrite your (.gitconfig .tmux.conf .vimrc .emacs .zshrc) dotfiles (y/n)? "
+echo -n "Continue and really overwrite your (.gitconfig .tmux.conf .vimrc .nexrc .emacs .zshrc) dotfiles (y/n)? "
 read answer
 if echo "$answer" | grep -iq "^y" ;then
 
@@ -25,6 +25,7 @@ if echo "$answer" | grep -iq "^y" ;then
     ln -sf "$(dirname $0)/vimrc"     ~/.vimrc
     ln -sf "$(dirname $0)/emacs"     ~/.emacs
     ln -sf "$(dirname $0)/zshrc"     ~/.zshrc
+    ln -sf "$(dirname $0)/nexrc"     ~/.nexrc
 
     echo "OK."
 
