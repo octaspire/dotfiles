@@ -108,6 +108,11 @@ autocmd FileType c          :iabbr <silent> printf printf("\n",);jk5hi<c-r>=EatC
 
 autocmd FileType c          :iabbr <silent> ocve  octaspire_container_vector_<c-r>=EatChar('\m\s\<bar>/')<cr>
 autocmd FileType c          :iabbr <silent> ocus  octaspire_container_utf8_string_<c-r>=EatChar('\m\s\<bar>/')<cr>
+autocmd FileType c          :iabbr <silent> oma   octaspire_memory_allocator_<c-r>=EatChar('\m\s\<bar>/')<cr>
+autocmd FileType c          :iabbr <silent> os    octaspire_stdio_<c-r>=EatChar('\m\s\<bar>/')<cr>
+autocmd FileType c          :iabbr <silent> ODA   OCTASPIRE_DERN_AMALGAMATED_<c-r>=EatChar('\m\s\<bar>/')<cr>
+autocmd FileType c          :iabbr <silent> ODAI  OCTASPIRE_DERN_AMALGAMATED_IMPLEMENTATION<c-r>=EatChar('\m\s\<bar>/')<cr>
+autocmd FileType c          :iabbr <silent> oda   octaspire_dern_amalgamated_<c-r>=EatChar('\m\s\<bar>/')<cr>
 autocmd FileType c          :iabbr <silent> oden  octaspire_dern_environment_<c-r>=EatChar('\m\s\<bar>/')<cr>
 autocmd FileType c          :iabbr <silent> ochm  octaspire_container_hash_map_<c-r>=EatChar('\m\s\<bar>/')<cr>
 autocmd FileType c          :iabbr <silent> ochme octaspire_container_hash_map_element_<c-r>=EatChar('\m\s\<bar>/')<cr>
@@ -172,7 +177,7 @@ fun! ShowFuncName()
     echohl None
     call search("\\%" . lnum . "l" . "\\%" . col . "c")
 endfun
-nnoremap f :call ShowFuncName() <CR>
+nnoremap <C-F> :call ShowFuncName() <CR>
 
 
 "From stackoverflow
