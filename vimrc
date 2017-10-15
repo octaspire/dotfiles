@@ -20,6 +20,8 @@ set cst
 
 set fileencodings=utf-8
 
+let mapleader=" "
+
 if has("autocmd")
     au BufNewFile,BufRead *.dern set filetype=dern
     au filetype dern set lisp
@@ -61,10 +63,21 @@ set tabpagemax=100
 
 set spell spelllang=en_us
 
+set makeprg=~/bin/omake
+"nnoremap <Space> :make<CR>
+"nnoremap <Space> :!omake<CR>
+nnoremap <leader><Space> :suspend<cr>
+
 "Prevent //-comment continuation on enter and O/o
 inoremap <expr> <enter> getline('.') =~ '^\s*//' ? '<enter><esc>S' : '<enter>'
 nnoremap <expr> O getline('.') =~ '\s*//' ? 'O<esc>S' : 'O'
 nnoremap <expr> o getline('.') =~ '\s*//' ? 'o<esc>S' : 'o'
+
+set timeout timeoutlen=200
+
+if has("nvim")
+    tnoremap jk <C-\><C-n>
+endif
 
 inoremap jk <esc>
 

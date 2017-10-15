@@ -14,85 +14,131 @@
 ;  See the License for the specific language governing permissions and
 ;  limitations under the License.
 ;-----------------------------------------------------------------------------
+;
+; To use this configuration:
+;
+; 1. Install ispell using the OS package manager.
+;
+; 2. Make sure the ~/.emacs.d/elisp directory has the following files:
+;
+;       evil-search-highlight-persist.el
+;       highlight.el
+;       key-chord.el
+;       linum-relative.el
+;       octaspire-dern-mode.el
+;
+; 2. Give the following commands inside Emacs:
+;
+;       M-x package-refresh-contents
+;       M-x package-install RET evil
+;       M-x package-install RET syndicate
+;
 (package-initialize)
-(setq inhibit-startup-screen t)
 
 (add-to-list 'load-path "~/.emacs.d/elisp")
-(add-to-list 'load-path "~/.emacs.d/evil")
 
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")))
+
+(require 'syndicate)
+(require 'octaspire-dern-mode)
 (require 'highlight)
 (require 'evil-search-highlight-persist)
-(global-evil-search-highlight-persist t)
-
-(require 'octaspire-dern-mode)
-
 (require 'goto-chg)
+(require 'linum-relative)
+(require 'whitespace)
+(require 'key-chord)
+(require 'flyspell)
+(require 'org)
 
-;(setq evil-search-module 'evil-search)
+; evil-search-module must be set before requiring evil, or the vi search
+; won't work correctly.
+(setq-default evil-search-module 'evil-search)
 (require 'evil)
 (evil-mode 1)
-;(evil-select-search-module 'evil-search-module 'evil-search)
 (with-eval-after-load 'evil
     (defalias #'forward-evil-word #'forward-evil-symbol))
 
-(require 'key-chord)
 (key-chord-mode 1)
-(setq key-chord-two-keys-delay 0.5)
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 
 (eval-after-load 'evil-maps
     '(progn
         (define-key evil-motion-state-map (kbd "ö") 'evil-ex)))
 
-(require 'linum-relative)
 (linum-mode)
 (linum-relative-global-mode)
-(setq linum-relative-current-symbol "")
+(global-evil-search-highlight-persist       1)
+(global-undo-tree-mode                      1)
+(save-place-mode                            1)
+(savehist-mode                              1)
+(which-function-mode                        1)
+(global-whitespace-mode                     1)
+(modify-face                                whitespace-tab nil "#F92672")
+(set-face-background                        'trailing-whitespace "yellow")
+(defface extra-whitespace-face              '((t (:background "pale green"))) "Color for tabs and such.")
+(defvar  bad-whitespace                     '(("\t" . 'extra-whitespace-face)))
+(fset    'yes-or-no-p                       'y-or-n-p)
+(tool-bar-mode                              -1)
+(menu-bar-mode                              -1)
+(toggle-scroll-bar                          -1)
+(show-paren-mode                             1)
+(flyspell-mode                               1)
+(flyspell-prog-mode)
 
-(setq c-default-style "bsd"
-      c-basic-offset 4
-      indent-tabs-mode nil)
+(define-key evil-normal-state-map (kbd "<SPC>") 'compile)
 
-(setq-default indent-tabs-mode nil)
+(setq-default show-trailing-whitespace      1)
+(setq-default savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
+(setq-default key-chord-two-keys-delay      0.5)
+(setq-default make-backup-files             nil)
+(setq-default truncate-lines                1)
+(setq-default compile-command               "make")
+(setq-default make-backup-files             nil)
+(setq-default inhibit-startup-screen        1)
+(setq-default abbrev-mode                   1)
+(setq-default save-abbrevs                  'silently)
+(setq-default indent-tabs-mode              nil)
+(setq-default goto-chg                      1)
+(setq-default linum-relative-current-symbol "")
+(setq-default c-default-style               "bsd" c-basic-offset 4 indent-tabs-mode nil)
+(setq-default whitespace-line-column        120)
+(setq-default whitespace-style              '(face tabs trailing lines lines-tail tab-mark))
+(setq-default column-number-mode            1)
+(setq-default org-src-fontify-natively      1) ;syntax highlight code blocks in org mode
 
-;(with-eval-after-load 'evil
-;    (defalias #'forward-evil-word #'forward-evil-symbol))
+(add-hook 'c-mode-hook    #'(lambda () (modify-syntax-entry ?_ "w")))
+(add-hook 'c-mode-hook    #'(lambda () (flyspell-prog-mode)))
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+(add-hook 'text-mode-hook 'flyspell-mode 1)
 
-(which-function-mode 1)
+(load-theme 'leuven t)
 
-;(global-hl-line-mode 1)
-;(set-face-background 'hl-line "#330")
-
-(setq make-backup-files nil)
-
-(save-place-mode 1)
-(savehist-mode 1)
-(setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
-
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-(load-theme 'zenburn t)
-;(load-theme 'adwaita)
-;(load-theme 'tango)
-
-(setq column-number-mode t)
-
-(setq org-log-done 'time)
-
-(setq-default abbrev-mode t)
-(setq save-abbrevs 'silently)
-
+(defvar my-leader-map (make-sparse-keymap) "Keymap for \"leader key\" shortcuts.")
+(define-key evil-normal-state-map (kbd "SPC") my-leader-map)
+(define-key my-leader-map " " 'suspend-frame)
+(define-key my-leader-map "f" 'avy-goto-char)
+(define-key my-leader-map "j" 'avy-goto-char-2)
+(define-key my-leader-map "a" 'avy-goto-char-timer)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("1373e3623ed5d758ef06dd19f2c8a736a69a15496c745a113d42230ab71d6b58" default))))
+ '(package-selected-packages (quote (avy syndicate htmlize))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(org-babel-do-load-languages
+  'org-babel-load-languages
+  '(
+    (sh . t)
+    (python  . t)
+    ))
