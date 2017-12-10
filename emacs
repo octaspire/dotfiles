@@ -70,6 +70,7 @@
 
 (linum-mode)
 (linum-relative-global-mode)
+(global-hl-line-mode                        1)
 (global-evil-search-highlight-persist       1)
 (global-undo-tree-mode                      1)
 (save-place-mode                            1)
