@@ -14,23 +14,19 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #-----------------------------------------------------------------------------
+[user]
+	email = octaspire@octaspire.com
+	name  = octaspire
+	signingkey = 9BD2CCD560E9E29C
+[core]
+	editor = vim
+[push]
+	default = simple
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
 
-echo "Check that the path below is correct before continuing. That directory should contain the dotfiles to be linked\n$(dirname $0)/"
-echo -n "Continue and really overwrite your (.gitconfig .tmux.conf .vimrc .nexrc .emacs .zshrc) dotfiles (y/n)? "
-read answer
-if echo "$answer" | grep -iq "^y" ;then
-
-    ln -sf "$(dirname $0)/gitconfig" ~/.gitconfig
-    ln -sf "$(dirname $0)/tmux.conf" ~/.tmux.conf
-    ln -sf "$(dirname $0)/vimrc"     ~/.vimrc
-    ln -sf "$(dirname $0)/emacs"     ~/.emacs
-    ln -sf "$(dirname $0)/zshrc"     ~/.zshrc
-    ln -sf "$(dirname $0)/nexrc"     ~/.nexrc
-
-    echo "OK."
-
-else
-
-    echo "Links NOT created."
-fi
-
+[commit]
+	gpgsign = true

@@ -34,7 +34,8 @@ set complete+=k**/*
 syntax enable
 set t_Co=256
 set background=dark
-colorscheme molokai
+colorscheme default
+silent! colorscheme molokai
 
 set tabstop=4
 set shiftwidth=4
