@@ -95,7 +95,6 @@
 (setq-default savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
 (setq-default key-chord-two-keys-delay      0.5)
 (setq-default make-backup-files             nil)
-(setq-default truncate-lines                1)
 (setq-default compile-command               "make")
 (setq-default make-backup-files             nil)
 (setq-default inhibit-startup-screen        1)
