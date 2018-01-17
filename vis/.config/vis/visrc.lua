@@ -1,0 +1,20 @@
+require('vis')
+
+vis.events.subscribe(vis.events.INIT, function()
+    vis:command('map! insert ö <Escape>')
+    vis:command('map! normal ö :')
+    end)
+
+vis.events.subscribe(vis.events.WIN_OPEN, function(win)
+    vis:command('set number')
+    vis:command('set expandtab')
+    vis:command('set autoindent')
+    vis:command('set tabwidth 4')
+    vis:command('set show-tabs')
+    vis:command('set show-newlines')
+    vis:command('set relativenumbers')
+    vis:command('set cursorline')
+    vis:command('set theme default-256')
+    vis:command('set colorcolumn 120')
+    end)
+
