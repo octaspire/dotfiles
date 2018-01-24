@@ -81,6 +81,7 @@ if has("nvim")
 endif
 
 inoremap jk <esc>
+inoremap ö <esc>
 
 nnoremap <Up> <nop>
 nnoremap <Down> <nop>
