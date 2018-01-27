@@ -19,5 +19,5 @@ function b64() {
 
 export GPG_TTY=$(tty)
 
-export PATH=/home/octaspire/.gem/ruby/2.3.0/bin:$PATH
+export PATH=~/bin:~/.gem/ruby/2.3.0/bin:$PATH
 
