@@ -23,7 +23,6 @@
 ;
 ;       evil-search-highlight-persist.el
 ;       highlight.el
-;       key-chord.el
 ;       linum-relative.el
 ;       octaspire-dern-mode.el
 ;
@@ -49,7 +48,6 @@
 (require 'goto-chg)
 (require 'linum-relative)
 (require 'whitespace)
-(require 'key-chord)
 (require 'flyspell)
 (require 'org)
 
@@ -61,12 +59,8 @@
 (with-eval-after-load 'evil
     (defalias #'forward-evil-word #'forward-evil-symbol))
 
-(key-chord-mode 1)
-(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-
-(eval-after-load 'evil-maps
-    '(progn
-        (define-key evil-motion-state-map (kbd "ö") 'evil-ex)))
+(define-key evil-insert-state-map (kbd "ö") 'evil-normal-state)
+(define-key evil-motion-state-map (kbd "ö") 'evil-ex)
 
 (linum-mode)
 (linum-relative-global-mode)
