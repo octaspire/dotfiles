@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+# Create and attach a new tmux session with three horizontally aligned panes running fish shell (no
+# need for fish shell to be a login shell).
+tmux new-session -d 'fish'
+tmux split-window -h 'fish'
+tmux split-window -h 'fish'
+tmux next-layout
+tmux -2 attach-session -d
+

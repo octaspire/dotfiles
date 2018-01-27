@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+# Create and attach a new tmux session with two panes running fish shell (no
+# need for fish shell to be a login shell).
+tmux new-session -d 'fish'
+tmux split-window -h 'fish'
+tmux -2 attach-session -d
+
