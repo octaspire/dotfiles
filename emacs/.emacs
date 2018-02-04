@@ -98,7 +98,7 @@
 (setq-default goto-chg                      1)
 (setq-default linum-relative-current-symbol "")
 (setq-default c-default-style               "bsd" c-basic-offset 4 indent-tabs-mode nil)
-(setq-default whitespace-line-column        120)
+(setq-default whitespace-line-column        110)
 (setq-default whitespace-style              '(face tabs trailing lines lines-tail tab-mark))
 (setq-default column-number-mode            1)
 (setq-default org-src-fontify-natively      1) ;syntax highlight code blocks in org mode
