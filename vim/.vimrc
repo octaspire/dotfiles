@@ -33,9 +33,10 @@ set complete+=k**/*
 
 syntax enable
 set t_Co=256
-set background=dark
+set background=light
+let g:solarized_termcolors=256
 colorscheme default
-silent! colorscheme molokai
+silent! colorscheme solarized
 
 set tabstop=4
 set shiftwidth=4
@@ -49,6 +50,8 @@ set incsearch
 set ignorecase
 set smartcase
 set autoindent
+
+set cursorline
 
 set nocompatible
 filetype plugin on
