@@ -80,7 +80,7 @@ nnoremap <expr> o getline('.') =~ '\s*//' ? 'o<esc>S' : 'o'
 set timeout timeoutlen=200
 
 if has("nvim")
-    tnoremap jk <C-\><C-n>
+    tnoremap ö <C-\><C-n>
 endif
 
 inoremap jk <esc>
