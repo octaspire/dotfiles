@@ -195,7 +195,7 @@ fun! ShowFuncName()
     echohl None
     call search("\\%" . lnum . "l" . "\\%" . col . "c")
 endfun
-nnoremap <C-F> :call ShowFuncName() <CR>
+nnoremap <leader>f :call ShowFuncName() <CR>
 
 
 "From stackoverflow
