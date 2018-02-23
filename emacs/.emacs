@@ -19,12 +19,13 @@
 ;
 ; 1. Install ispell using the OS package manager.
 ;
-; 2. Make sure the ~/.emacs.d/elisp directory has the following files:
+; 2. Make sure the ~/.emacs.d/elisp directory has the following files/directories:
 ;
 ;       evil-search-highlight-persist.el
 ;       highlight.el
 ;       linum-relative.el
 ;       octaspire-dern-mode.el
+;       https://github.com/sellout/emacs-color-theme-solarized in directory ~/.emacs.d/themes/
 ;
 ; 2. Give the following commands inside Emacs:
 ;
@@ -35,6 +36,7 @@
 (package-initialize)
 
 (add-to-list 'load-path "~/.emacs.d/elisp")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
 
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -108,7 +110,9 @@
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 (add-hook 'text-mode-hook 'flyspell-mode 1)
 
-(load-theme 'leuven t)
+(set-frame-parameter nil 'background-mode 'dark)
+(set-terminal-parameter nil 'background-mode 'dark)
+(load-theme 'solarized t)
 
 (defvar my-leader-map (make-sparse-keymap) "Keymap for \"leader key\" shortcuts.")
 (define-key evil-normal-state-map (kbd "SPC") my-leader-map)
