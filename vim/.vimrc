@@ -33,10 +33,10 @@ set complete+=k**/*
 
 syntax enable
 set t_Co=256
-set background=dark
 "let g:solarized_termcolors=256
 colorscheme default
 silent! colorscheme solarized
+set background=dark
 
 set tabstop=4
 set shiftwidth=4
