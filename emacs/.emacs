@@ -32,6 +32,7 @@
 ;       M-x package-refresh-contents
 ;       M-x package-install RET evil
 ;       M-x package-install RET syndicate
+;       M-x package-install RET evil-numbers
 ;
 (package-initialize)
 
@@ -63,6 +64,10 @@
 
 (define-key evil-insert-state-map (kbd "ö") 'evil-normal-state)
 (define-key evil-motion-state-map (kbd "ö") 'evil-ex)
+
+(require 'evil-numbers)
+(global-set-key (kbd "C-c +") 'evil-numbers/inc-at-pt)
+(global-set-key (kbd "C-c -") 'evil-numbers/dec-at-pt)
 
 (linum-mode)
 (linum-relative-global-mode)
