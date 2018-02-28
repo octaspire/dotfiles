@@ -33,6 +33,8 @@
 ;       M-x package-install RET evil
 ;       M-x package-install RET syndicate
 ;       M-x package-install RET evil-numbers
+;       M-x package-install RET ox-twbs
+;       M-x package-install RET htmlize
 ;
 (package-initialize)
 
@@ -53,6 +55,8 @@
 (require 'whitespace)
 (require 'flyspell)
 (require 'org)
+(require 'ox-twbs)
+(require 'htmlize)
 
 ; evil-search-module must be set before requiring evil, or the vi search
 ; won't work correctly.
@@ -109,6 +113,7 @@
 (setq-default whitespace-style              '(face tabs trailing lines lines-tail tab-mark))
 (setq-default column-number-mode            1)
 (setq-default org-src-fontify-natively      1) ;syntax highlight code blocks in org mode
+(setq-default org-export-with-smart-quotes  1)
 
 (add-hook 'c-mode-hook    #'(lambda () (modify-syntax-entry ?_ "w")))
 (add-hook 'c-mode-hook    #'(lambda () (flyspell-prog-mode)))
@@ -131,7 +136,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (org-edna avy syndicate htmlize))))
+ '(package-selected-packages (quote (ox-twbs org-edna avy syndicate htmlize))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
