@@ -5,5 +5,10 @@ tmux new-session -d 'fish'
 tmux split-window -h 'fish'
 tmux split-window -h 'fish'
 tmux next-layout
+tmux select-pane -t 0
+tmux resize-pane -L 14
+tmux select-pane -t 2
+tmux resize-pane -R 15
+tmux select-pane -t 1
 tmux -2 attach-session -d
 
