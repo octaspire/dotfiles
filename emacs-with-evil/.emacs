@@ -21,6 +21,7 @@
 ;
 ; 2. Make sure the ~/.emacs.d/elisp directory has the following files/directories:
 ;
+;       evil-search-highlight-persist.el
 ;       highlight.el
 ;       linum-relative.el
 ;       octaspire-dern-mode.el
@@ -29,6 +30,9 @@
 ; 2. Give the following commands inside Emacs:
 ;
 ;       M-x package-refresh-contents
+;       M-x package-install RET evil
+;       M-x package-install RET syndicate
+;       M-x package-install RET evil-numbers
 ;       M-x package-install RET ox-twbs
 ;       M-x package-install RET htmlize
 ;
@@ -42,8 +46,10 @@
   (package-initialize)
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")))
 
+(require 'syndicate)
 (require 'octaspire-dern-mode)
 (require 'highlight)
+(require 'evil-search-highlight-persist)
 (require 'goto-chg)
 (require 'linum-relative)
 (require 'whitespace)
@@ -52,9 +58,26 @@
 (require 'ox-twbs)
 (require 'htmlize)
 
+; evil-search-module must be set before requiring evil, or the vi search
+; won't work correctly.
+(setq-default evil-search-module 'evil-search)
+(require 'evil)
+(evil-mode 1)
+(with-eval-after-load 'evil
+    (defalias #'forward-evil-word #'forward-evil-symbol))
+
+(define-key evil-insert-state-map (kbd "ö") 'evil-normal-state)
+(define-key evil-motion-state-map (kbd "ö") 'evil-ex)
+
+(require 'evil-numbers)
+(global-set-key (kbd "C-c +") 'evil-numbers/inc-at-pt)
+(global-set-key (kbd "C-c -") 'evil-numbers/dec-at-pt)
+
 (linum-mode)
 (linum-relative-global-mode)
 (global-hl-line-mode                        1)
+(global-evil-search-highlight-persist       1)
+(global-undo-tree-mode                      1)
 (save-place-mode                            1)
 (savehist-mode                              1)
 (which-function-mode                        1)
@@ -70,6 +93,8 @@
 (show-paren-mode                             1)
 (flyspell-mode                               1)
 (flyspell-prog-mode)
+
+(define-key evil-normal-state-map (kbd "<SPC>") 'compile)
 
 (setq-default show-trailing-whitespace      1)
 (setq-default savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
@@ -98,6 +123,13 @@
 (set-frame-parameter nil 'background-mode 'dark)
 (set-terminal-parameter nil 'background-mode 'dark)
 (load-theme 'solarized t)
+
+(defvar my-leader-map (make-sparse-keymap) "Keymap for \"leader key\" shortcuts.")
+(define-key evil-normal-state-map (kbd "SPC") my-leader-map)
+(define-key my-leader-map " " 'suspend-frame)
+(define-key my-leader-map "f" 'avy-goto-char)
+(define-key my-leader-map "j" 'avy-goto-char-2)
+(define-key my-leader-map "a" 'avy-goto-char-timer)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
