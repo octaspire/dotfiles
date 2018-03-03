@@ -1,0 +1,240 @@
+#+STARTIP: overview
+* License and credits
+
+  Octaspire dotfiles - Various configuration files
+  Copyright 2017, 2018 www.octaspire.com
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  This configuration file is based partially on a very nice [[https://www.youtube.com/watch?v%3D49kBWM3RQQ8][video tutorial series.]]
+
+* Prerequisites
+  Emacs 25 and internet connection, so that packages can be installed automatically
+  using 'use-package'. Everything else is installed automatically, but not octaspire
+  Dern mode. Please make sure that the ~/.emacs.d/elisp directory has the following file:
+  octaspire-dern-mode.el
+* Interface tweaks
+
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-startup-message  t)             ; Do not show startup screen.
+(tool-bar-mode                -1)             ; Hide tool bar.
+(menu-bar-mode                -1)             ; Hide menu bar.
+(scroll-bar-mode              -1)             ; Hide scroll bar.
+(defalias 'yes-or-no-p        'y-or-n-p)      ; Save typing when answering confirmations. 
+(global-set-key (kbd "<f5>")  'revert-buffer) ; Revert buffer (load changes from filesystem) with F5.
+(global-hl-line-mode           1)             ; Highlight current line.
+(save-place-mode               1)             ; When visiting a file, point goes to the last point of previous visit.
+(savehist-mode                 1)             ; Save history.
+(which-function-mode           1)             ; Show the name of the current function.
+(show-paren-mode               1)             ; Highlight delimiter pairs.
+(electric-pair-mode            1)             ; Close delimiters automatically.
+(column-number-mode            1)             ; Show current column number.
+#+END_SRC
+* Spellchecking
+  #+BEGIN_SRC emacs-lisp
+  (require 'flyspell)
+  (setq-default flyspell-issue-message-flag nil) ; Don't print message word every word.
+  #+END_SRC
+* Whitespace
+  #+BEGIN_SRC emacs-lisp
+  ; Highlight bad whitespace.
+  (require 'whitespace)
+  (global-whitespace-mode                 1)
+  (modify-face                            whitespace-tab nil "#F92672")
+  (set-face-background                    'trailing-whitespace "yellow")
+  (defface extra-whitespace-face          '((t (:background "pale green"))) "Color for tabs and such.")
+  (defvar  bad-whitespace                 '(("\t" . 'extra-whitespace-face)))
+  (setq-default show-trailing-whitespace  1)
+  (setq-default whitespace-line-column    110)
+  (setq-default whitespace-style          '(face tabs trailing lines lines-tail tab-mark))
+  #+END_SRC
+* Packages
+** try
+   Try packages without installing them. 
+   #+BEGIN_SRC emacs-lisp
+       (use-package try
+         :ensure t)
+   #+END_SRC
+** which-key
+   Give information about available keybindings.
+   #+BEGIN_SRC emacs-lisp
+       (use-package which-key
+         :ensure t
+         :config (which-key-mode))
+   #+END_SRC
+** org-bullets
+   #+BEGIN_SRC emacs-lisp
+   (use-package org-bullets
+     :ensure t
+     :config
+       (add-hook 'org-mode-hook 'org-bullets-mode))
+   #+END_SRC
+** ace-window
+   #+BEGIN_SRC emacs-lisp
+   (use-package ace-window
+     :ensure t
+     :init
+       (progn
+         (global-set-key [remap other-window] 'ace-window)
+         (custom-set-faces
+           '(aw-leading-char-face
+            ((t (:inherit ace-jump-face-foreground :height 3.0)))))))
+   #+END_SRC
+** ivy, counsel and swiper
+   #+BEGIN_SRC emacs-lisp
+   (use-package counsel
+     :ensure t)
+
+   (use-package ivy
+     :ensure t
+     :diminish (ivy-mode)
+     :bind (("C-x b" . ivy-switch-buffer))
+     :config
+       (ivy-mode 1)
+       (setq ivy-use-virtual-buffers t)
+       (setq ivy-display-style 'fancy))
+
+     (use-package swiper
+       :ensure try
+       :bind
+         (("C-s"     . swiper)
+          ("C-r"     . swiper)
+	  ("C-c C-r" . ivy-resume)
+	  ("M-x"     . counsel-M-x)
+	  ("C-x C-f" . counsel-find-file))
+       :config
+         (progn
+           (ivy-mode 1)
+           (setq ivy-use-virtual-buffers t)
+           (setq ivy-display-style 'fancy)
+           (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)))
+   #+END_SRC
+** avy
+   #+BEGIN_SRC emacs-lisp
+   (use-package avy
+     :ensure t
+     :bind ("M-s" . avy-goto-char))
+   #+END_SRC
+** auto-complete
+   #+BEGIN_SRC emacs-lisp
+   (use-package auto-complete
+     :ensure t
+     :init
+       (progn
+       (ac-config-default)
+       (global-auto-complete-mode t))
+     :config
+       (progn
+       (add-to-list 'ac-user-dictionary-files "~/.emacs.d/ac-dict")))
+   #+END_SRC
+** ox-twbs
+   #+BEGIN_SRC emacs-lisp
+   (use-package ox-twbs
+     :ensure t)
+   #+END_SRC
+** highlight
+   #+BEGIN_SRC emacs-lisp
+   (use-package highlight
+     :ensure t)
+   #+END_SRC
+** htmlize
+   #+BEGIN_SRC emacs-lisp
+     (use-package htmlize
+       :ensure t)
+   #+END_SRC
+** goto-chg
+   #+BEGIN_SRC emacs-lisp
+   (use-package goto-chg
+     :ensure t
+     :bind
+       (("C-." . goto-last-change)
+        ("C-," . goto-last-change-reverse)))
+   #+END_SRC
+** yasnippet
+   #+BEGIN_SRC emacs-lisp
+   (use-package yasnippet
+     :ensure t
+     :config (yas-global-mode 1))
+   #+END_SRC
+** yasnippet-snippets
+   #+BEGIN_SRC emacs-lisp
+   (use-package yasnippet-snippets
+     :ensure t)
+   #+END_SRC
+* macOS keyboard configuration
+  This section sets the keys for macOS, so that option key can be used to enter
+  characters [ and ] and used together with Shift to enter { and }.
+  I use also CapsLock as Control key. In macOS the CapsLock can be remapped by:
+  System Preferences > Keyboard > Modifier Keys... > Caps Lock Key: Control.
+  It can be set in GNU/Linux in a similar fashion.
+  #+BEGIN_SRC emacs-lisp
+  (setq mac-option-key-is-meta nil
+    mac-command-key-is-meta    t
+    mac-command-modifier      'meta
+    mac-option-modifier        nil)
+  #+END_SRC
+* Backups and autosaves
+  Save all backups into one directory. Disable autosaves.
+  #+BEGIN_SRC emacs-lisp
+  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+  (setq auto-save-default nil)
+  #+END_SRC
+
+* Symlinks
+  Always follow symbolic links without being prompted.
+  #+BEGIN_SRC emacs-lisp
+    (setq vc-follow-symlinks t)
+  #+END_SRC
+* Coding style
+** Common
+   #+BEGIN_SRC emacs-lisp
+   (setq-default indent-tabs-mode nil)
+   #+END_SRC
+** C
+   #+BEGIN_SRC emacs-lisp
+   (setq-default c-default-style "bsd" c-basic-offset 4 indent-tabs-mode nil)
+   #+END_SRC
+* Hooks
+** Text
+   #+BEGIN_SRC emacs-lisp
+   (add-hook 'text-mode-hook 'flyspell-mode)
+   #+END_SRC
+** Programming
+   #+BEGIN_SRC emacs-lisp
+   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+   #+END_SRC
+** C
+  #+BEGIN_SRC emacs-lisp
+  (add-hook 'c-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+  #+END_SRC
+* Org-mode
+  #+BEGIN_SRC emacs-lisp
+  (setq-default org-src-fontify-natively      1) ; syntax highlight code blocks.
+  (setq-default org-export-with-smart-quotes  1)
+  (setq-default org-html-htmlize-output-type 'inline-css)
+  #+END_SRC
+* Theme
+  #+BEGIN_SRC emacs-lisp
+  (load-theme 'leuven t)  
+  #+END_SRC
+* Abbreviations
+  #+BEGIN_SRC emacs-lisp
+  (setq-default abbrev-mode  1)
+  (setq-default save-abbrevs 'silently)
+  #+END_SRC
+* Additional modes
+  #+BEGIN_SRC emacs-lisp
+  (add-to-list 'load-path "~/.emacs.d/elisp")
+  ; Octaspire Dern mode.
+  (require 'octaspire-dern-mode)
+  #+END_SRC
