@@ -1,3 +1,6 @@
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 
 alias wip='git ci -am WIP'

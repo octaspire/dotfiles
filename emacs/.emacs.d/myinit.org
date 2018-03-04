@@ -24,7 +24,6 @@
   Dern mode. Please make sure that the ~/.emacs.d/elisp directory has the following file:
   octaspire-dern-mode.el
 * Interface tweaks
-
 #+BEGIN_SRC emacs-lisp
 (setq inhibit-startup-message  t)             ; Do not show startup screen.
 (tool-bar-mode                -1)             ; Hide tool bar.
@@ -39,6 +38,7 @@
 (show-paren-mode               1)             ; Highlight delimiter pairs.
 (electric-pair-mode            1)             ; Close delimiters automatically.
 (column-number-mode            1)             ; Show current column number.
+(setq visible-bell             1)             ; Disable bell sound.
 ; Fix accessing the context menu of artist-mode in macOS.
 (eval-after-load "artist"
   '(define-key artist-mode-map [down-mouse-3] 'artist-mouse-choose-operation))
@@ -217,7 +217,7 @@
   (setq auto-save-default nil)
   #+END_SRC
 
-* Symlinks
+* Symbolic links
   Always follow symbolic links without being prompted.
   #+BEGIN_SRC emacs-lisp
     (setq vc-follow-symlinks t)
@@ -258,6 +258,22 @@
   #+BEGIN_SRC emacs-lisp
   (setq-default abbrev-mode  1)
   (setq-default save-abbrevs 'silently)
+  #+END_SRC
+* Functions
+  #+BEGIN_SRC emacs-lisp
+    (defun octaspire/terminal-mode-settings ()
+      "Turn on settings for ansi-term mode."
+      (interactive)
+      (setq-local whitespace-mode -1)
+      (setq-local global-hl-line-mode (null global-hl-line-mode))
+      (setq-local show-trailing-whitespace (null show-trailing-whitespace)))
+    (defun octaspire/layout-3-windows ()
+      "Create layout with three windows."
+      (interactive)
+      (split-window-right)
+      (split-window-right)
+      (balance-windows)
+      (other-window 1))
   #+END_SRC
 * Additional modes
   #+BEGIN_SRC emacs-lisp
