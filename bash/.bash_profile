@@ -1,11 +1,8 @@
-# Load from .bashrc with:
-#
-# if [ -f ~/.bash_customrc ]; then
-#     . ~/.bash_customrc
-# fi
-#
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 
-alias e='emacsclient -t -nw'
+alias wip='git ci -am WIP'
+alias la='ls -lath'
+alias e='emacsclient -nw'
 
 # Eternal bash history (from stackoverflow)
 export HISTFILE=~/.bash_eternal_history
@@ -18,6 +15,5 @@ function b64() {
 }
 
 export GPG_TTY=$(tty)
-
 export PATH=~/bin:~/.gem/ruby/2.3.0/bin:$PATH
 
