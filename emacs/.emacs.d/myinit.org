@@ -96,7 +96,10 @@
 ** ivy, counsel and swiper
    #+BEGIN_SRC emacs-lisp
    (use-package counsel
-     :ensure t)
+     :ensure t
+     :bind (("M-y" . counsel-yank-pop)
+            :map ivy-minibuffer-map
+            ("M-y" . ivy-next-line)))
 
    (use-package ivy
      :ensure t
@@ -197,6 +200,17 @@
    (use-package expand-region
      :ensure t
      :config (global-set-key (kbd "C-=") 'er/expand-region))
+   #+END_SRC
+** magit
+   #+BEGIN_SRC emacs-lisp
+   (use-package magit
+     :ensure t
+     :bind (("C-x g" . magit-status)))
+   #+END_SRC
+** keychain-environment
+   #+BEGIN_SRC emacs-lisp
+   (use-package keychain-environment
+     :ensure t)
    #+END_SRC
 * macOS keyboard configuration
   This section sets the keys for macOS, so that option key can be used to enter
