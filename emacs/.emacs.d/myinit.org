@@ -39,6 +39,8 @@
 (electric-pair-mode            1)             ; Close delimiters automatically.
 (column-number-mode            1)             ; Show current column number.
 (setq visible-bell             1)             ; Disable bell sound.
+(setq display-time-24hr-format t)             ; Display time in 24 hour format.
+(display-time-mode             1)             ; Display current time in the modeline.
 ; Fix accessing the context menu of artist-mode in macOS.
 (eval-after-load "artist"
   '(define-key artist-mode-map [down-mouse-3] 'artist-mouse-choose-operation))
@@ -163,8 +165,8 @@
    (use-package goto-chg
      :ensure t
      :bind
-       (("C-." . goto-last-change)
-        ("C-," . goto-last-change-reverse)))
+       (("C-<" . goto-last-change)
+        ("C->" . goto-last-change-reverse)))
    #+END_SRC
 ** yasnippet
    #+BEGIN_SRC emacs-lisp
@@ -212,6 +214,32 @@
    (use-package keychain-environment
      :ensure t)
    #+END_SRC
+** linum-relative
+   #+BEGIN_SRC emacs-lisp
+   (use-package linum-relative
+     :ensure t
+     :config
+       (progn
+         (linum-mode)
+         (linum-relative-global-mode)
+         (setq-default linum-relative-current-symbol "")))
+   #+END_SRC
+** operate-on-number
+   #+BEGIN_SRC emacs-lisp
+   (use-package operate-on-number
+     :ensure t
+     :bind (("C-ä" . operate-on-number-at-point)))
+   #+END_SRC
+** smart-mode-line
+   #+BEGIN_SRC emacs-lisp
+   (use-package smart-mode-line
+     :ensure t
+     :config
+       (progn
+         (setq sml/no-confirm-load-theme t)
+         (setq sml/theme 'light)
+         (sml/setup)))
+   #+End_SRC
 * macOS keyboard configuration
   This section sets the keys for macOS, so that option key can be used to enter
   characters [ and ] and used together with Shift to enter { and }.
@@ -288,6 +316,25 @@
       (split-window-right)
       (balance-windows)
       (other-window 1))
+    (defun octaspire/workspace-3-windows ()
+      "Create workspace with octaspire/layout-3-windows"
+      (interactive)
+      (octaspire/layout-3-windows)
+      (switch-to-buffer "scratch")
+      (other-window -1)
+      (ansi-term "fish")
+      (octaspire/terminal-mode-settings)
+      (other-window 2)
+      (switch-to-buffer "scratch")
+      (other-window -1))
+    (defun octaspire/init-file-load ()
+      "(Re)Load Emacs initialization file."
+      (interactive)
+      (load-file user-init-file))
+    (defun octaspire/init-file-open ()
+      "Visit Emacs initialization file."
+      (interactive)
+      (find-file "~/.emacs.d/myinit.org"))
   #+END_SRC
 * Additional modes
   #+BEGIN_SRC emacs-lisp
