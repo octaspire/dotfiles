@@ -29,8 +29,8 @@
 (tool-bar-mode                -1)             ; Hide tool bar.
 (menu-bar-mode                -1)             ; Hide menu bar.
 (scroll-bar-mode              -1)             ; Hide scroll bar.
-(defalias 'yes-or-no-p        'y-or-n-p)      ; Save typing when answering confirmations. 
-(global-set-key (kbd "<f5>")  'revert-buffer) ; Revert buffer (load changes from filesystem) with F5.
+(defalias 'yes-or-no-p        'y-or-n-p)      ; Save typing when answering confirmations.
+(global-auto-revert-mode       1)             ; Revert buffer automatically when file changes on filesystem.
 (global-hl-line-mode           1)             ; Highlight current line.
 (save-place-mode               1)             ; When visiting a file, point goes to the last point of previous visit.
 (savehist-mode                 1)             ; Save history.
@@ -191,12 +191,6 @@
      :ensure t
      :config (beacon-mode 1))
    #+END_SRC
-** hungry-delete
-   #+BEGIN_SRC emacs-lisp
-   (use-package hungry-delete
-     :ensure t
-     :config (global-hungry-delete-mode))
-   #+END_SRC
 ** expand-region
    #+BEGIN_SRC emacs-lisp
    (use-package expand-region
@@ -240,6 +234,13 @@
          (setq sml/theme 'light)
          (sml/setup)))
    #+End_SRC
+** zoom-window
+   #+BEGIN_SRC emacs-lisp
+   (use-package zoom-window
+     :ensure t
+     :bind   (("M-C-z" . zoom-window-zoom))
+     :config (custom-set-variables '(zoom-window-mode-line-color "LightGreen")))
+   #+END_SRC
 * macOS keyboard configuration
   This section sets the keys for macOS, so that option key can be used to enter
   characters [ and ] and used together with Shift to enter { and }.
@@ -308,7 +309,13 @@
       (interactive)
       (setq-local whitespace-mode -1)
       (setq-local global-hl-line-mode (null global-hl-line-mode))
-      (setq-local show-trailing-whitespace (null show-trailing-whitespace)))
+      (setq-local show-trailing-whitespace (null show-trailing-whitespace))
+      (linum-mode -1))
+    (defun octaspire/layout-2-windows ()
+      "Create layout with two windows."
+      (interactive)
+      (split-window-right)
+      (balance-windows))
     (defun octaspire/layout-3-windows ()
       "Create layout with three windows."
       (interactive)
@@ -316,6 +323,14 @@
       (split-window-right)
       (balance-windows)
       (other-window 1))
+    (defun octaspire/workspace-2-windows ()
+      "Create workspace with octaspire/layout-2-windows"
+      (interactive)
+      (octaspire/layout-2-windows)
+      (ansi-term "fish")
+      (octaspire/terminal-mode-settings)
+      (other-window -1)
+      (switch-to-buffer "scratch"))
     (defun octaspire/workspace-3-windows ()
       "Create workspace with octaspire/layout-3-windows"
       (interactive)
