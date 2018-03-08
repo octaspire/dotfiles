@@ -133,18 +133,15 @@
      :ensure t
      :bind ("M-s" . avy-goto-char))
    #+END_SRC
-** auto-complete
+** company
    #+BEGIN_SRC emacs-lisp
-   (use-package auto-complete
+   (use-package company
      :ensure t
-     :init
-       (progn
-       (ac-config-default)
-       (global-auto-complete-mode t))
      :config
        (progn
-       (add-to-list 'ac-user-dictionary-files "~/.emacs.d/ac-dict")))
-   #+END_SRC
+         (global-company-mode)
+         (add-to-list 'company-backends 'company-capf)))
+    #+END_SRC
 ** ox-twbs
    #+BEGIN_SRC emacs-lisp
    (use-package ox-twbs
@@ -305,7 +302,7 @@
 * Functions
   #+BEGIN_SRC emacs-lisp
     (defun octaspire/terminal-mode-settings ()
-      "Turn on settings for ansi-term mode."
+      "Turn on settings for terminal mode."
       (interactive)
       (setq-local whitespace-mode -1)
       (setq-local global-hl-line-mode (null global-hl-line-mode))
@@ -323,7 +320,8 @@
       (split-window-right)
       (balance-windows)
       (other-window 1))
-    (defun octaspire/workspace-2-windows ()
+
+    (defun octaspire/workspace-2-windows-ansi ()
       "Create workspace with octaspire/layout-2-windows"
       (interactive)
       (octaspire/layout-2-windows)
@@ -331,7 +329,16 @@
       (octaspire/terminal-mode-settings)
       (other-window -1)
       (switch-to-buffer "scratch"))
-    (defun octaspire/workspace-3-windows ()
+    (defun octaspire/workspace-2-windows-eshell ()
+      "Create workspace with octaspire/layout-2-windows"
+      (interactive)
+      (octaspire/layout-2-windows)
+      (eshell)
+      (octaspire/terminal-mode-settings)
+      (other-window -1)
+      (switch-to-buffer "scratch"))
+
+    (defun octaspire/workspace-3-windows-ansi ()
       "Create workspace with octaspire/layout-3-windows"
       (interactive)
       (octaspire/layout-3-windows)
@@ -342,6 +349,18 @@
       (other-window 2)
       (switch-to-buffer "scratch")
       (other-window -1))
+    (defun octaspire/workspace-3-windows-eshell ()
+      "Create workspace with octaspire/layout-3-windows"
+      (interactive)
+      (octaspire/layout-3-windows)
+      (switch-to-buffer "scratch")
+      (other-window -1)
+      (eshell)
+      (octaspire/terminal-mode-settings)
+      (other-window 2)
+      (switch-to-buffer "scratch")
+      (other-window -1))
+
     (defun octaspire/init-file-load ()
       "(Re)Load Emacs initialization file."
       (interactive)
@@ -350,6 +369,17 @@
       "Visit Emacs initialization file."
       (interactive)
       (find-file "~/.emacs.d/myinit.org"))
+  #+END_SRC
+* Keybindings
+  #+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-ö a 2") 'octaspire/workspace-2-windows-ansi)
+  (global-set-key (kbd "C-ö a 3") 'octaspire/workspace-3-windows-ansi)
+
+  (global-set-key (kbd "C-ö e 2") 'octaspire/workspace-2-windows-eshell)
+  (global-set-key (kbd "C-ö e 3") 'octaspire/workspace-3-windows-eshell)
+
+  (global-set-key (kbd "C-ö i o") 'octaspire/init-file-open)
+  (global-set-key (kbd "C-ö i l") 'octaspire/init-file-load)
   #+END_SRC
 * Additional modes
   #+BEGIN_SRC emacs-lisp
