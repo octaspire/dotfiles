@@ -219,7 +219,7 @@
    #+BEGIN_SRC emacs-lisp
    (use-package operate-on-number
      :ensure t
-     :bind (("C-ä" . operate-on-number-at-point)))
+     :bind (("C-c n" . operate-on-number-at-point)))
    #+END_SRC
 ** smart-mode-line
    #+BEGIN_SRC emacs-lisp
@@ -360,14 +360,22 @@
   #+END_SRC
 * Keybindings
   #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-ö a 2") 'octaspire/workspace-2-windows-ansi)
-  (global-set-key (kbd "C-ö a 3") 'octaspire/workspace-3-windows-ansi)
+  (global-set-key (kbd "C-c a 2") 'octaspire/workspace-2-windows-ansi)
+  (global-set-key (kbd "C-c a 3") 'octaspire/workspace-3-windows-ansi)
 
-  (global-set-key (kbd "C-ö e 2") 'octaspire/workspace-2-windows-eshell)
-  (global-set-key (kbd "C-ö e 3") 'octaspire/workspace-3-windows-eshell)
+  (global-set-key (kbd "C-c e 2") 'octaspire/workspace-2-windows-eshell)
+  (global-set-key (kbd "C-c e 3") 'octaspire/workspace-3-windows-eshell)
 
-  (global-set-key (kbd "C-ö i o") 'octaspire/init-file-open)
-  (global-set-key (kbd "C-ö i l") 'octaspire/init-file-load)
+  (global-set-key (kbd "C-c i o") 'octaspire/init-file-open)
+  (global-set-key (kbd "C-c i l") 'octaspire/init-file-load)
+
+  ; Kill the current buffer instead of asking which buffer to kill.
+  (global-set-key (kbd "C-x k")   'kill-this-buffer)
+
+  ; Override the default binding in "M-o" with ace-window because
+  ; switching windows is done a lot and it is shorter to enter
+  ; than the default "C-x o".
+  (global-set-key (kbd "M-o")     'ace-window)
   #+END_SRC
 * Additional modes
   #+BEGIN_SRC emacs-lisp
