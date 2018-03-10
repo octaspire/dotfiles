@@ -23,6 +23,13 @@
   using 'use-package'. Everything else is installed automatically, but not octaspire
   Dern mode. Please make sure that the ~/.emacs.d/elisp directory has the following file:
   octaspire-dern-mode.el
+* Platform-specific configuration
+** macOS
+   It seems to be that in macOS Emacs cannot find the homebrew installed aspell.
+   #+BEGIN_SRC emacs-lisp
+   (when (eq system-type 'darwin)
+     (setq ispell-program-name "/usr/local/bin/aspell"))
+   #+END_SRC
 * Interface tweaks
 #+BEGIN_SRC emacs-lisp
 (setq inhibit-startup-message  t)             ; Do not show startup screen.
