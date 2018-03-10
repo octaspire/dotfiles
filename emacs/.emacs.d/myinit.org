@@ -238,18 +238,6 @@
      :bind   (("M-C-z" . zoom-window-zoom))
      :config (custom-set-variables '(zoom-window-mode-line-color "LightGreen")))
    #+END_SRC
-* macOS keyboard configuration
-  This section sets the keys for macOS, so that option key can be used to enter
-  characters [ and ] and used together with Shift to enter { and }.
-  I use also CapsLock as Control key. In macOS the CapsLock can be remapped by:
-  System Preferences > Keyboard > Modifier Keys... > Caps Lock Key: Control.
-  It can be set in GNU/Linux in a similar fashion.
-  #+BEGIN_SRC emacs-lisp
-  (setq mac-option-key-is-meta nil
-    mac-command-key-is-meta    t
-    mac-command-modifier      'meta
-    mac-option-modifier        nil)
-  #+END_SRC
 * Backups and autosaves
   Save all backups into one directory. Disable autosaves.
   #+BEGIN_SRC emacs-lisp
