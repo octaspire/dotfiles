@@ -48,6 +48,7 @@
 (setq visible-bell             1)             ; Disable bell sound.
 (setq display-time-24hr-format t)             ; Display time in 24 hour format.
 (display-time-mode             1)             ; Display current time in the modeline.
+(setq apropos-sort-by-scores   t)             ; Sort apropos results by relevancy.
 ; Fix accessing the context menu of artist-mode in macOS.
 (eval-after-load "artist"
   '(define-key artist-mode-map [down-mouse-3] 'artist-mouse-choose-operation))
