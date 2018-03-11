@@ -31,28 +31,45 @@
      (setq ispell-program-name "/usr/local/bin/aspell"))
    #+END_SRC
 * Interface tweaks
-#+BEGIN_SRC emacs-lisp
-(setq inhibit-startup-message  t)             ; Do not show startup screen.
-(tool-bar-mode                -1)             ; Hide tool bar.
-(menu-bar-mode                -1)             ; Hide menu bar.
-(scroll-bar-mode              -1)             ; Hide scroll bar.
-(defalias 'yes-or-no-p        'y-or-n-p)      ; Save typing when answering confirmations.
-(global-auto-revert-mode       1)             ; Revert buffer automatically when file changes on filesystem.
-(global-hl-line-mode           1)             ; Highlight current line.
-(save-place-mode               1)             ; When visiting a file, point goes to the last point of previous visit.
-(savehist-mode                 1)             ; Save history.
-(which-function-mode           1)             ; Show the name of the current function.
-(show-paren-mode               1)             ; Highlight delimiter pairs.
-(electric-pair-mode            1)             ; Close delimiters automatically.
-(column-number-mode            1)             ; Show current column number.
-(setq visible-bell             1)             ; Disable bell sound.
-(setq display-time-24hr-format t)             ; Display time in 24 hour format.
-(display-time-mode             1)             ; Display current time in the modeline.
-(setq apropos-sort-by-scores   t)             ; Sort apropos results by relevancy.
-; Fix accessing the context menu of artist-mode in macOS.
-(eval-after-load "artist"
-  '(define-key artist-mode-map [down-mouse-3] 'artist-mouse-choose-operation))
-#+END_SRC
+** UI
+   #+BEGIN_SRC emacs-lisp
+   (setq inhibit-startup-message  t)             ; Do not show startup screen.
+   (tool-bar-mode                -1)             ; Hide tool bar.
+   (menu-bar-mode                -1)             ; Hide menu bar.
+   (scroll-bar-mode              -1)             ; Hide scroll bar.
+   (defalias 'yes-or-no-p        'y-or-n-p)      ; Save typing when answering confirmations.
+   (global-hl-line-mode           1)             ; Highlight current line.
+   (column-number-mode            1)             ; Show current column number.
+   (setq visible-bell             1)             ; Disable bell sound.
+   (setq display-time-24hr-format t)             ; Display time in 24 hour format.
+   (display-time-mode             1)             ; Display current time in the modeline.
+   (which-function-mode           1)             ; Show the name of the current function.
+   (show-paren-mode               1)             ; Highlight delimiter pairs.
+   #+END_SRC
+** Editing and history
+   #+BEGIN_SRC emacs-lisp
+   (global-auto-revert-mode       1)             ; Revert buffer automatically when file changes on filesystem.
+   (save-place-mode               1)             ; When visiting a file, point goes to the last point of previous visit.
+   (savehist-mode                 1)             ; Save history.
+   (electric-pair-mode            1)             ; Close delimiters automatically.
+   #+END_SRC
+** apropos
+   #+BEGIN_SRC emacs-lisp
+   (setq apropos-sort-by-scores   t)             ; Sort apropos results by relevancy.
+   #+END_SRC
+** artist
+   #+BEGIN_SRC emacs-lisp
+   ; Fix accessing the context menu of artist-mode in macOS.
+   (eval-after-load "artist"
+     '(define-key artist-mode-map [down-mouse-3] 'artist-mouse-choose-operation))
+   #+END_SRC
+** ido-mode
+   #+BEGIN_SRC emacs-lisp
+     (setq ido-enable-flex-matching  t)
+     (setq ido-everywhere            t)
+     (setq ido-use-filename-at-point 'guess)
+     (ido-mode                       1)
+   #+END_SRC
 * Spellchecking
   #+BEGIN_SRC emacs-lisp
   (require 'flyspell)
