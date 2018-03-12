@@ -46,6 +46,7 @@
    (which-function-mode           1)             ; Show the name of the current function.
    (show-paren-mode               1)             ; Highlight delimiter pairs.
    (winner-mode                   1)             ; Undo and redo window configurations.
+   (windmove-default-keybindings)                ; Allow moving between windows.
 #+END_SRC
 ** Editing and history
    #+BEGIN_SRC emacs-lisp
