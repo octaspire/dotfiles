@@ -45,7 +45,8 @@
    (display-time-mode             1)             ; Display current time in the modeline.
    (which-function-mode           1)             ; Show the name of the current function.
    (show-paren-mode               1)             ; Highlight delimiter pairs.
-   #+END_SRC
+   (winner-mode                   1)             ; Undo and redo window configurations.
+#+END_SRC
 ** Editing and history
    #+BEGIN_SRC emacs-lisp
    (global-auto-revert-mode       1)             ; Revert buffer automatically when file changes on filesystem.
