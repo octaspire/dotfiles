@@ -315,6 +315,7 @@
   (setq-default save-abbrevs 'silently)
   #+END_SRC
 * Functions
+** Terminal-mode
   #+BEGIN_SRC emacs-lisp
     (defun octaspire/terminal-mode-settings ()
       "Turn on settings for terminal mode."
@@ -323,6 +324,9 @@
       (setq-local global-hl-line-mode (null global-hl-line-mode))
       (setq-local show-trailing-whitespace (null show-trailing-whitespace))
       (linum-mode -1))
+  #+END_SRC
+** Window layout
+   #+BEGIN_SRC emacs-lisp
     (defun octaspire/layout-2-windows ()
       "Create layout with two windows."
       (interactive)
@@ -335,7 +339,10 @@
       (split-window-right)
       (balance-windows)
       (other-window 1))
-
+   #+END_SRC
+** Workspace
+*** 2 windows
+    #+BEGIN_SRC emacs-lisp
     (defun octaspire/workspace-2-windows-ansi ()
       "Create workspace with octaspire/layout-2-windows"
       (interactive)
@@ -352,7 +359,9 @@
       (octaspire/terminal-mode-settings)
       (other-window -1)
       (switch-to-buffer "scratch"))
-
+    #+END_SRC
+*** 3 windows
+    #+BEGIN_SRC emacs-lisp
     (defun octaspire/workspace-3-windows-ansi ()
       "Create workspace with octaspire/layout-3-windows"
       (interactive)
@@ -375,7 +384,9 @@
       (other-window 2)
       (switch-to-buffer "scratch")
       (other-window -1))
-
+    #+END_SRC
+** Initialization-file
+   #+BEGIN_SRC emacs-lisp
     (defun octaspire/init-file-load ()
       "(Re)Load Emacs initialization file."
       (interactive)
@@ -384,26 +395,70 @@
       "Visit Emacs initialization file."
       (interactive)
       (find-file "~/.emacs.d/myinit.org"))
-  #+END_SRC
+   #+END_SRC
+** Editing
+*** Opening lines
+    #+BEGIN_SRC emacs-lisp
+      (defun octaspire/line-open-above ()
+        "Open new empty line above the line that has Point."
+        (interactive)
+        (beginning-of-line)
+        (newline)
+        (forward-line -1)
+        (indent-according-to-mode))
+      (defun octaspire/line-open-below ()
+        "Open new empty line below the line that has Point."
+        (interactive)
+        (end-of-line)
+        (newline-and-indent))
+    #+END_SRC
+*** Copying lines
+    #+BEGIN_SRC emacs-lisp
+      (defun octaspire/line-copy ()
+        "Copy the line that has Point."
+        (interactive)
+        (save-excursion
+          (beginning-of-line)
+          (set-mark-command nil)
+          (end-of-line)
+          (kill-ring-save 0 0 t))
+          (message "Line copied"))
+    #+END_SRC
 * Keybindings
+** New bindings
+*** Workspace
   #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-c a 2") 'octaspire/workspace-2-windows-ansi)
   (global-set-key (kbd "C-c a 3") 'octaspire/workspace-3-windows-ansi)
 
   (global-set-key (kbd "C-c e 2") 'octaspire/workspace-2-windows-eshell)
   (global-set-key (kbd "C-c e 3") 'octaspire/workspace-3-windows-eshell)
-
+  #+END_SRC
+*** Initialization-file
+  #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-c i o") 'octaspire/init-file-open)
   (global-set-key (kbd "C-c i l") 'octaspire/init-file-load)
-
-  ; Kill the current buffer instead of asking which buffer to kill.
-  (global-set-key (kbd "C-x k")   'kill-this-buffer)
-
-  ; Override the default binding in "M-o" with ace-window because
-  ; switching windows is done a lot and it is shorter to enter
-  ; than the default "C-x o".
-  (global-set-key (kbd "M-o")     'ace-window)
   #+END_SRC
+*** Editing
+**** Opening lines
+   #+BEGIN_SRC emacs-lisp
+   (global-set-key (kbd "C-c O")   'octaspire/line-open-above)
+   (global-set-key (kbd "C-c o")   'octaspire/line-open-below)
+   #+END_SRC
+**** Copying lines
+   #+BEGIN_SRC emacs-lisp
+   (global-set-key (kbd "C-c k")   'octaspire/line-copy)
+   #+END_SRC
+** Overriding existing bindings
+   #+BEGIN_SRC emacs-lisp
+   ; Kill the current buffer instead of asking which buffer to kill.
+   (global-set-key (kbd "C-x k")   'kill-this-buffer)
+
+   ; Override the default binding in "M-o" with ace-window because
+   ; switching windows is done a lot and it is shorter to enter
+   ; than the default "C-x o".
+   (global-set-key (kbd "M-o")     'ace-window)
+   #+END_SRC
 * Additional modes
   #+BEGIN_SRC emacs-lisp
   (add-to-list 'load-path "~/.emacs.d/elisp")
