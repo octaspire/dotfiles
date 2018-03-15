@@ -396,6 +396,13 @@
       (interactive)
       (find-file "~/.emacs.d/myinit.org"))
    #+END_SRC
+** Searching
+   #+BEGIN_SRC emacs-lisp
+   (defun octaspire/search-symbol-at-point ()
+    "Do a search for the symbol under the Point."
+    (interactive)
+    (swiper (thing-at-point 'symbol)))
+   #+END_SRC
 ** Editing
 *** Opening lines
     #+BEGIN_SRC emacs-lisp
@@ -449,6 +456,10 @@
    #+BEGIN_SRC emacs-lisp
    (global-set-key (kbd "C-c k")   'octaspire/line-copy)
    #+END_SRC
+*** Searching
+    #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "C-c s") 'octaspire/search-symbol-at-point)
+    #+END_SRC
 ** Overriding existing bindings
    #+BEGIN_SRC emacs-lisp
    ; Kill the current buffer instead of asking which buffer to kill.
