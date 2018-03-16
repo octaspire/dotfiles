@@ -122,43 +122,11 @@
            '(aw-leading-char-face
             ((t (:inherit ace-jump-face-foreground :height 3.0)))))))
    #+END_SRC
-** ivy, counsel and swiper
-   #+BEGIN_SRC emacs-lisp
-   (use-package counsel
-     :ensure t
-     :bind (("M-y" . counsel-yank-pop)
-            :map ivy-minibuffer-map
-            ("M-y" . ivy-next-line)))
-
-   (use-package ivy
-     :ensure t
-     :diminish (ivy-mode)
-     :bind (("C-x b" . ivy-switch-buffer))
-     :config
-       (ivy-mode 1)
-       (setq ivy-use-virtual-buffers t)
-       (setq ivy-display-style 'fancy))
-
-     (use-package swiper
-       :ensure try
-       :bind
-         (("C-s"     . swiper)
-          ("C-r"     . swiper)
-	  ("C-c C-r" . ivy-resume)
-	  ("M-x"     . counsel-M-x)
-	  ("C-x C-f" . counsel-find-file))
-       :config
-         (progn
-           (ivy-mode 1)
-           (setq ivy-use-virtual-buffers t)
-           (setq ivy-display-style 'fancy)
-           (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)))
-   #+END_SRC
 ** avy
    #+BEGIN_SRC emacs-lisp
    (use-package avy
      :ensure t
-     :bind ("M-s" . avy-goto-char))
+     :bind ("M-p" . avy-goto-char))
    #+END_SRC
 ** company
    #+BEGIN_SRC emacs-lisp
@@ -396,13 +364,6 @@
       (interactive)
       (find-file "~/.emacs.d/myinit.org"))
    #+END_SRC
-** Searching
-   #+BEGIN_SRC emacs-lisp
-   (defun octaspire/search-symbol-at-point ()
-    "Do a search for the symbol under the Point."
-    (interactive)
-    (swiper (thing-at-point 'symbol)))
-   #+END_SRC
 ** Editing
 *** Opening lines
     #+BEGIN_SRC emacs-lisp
@@ -431,6 +392,14 @@
           (kill-ring-save 0 0 t))
           (message "Line copied"))
     #+END_SRC
+** Searching
+   #+BEGIN_SRC emacs-lisp
+     (defun octaspire/search-symbol-at-point ()
+       "Do a search for the symbol at the Point, including words that have '.' or '-' after them."
+       (interactive)
+       (isearch-forward-word nil 1)
+       (isearch-yank-string (thing-at-point 'symbol)))
+   #+END_SRC
 * Keybindings
 ** New bindings
 *** Workspace
@@ -459,6 +428,10 @@
 *** Searching
     #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-c s") 'octaspire/search-symbol-at-point)
+    #+END_SRC
+*** Completion
+    #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "C-c c") 'company-complete)
     #+END_SRC
 ** Overriding existing bindings
    #+BEGIN_SRC emacs-lisp
