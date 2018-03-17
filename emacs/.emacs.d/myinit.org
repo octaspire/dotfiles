@@ -233,6 +233,12 @@
      :bind   (("M-C-z" . zoom-window-zoom))
      :config (custom-set-variables '(zoom-window-mode-line-color "LightGreen")))
    #+END_SRC
+** helm
+   #+BEGIN_SRC emacs-lisp
+   (use-package helm
+     :ensure t
+     :config (require 'helm-config))
+   #+END_SRC
 * Backups and autosaves
   Save all backups into one directory. Disable autosaves.
   #+BEGIN_SRC emacs-lisp
