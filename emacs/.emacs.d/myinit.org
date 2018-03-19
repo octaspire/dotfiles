@@ -239,6 +239,14 @@
      :ensure t
      :config (require 'helm-config))
    #+END_SRC
+** exec-path-from-shell
+   #+BEGIN_SRC emacs-lisp
+   (use-package exec-path-from-shell
+     :ensure t
+     :config
+       (when (memq window-system '(mac ns x))
+         (exec-path-from-shell-initialize)))
+   #+END_SRC
 * Backups and autosaves
   Save all backups into one directory. Disable autosaves.
   #+BEGIN_SRC emacs-lisp
