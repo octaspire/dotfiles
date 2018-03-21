@@ -72,6 +72,11 @@
      (setq ido-use-filename-at-point 'guess)
      (ido-mode                       1)
    #+END_SRC
+** shell
+   Make =rgrep= to work with fish shell.
+   #+BEGIN_SRC emacs-lisp
+        (setq shell-file-name "/bin/sh")
+   #+END_SRC
 * Spellchecking
   #+BEGIN_SRC emacs-lisp
   (require 'flyspell)

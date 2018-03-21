@@ -6,6 +6,7 @@ export LC_ALL=en_US.UTF-8
 alias wip='git ci -am WIP'
 alias la='ls -lath'
 alias e='emacsclient -nw'
+alias em='emacs -nw'
 
 # Eternal bash history (from stackoverflow)
 export HISTFILE=~/.bash_eternal_history

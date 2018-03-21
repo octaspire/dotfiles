@@ -28,7 +28,8 @@ export PATH="$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/
 export EDITOR='vim'
 export TERM='screen-256color'
 
-alias emacs="emacs -nw"
+alias e="emacsclient -nw"
+alias em="emacs -nw"
 function quit() {
     clear
     exit
