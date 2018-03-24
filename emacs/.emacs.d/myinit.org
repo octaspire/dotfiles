@@ -22,7 +22,8 @@
   Emacs 25 and internet connection, so that packages can be installed automatically
   using 'use-package'. Everything else is installed automatically, but not octaspire
   Dern mode. Please make sure that the ~/.emacs.d/elisp directory has the following file:
-  octaspire-dern-mode.el
+  octaspire-dern-mode.el. See *Completion packages* for instructions on
+  installing tools needed for code completion.
 * Platform-specific configuration
 ** macOS
    It seems to be that in macOS Emacs cannot find the homebrew installed aspell.
@@ -47,13 +48,15 @@
    (show-paren-mode               1)             ; Highlight delimiter pairs.
    (winner-mode                   1)             ; Undo and redo window configurations.
    (windmove-default-keybindings)                ; Allow moving between windows.
-#+END_SRC
+   #+END_SRC
 ** Editing and history
    #+BEGIN_SRC emacs-lisp
    (global-auto-revert-mode       1)             ; Revert buffer automatically when file changes on filesystem.
    (save-place-mode               1)             ; When visiting a file, point goes to the last point of previous visit.
    (savehist-mode                 1)             ; Save history.
    (electric-pair-mode            1)             ; Close delimiters automatically.
+   (put 'upcase-region   'disabled nil)          ; Enable upcase-region
+   (put 'downcase-region 'disabled nil)          ; Enable downcase-region
    #+END_SRC
 ** apropos
    #+BEGIN_SRC emacs-lisp
@@ -64,13 +67,6 @@
    ; Fix accessing the context menu of artist-mode in macOS.
    (eval-after-load "artist"
      '(define-key artist-mode-map [down-mouse-3] 'artist-mouse-choose-operation))
-   #+END_SRC
-** ido-mode
-   #+BEGIN_SRC emacs-lisp
-     (setq ido-enable-flex-matching  t)
-     (setq ido-everywhere            t)
-     (setq ido-use-filename-at-point 'guess)
-     (ido-mode                       1)
    #+END_SRC
 ** shell
    Make =rgrep= to work with fish shell.
@@ -133,15 +129,6 @@
      :ensure t
      :bind ("M-p" . avy-goto-char))
    #+END_SRC
-** company
-   #+BEGIN_SRC emacs-lisp
-   (use-package company
-     :ensure t
-     :config
-       (progn
-         (global-company-mode)
-         (add-to-list 'company-backends 'company-capf)))
-    #+END_SRC
 ** ox-twbs
    #+BEGIN_SRC emacs-lisp
    (use-package ox-twbs
@@ -252,6 +239,65 @@
        (when (memq window-system '(mac ns x))
          (exec-path-from-shell-initialize)))
    #+END_SRC
+** flx-ido
+   #+BEGIN_SRC emacs-lisp
+     (use-package flx-ido
+       :ensure t
+       :config
+         (progn
+           (ido-mode                     1)
+           (ido-everywhere               1)
+           (flx-ido-mode                 1)
+           (setq ido-enable-flex-mathing t)
+           (setq ido-use-faces           nil)))
+   #+END_SRC
+** projectile
+   #+BEGIN_SRC emacs-lisp
+     (use-package projectile
+       :ensure t
+       :config
+         (progn
+           (setq projectile-enable-caching         t)
+           (setq projectile-indexing-method        'native)
+           (setq projectile-globally-ignored-files (append
+             '(".o" ".so" ".dylib" ".lib" ".dll")))
+           (projectile-mode)))
+   #+END_SRC
+** Completion packages
+   The completion requires additional installation outside Emacs
+   (/libclang/ and /global/). For example: =brew install llvm global=.
+   Then, inside Emacs, give command =M-x irony-install-server=.
+*** irony-mode
+   #+BEGIN_SRC emacs-lisp
+     (use-package irony
+       :ensure t
+       :config
+         (progn
+           (defun octaspire-irony-mode-hook ()
+             (define-key irony-mode-map [remap completion-at-point]
+               'irony-completion-at-point-async)
+             (define-key irony-mode-map [remap complete-symbol]
+               'irony-completion-at-async))
+           (add-hook 'c-mode-hook     'irony-mode)
+           (add-hook 'irony-mode-hook 'octaspire-irony-mode-hook)
+           (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)))
+   #+END_SRC
+*** company-irony
+   #+BEGIN_SRC emacs-lisp
+     (use-package company-irony
+       :ensure t)
+   #+END_SRC
+*** company
+   #+BEGIN_SRC emacs-lisp
+   (use-package company
+     :ensure t
+     :init (add-hook 'after-init-hook 'global-company-mode)
+     :config
+       (progn
+         (setq company-idle-delay            nil)
+         (setq company-minimum-prefix-length 2)
+         (setq company-backends '((company-irony company-gtags company-capf)))))
+    #+END_SRC
 * Backups and autosaves
   Save all backups into one directory. Disable autosaves.
   #+BEGIN_SRC emacs-lisp
@@ -450,7 +496,11 @@
     #+END_SRC
 *** Completion
     #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-c c") 'company-complete)
+    (define-key company-active-map (kbd "M-n") nil)
+    (define-key company-active-map (kbd "M-p") nil)
+    (define-key company-active-map (kbd "C-n") #'company-select-next)
+    (define-key company-active-map (kbd "C-p") #'company-select-previous)
+    (global-set-key (kbd "C-c c") 'company-complete-common)
     #+END_SRC
 ** Overriding existing bindings
    #+BEGIN_SRC emacs-lisp
