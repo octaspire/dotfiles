@@ -51,12 +51,13 @@
    #+END_SRC
 ** Editing and history
    #+BEGIN_SRC emacs-lisp
-   (global-auto-revert-mode       1)             ; Revert buffer automatically when file changes on filesystem.
-   (save-place-mode               1)             ; When visiting a file, point goes to the last point of previous visit.
-   (savehist-mode                 1)             ; Save history.
-   (electric-pair-mode            1)             ; Close delimiters automatically.
-   (put 'upcase-region   'disabled nil)          ; Enable upcase-region
-   (put 'downcase-region 'disabled nil)          ; Enable downcase-region
+   (global-auto-revert-mode       1)                      ; Revert buffer automatically when file changes on filesystem.
+   (save-place-mode               1)                      ; When visiting a file, point goes to the last point of previous visit.
+   (savehist-mode                 1)                      ; Save history.
+   (electric-pair-mode            1)                      ; Close delimiters automatically.
+   (put 'upcase-region   'disabled nil)                   ; Enable upcase-region.
+   (put 'downcase-region 'disabled nil)                   ; Enable downcase-region.
+   (global-set-key [remap dabbrev-expand] 'hippie-expand) ; Use Hippie Expand instead of DAbbrev.
    #+END_SRC
 ** apropos
    #+BEGIN_SRC emacs-lisp
@@ -72,6 +73,10 @@
    Make =rgrep= to work with fish shell.
    #+BEGIN_SRC emacs-lisp
         (setq shell-file-name "/bin/sh")
+   #+END_SRC
+** Tramp
+   #+BEGIN_SRC emacs-lisp
+   (setq tramp-default-method "ssh")
    #+END_SRC
 * Spellchecking
   #+BEGIN_SRC emacs-lisp
@@ -464,6 +469,19 @@
        (interactive)
        (isearch-forward-word nil 1)
        (isearch-yank-string (thing-at-point 'symbol)))
+   #+END_SRC
+** Tramp
+   This function is from the book /Mastering Emacs/ by Mickey Petersen.
+   When invoked as =M-x sudo=, it uses =TRAMP= to edit the current file
+   as *root*.
+   #+BEGIN_SRC emacs-lisp
+     (defun sudo ()
+       "Use TRAMP to 'sudo' the current buffer"
+       (interactive)
+       (when buffer-file-name
+         (find-alternate-file
+          (concat "/sudo:root@localhost:"
+                  buffer-file-name))))
    #+END_SRC
 * Keybindings
 ** New bindings
