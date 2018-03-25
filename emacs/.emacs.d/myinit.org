@@ -78,6 +78,12 @@
    #+BEGIN_SRC emacs-lisp
    (setq tramp-default-method "ssh")
    #+END_SRC
+** dired-x
+  Enable /dired-x/ package. =F= visits all marked files (each in its own
+  window). =C-u F= opens them in the background.
+  #+BEGIN_SRC emacs-lisp
+      (require 'dired-x)
+  #+END_SRC
 * Spellchecking
   #+BEGIN_SRC emacs-lisp
   (require 'flyspell)
