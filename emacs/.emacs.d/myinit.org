@@ -276,7 +276,8 @@
    #+END_SRC
 ** Completion packages
    The completion requires additional installation outside Emacs
-   (/libclang/ and /global/). For example: =brew install llvm global=.
+   (/libclang/ and /global/). For example, in macOS =brew install llvm global=
+   and in Ubuntu =sudo apt-get install libclang-5.0-dev global=.
    Then, inside Emacs, give command =M-x irony-install-server=.
 *** irony-mode
    #+BEGIN_SRC emacs-lisp
