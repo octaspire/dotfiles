@@ -307,7 +307,8 @@
        (progn
          (setq company-idle-delay            nil)
          (setq company-minimum-prefix-length 2)
-         (setq company-backends '((company-irony company-gtags company-capf)))))
+         (setq company-dabbrev-other-buffers 'all)
+         (setq company-backends '((company-files company-irony company-gtags company-capf company-dabbrev company-ispell)))))
     #+END_SRC
 * Backups and autosaves
   Save all backups into one directory. Disable autosaves.
