@@ -103,6 +103,14 @@
   (setq-default whitespace-style          '(face tabs trailing lines lines-tail tab-mark))
   #+END_SRC
 * Packages
+** More recent Org mode
+   #+BEGIN_SRC emacs-lisp
+   (require 'package)
+   (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+   (package-initialize)
+   ; M-x list-packages RET
+   ; U x        update all
+   #+END_SRC
 ** try
    Try packages without installing them. 
    #+BEGIN_SRC emacs-lisp
