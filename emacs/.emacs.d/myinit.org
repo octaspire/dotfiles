@@ -358,6 +358,8 @@
   (setq-default org-src-fontify-natively      1) ; syntax highlight code blocks.
   (setq-default org-export-with-smart-quotes  1)
   (setq-default org-html-htmlize-output-type 'inline-css)
+  (setq org-export-html-style-include-scripts nil)
+  (setq org-export-html-style-include-default nil)
   #+END_SRC
 * Theme
   #+BEGIN_SRC emacs-lisp
