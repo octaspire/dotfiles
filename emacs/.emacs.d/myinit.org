@@ -160,8 +160,8 @@
    (use-package goto-chg
      :ensure t
      :bind
-       (("C-<" . goto-last-change)
-        ("C->" . goto-last-change-reverse)))
+       (("C-c l" . goto-last-change)
+        ("C-c ;" . goto-last-change-reverse)))
    #+END_SRC
 ** yasnippet
    #+BEGIN_SRC emacs-lisp
