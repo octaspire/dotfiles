@@ -138,7 +138,9 @@
    #+BEGIN_SRC emacs-lisp
    (use-package avy
      :ensure t
-     :bind ("C-c C-g" . avy-goto-char))
+     :bind (("C-c C-a c" . avy-goto-char)
+            ("C-c C-a l" . avy-goto-line)
+            ("C-c C-a t" . avy-goto-char-timer)))
    #+END_SRC
 ** ox-twbs
    #+BEGIN_SRC emacs-lisp
@@ -202,16 +204,6 @@
    #+BEGIN_SRC emacs-lisp
    (use-package keychain-environment
      :ensure t)
-   #+END_SRC
-** linum-relative
-   #+BEGIN_SRC emacs-lisp
-   (use-package linum-relative
-     :ensure t
-     :config
-       (progn
-         (linum-mode)
-         (linum-relative-global-mode)
-         (setq-default linum-relative-current-symbol "")))
    #+END_SRC
 ** operate-on-number
    #+BEGIN_SRC emacs-lisp
