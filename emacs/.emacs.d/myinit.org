@@ -41,6 +41,7 @@
    (defalias 'yes-or-no-p        'y-or-n-p)      ; Save typing when answering confirmations.
    (global-hl-line-mode           1)             ; Highlight current line.
    (column-number-mode            1)             ; Show current column number.
+   (setq-default truncate-lines   1)             ; Truncate long lines.
    (setq visible-bell             1)             ; Disable bell sound.
    (setq display-time-24hr-format t)             ; Display time in 24 hour format.
    (display-time-mode             1)             ; Display current time in the modeline.
