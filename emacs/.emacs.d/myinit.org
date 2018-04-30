@@ -104,19 +104,6 @@
   (setq-default whitespace-style          '(face tabs trailing lines lines-tail tab-mark))
   #+END_SRC
 * Packages
-** try
-   Try packages without installing them.
-   #+BEGIN_SRC emacs-lisp
-       (use-package try
-         :ensure t)
-   #+END_SRC
-** which-key
-   Give information about available keybindings.
-   #+BEGIN_SRC emacs-lisp
-       (use-package which-key
-         :ensure t
-         :config (which-key-mode))
-   #+END_SRC
 ** org-bullets
    #+BEGIN_SRC emacs-lisp
    (use-package org-bullets
