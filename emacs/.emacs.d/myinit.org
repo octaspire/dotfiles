@@ -180,7 +180,7 @@
    #+BEGIN_SRC emacs-lisp
    (use-package expand-region
      :ensure t
-     :config (global-set-key (kbd "C-=") 'er/expand-region))
+     :config (global-set-key (kbd "C-c M-e") 'er/expand-region))
    #+END_SRC
 ** magit
    #+BEGIN_SRC emacs-lisp
