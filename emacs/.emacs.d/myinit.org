@@ -153,6 +153,15 @@
        (("C-c l" . goto-last-change)
         ("C-c ;" . goto-last-change-reverse)))
    #+END_SRC
+** dashboard
+   #+BEGIN_SRC emacs-lisp
+   (use-package dashboard
+     :ensure t
+     :config
+       (progn
+         (setq dashboard-startup-banner nil)
+         (dashboard-setup-startup-hook)))
+   #+END_SRC
 ** yasnippet
    #+BEGIN_SRC emacs-lisp
    (use-package yasnippet
