@@ -13,6 +13,12 @@ switch (uname)
        # brew install coreutils
        set -x PATH /usr/local/opt/coreutils/libexec/gnubin $PATH
        set -x MANPATH /usr/local/opt/coreutils/libexec/gnuman $MANPATH
+
+       case Linux
+       # Change Caps Lock into Control
+       xmodmap -e 'keycode 66 = Control_L'
+       xmodmap -e 'clear Lock'
+       xmodmap -e 'add Control = Control_L'
 end
 
 # Load private settings from a separate file, if it is present.
