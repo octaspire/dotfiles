@@ -298,6 +298,7 @@
          (setq company-idle-delay            nil)
          (setq company-minimum-prefix-length 2)
          (setq company-dabbrev-other-buffers 'all)
+         (setq company-dabbrev-downcase      nil)
          (setq company-backends '((company-files company-irony company-gtags company-capf company-dabbrev company-ispell)))))
     #+END_SRC
 * Backups and autosaves
