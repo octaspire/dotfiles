@@ -333,7 +333,8 @@
    #+END_SRC
 ** C
   #+BEGIN_SRC emacs-lisp
-  (add-hook 'c-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+  (add-hook 'c-mode-hook #'(lambda () (progn (modify-syntax-entry ?_ "w")
+                                             (setq comment-start "//" comment-end ""))))
   #+END_SRC
 * Org-mode
   #+BEGIN_SRC emacs-lisp
