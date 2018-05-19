@@ -16,6 +16,8 @@
 "  See the License for the specific language governing permissions and
 "  limitations under the License.
 "-----------------------------------------------------------------------------
+packadd termdebug
+
 set cst
 
 set fileencodings=utf-8
@@ -36,7 +38,7 @@ set t_Co=256
 "let g:solarized_termcolors=256
 colorscheme default
 silent! colorscheme solarized
-set background=dark
+set background=light
 
 set tabstop=4
 set shiftwidth=4
@@ -61,7 +63,7 @@ syntax on
 set listchars=tab:▸\ ,trail:·
 set list
 
-set colorcolumn=101
+set colorcolumn=110
 
 set tabpagemax=100
 
@@ -83,8 +85,13 @@ if has("nvim")
     tnoremap ö <C-\><C-n>
 endif
 
-inoremap jk <esc>
 inoremap ö <esc>
+inoremap <leader>a {
+inoremap <leader>aa }
+inoremap <Leader>f [
+inoremap <Leader>ff ]
+inoremap <Leader>j (
+inoremap <Leader>jj )
 
 nnoremap <Up> <nop>
 nnoremap <Down> <nop>
@@ -99,6 +106,7 @@ inoremap <Right> <nop>
 inoremap <esc> <nop>
 
 nnoremap ö :
+cnoremap ö <C-c>
 
 "This function or mapping doesn't work. Fix it.
 function! NumberToggle()
