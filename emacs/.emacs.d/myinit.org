@@ -526,6 +526,12 @@
     (define-key company-active-map (kbd "C-p") #'company-select-previous)
     (global-set-key (kbd "C-c c") 'company-complete-common)
     #+END_SRC
+*** TAGS
+  #+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "M-*") 'pop-tag-mark)
+  (global-set-key (kbd "M-s") 'tags-search)
+  (global-set-key (kbd "M-,") 'tags-loop-continue)
+  #+END_SRC
 ** Overriding existing bindings
    #+BEGIN_SRC emacs-lisp
    ; Kill the current buffer instead of asking which buffer to kill.
