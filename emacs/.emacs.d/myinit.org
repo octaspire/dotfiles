@@ -126,9 +126,9 @@
    #+BEGIN_SRC emacs-lisp
    (use-package avy
      :ensure t
-     :bind (("C-c C-a c" . avy-goto-char)
-            ("C-c C-a l" . avy-goto-line)
-            ("C-c C-a t" . avy-goto-char-timer)))
+     :bind (("C-c M-c" . avy-goto-char)
+            ("C-c M-l" . avy-goto-line)
+            ("C-c M-t" . avy-goto-char-timer)))
    #+END_SRC
 ** ox-twbs
    #+BEGIN_SRC emacs-lisp
