@@ -463,6 +463,15 @@
           (kill-ring-save 0 0 t))
           (message "Line copied"))
     #+END_SRC
+*** Buffers
+    Kill all other buffers than the current one. This function is from
+    [[https://www.emacswiki.org/emacs/KillingBuffers][EmacsWiki.]]
+    #+BEGIN_SRC emacs-lisp
+    (defun kill-other-buffers ()
+      "Kill all other buffers than the current one."
+      (interactive)
+      (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+    #+END_SRC
 ** Searching
    #+BEGIN_SRC emacs-lisp
      (defun octaspire/search-symbol-at-point ()
