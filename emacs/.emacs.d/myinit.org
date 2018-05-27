@@ -105,13 +105,6 @@
   (setq-default whitespace-style          '(face tabs trailing lines lines-tail tab-mark))
   #+END_SRC
 * Packages
-** org-bullets
-   #+BEGIN_SRC emacs-lisp
-   (use-package org-bullets
-     :ensure t
-     :config
-       (add-hook 'org-mode-hook 'org-bullets-mode))
-   #+END_SRC
 ** ace-window
    #+BEGIN_SRC emacs-lisp
    (use-package ace-window
@@ -131,154 +124,13 @@
             ("C-c M-l" . avy-goto-line)
             ("C-c M-t" . avy-goto-char-timer)))
    #+END_SRC
-** ox-twbs
-   #+BEGIN_SRC emacs-lisp
-   (use-package ox-twbs
-     :ensure t)
-   #+END_SRC
-** highlight
-   #+BEGIN_SRC emacs-lisp
-   (use-package highlight
-     :ensure t)
-   #+END_SRC
-** htmlize
-   #+BEGIN_SRC emacs-lisp
-     (use-package htmlize
-       :ensure t)
-   #+END_SRC
-** goto-chg
-   #+BEGIN_SRC emacs-lisp
-   (use-package goto-chg
-     :ensure t
-     :bind
-       (("C-c l" . goto-last-change)
-        ("C-c ;" . goto-last-change-reverse)))
-   #+END_SRC
-** dashboard
-   #+BEGIN_SRC emacs-lisp
-   (use-package dashboard
-     :ensure t
-     :config
-       (progn
-         (setq dashboard-startup-banner nil)
-         (dashboard-setup-startup-hook)))
-   #+END_SRC
-** yasnippet
-   #+BEGIN_SRC emacs-lisp
-   (use-package yasnippet
-     :ensure t
-     :config (yas-global-mode 1))
-   #+END_SRC
-** yasnippet-snippets
-   #+BEGIN_SRC emacs-lisp
-   (use-package yasnippet-snippets
-     :ensure t)
-   #+END_SRC
-** undo-tree
-   #+BEGIN_SRC emacs-lisp
-   (use-package undo-tree
-     :ensure t
-     :init (global-undo-tree-mode))
-   #+END_SRC
 ** beacon
    #+BEGIN_SRC emacs-lisp
    (use-package beacon
      :ensure t
      :config (beacon-mode 1))
    #+END_SRC
-** expand-region
-   #+BEGIN_SRC emacs-lisp
-   (use-package expand-region
-     :ensure t
-     :config (global-set-key (kbd "C-c M-e") 'er/expand-region))
-   #+END_SRC
-** magit
-   #+BEGIN_SRC emacs-lisp
-   (use-package magit
-     :ensure t
-     :bind (("C-x g" . magit-status)))
-   #+END_SRC
-** keychain-environment
-   #+BEGIN_SRC emacs-lisp
-   (use-package keychain-environment
-     :ensure t)
-   #+END_SRC
-** operate-on-number
-   #+BEGIN_SRC emacs-lisp
-   (use-package operate-on-number
-     :ensure t
-     :bind (("C-c n" . operate-on-number-at-point)))
-   #+END_SRC
-** rainbow-delimiters
-   #+BEGIN_SRC emacs-lisp
-   (use-package rainbow-delimiters
-     :ensure t
-     :config
-       (progn (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-              (add-hook 'octaspire-dern-mode-hook #'rainbow-delimiters-mode)))
-   #+END_SRC
-** smart-mode-line
-   #+BEGIN_SRC emacs-lisp
-   (use-package smart-mode-line
-     :ensure t
-     :config
-       (progn
-         (setq sml/no-confirm-load-theme t)
-         (setq sml/theme 'light)
-         (sml/setup)))
-   #+End_SRC
-** theme
-   #+BEGIN_SRC emacs-lisp
-   (use-package zenburn-theme
-     :ensure t
-     :config (load-theme 'zenburn t))
-   #+END_SRC
-** zoom-window
-   #+BEGIN_SRC emacs-lisp
-   (use-package zoom-window
-     :ensure t
-     :bind   (("M-C-z" . zoom-window-zoom))
-     :config (custom-set-variables '(zoom-window-mode-line-color "LightGreen")))
-   #+END_SRC
-** helm
-   #+BEGIN_SRC emacs-lisp
-   (use-package helm
-     :ensure t
-     :config (require 'helm-config))
-   #+END_SRC
-** exec-path-from-shell
-   #+BEGIN_SRC emacs-lisp
-   (use-package exec-path-from-shell
-     :ensure t
-     :config
-       (when (memq window-system '(mac ns x))
-         (exec-path-from-shell-initialize)))
-   #+END_SRC
-** flx-ido
-   #+BEGIN_SRC emacs-lisp
-     (use-package flx-ido
-       :ensure t
-       :config
-         (progn
-           (ido-mode                     1)
-           (ido-everywhere               1)
-           (flx-ido-mode                 1)
-           (setq ido-enable-flex-mathing t)
-           (setq ido-use-faces           nil)))
-   #+END_SRC
-** projectile
-   #+BEGIN_SRC emacs-lisp
-     (use-package projectile
-       :ensure t
-       :config
-         (progn
-           (setq projectile-enable-caching         t)
-           (setq projectile-indexing-method        'native)
-           (setq projectile-globally-ignored-files (append
-             '(".o" ".so" ".dylib" ".lib" ".dll")))
-           (projectile-mode)))
-   #+END_SRC
-** Completion packages
+** completion packages
    The completion requires additional installation outside Emacs
    (/libclang/ and /global/). For example, in macOS =brew install llvm global=
    and in Ubuntu =sudo apt-get install libclang-5.0-dev global=.
@@ -316,6 +168,154 @@
          (setq company-dabbrev-downcase      nil)
          (setq company-backends '((company-files company-irony company-gtags company-capf company-dabbrev company-ispell)))))
     #+END_SRC
+** dashboard
+   #+BEGIN_SRC emacs-lisp
+   (use-package dashboard
+     :ensure t
+     :config
+       (progn
+         (setq dashboard-startup-banner nil)
+         (dashboard-setup-startup-hook)))
+   #+END_SRC
+** exec-path-from-shell
+   #+BEGIN_SRC emacs-lisp
+   (use-package exec-path-from-shell
+     :ensure t
+     :config
+       (when (memq window-system '(mac ns x))
+         (exec-path-from-shell-initialize)))
+   #+END_SRC
+** expand-region
+   #+BEGIN_SRC emacs-lisp
+   (use-package expand-region
+     :ensure t
+     :config (global-set-key (kbd "C-c M-e") 'er/expand-region))
+   #+END_SRC
+** flx-ido
+   #+BEGIN_SRC emacs-lisp
+     (use-package flx-ido
+       :ensure t
+       :config
+         (progn
+           (ido-mode                     1)
+           (ido-everywhere               1)
+           (flx-ido-mode                 1)
+           (setq ido-enable-flex-mathing t)
+           (setq ido-use-faces           nil)))
+   #+END_SRC
+** goto-chg
+   #+BEGIN_SRC emacs-lisp
+   (use-package goto-chg
+     :ensure t
+     :bind
+       (("C-c l" . goto-last-change)
+        ("C-c ;" . goto-last-change-reverse)))
+   #+END_SRC
+** helm
+   #+BEGIN_SRC emacs-lisp
+   (use-package helm
+     :ensure t
+     :config (require 'helm-config))
+   #+END_SRC
+** highlight
+   #+BEGIN_SRC emacs-lisp
+   (use-package highlight
+     :ensure t)
+   #+END_SRC
+** htmlize
+   #+BEGIN_SRC emacs-lisp
+     (use-package htmlize
+       :ensure t)
+   #+END_SRC
+** keychain-environment
+   #+BEGIN_SRC emacs-lisp
+   (use-package keychain-environment
+     :ensure t)
+   #+END_SRC
+** magit
+   #+BEGIN_SRC emacs-lisp
+   (use-package magit
+     :ensure t
+     :bind (("C-x g" . magit-status)))
+   #+END_SRC
+** operate-on-number
+   #+BEGIN_SRC emacs-lisp
+   (use-package operate-on-number
+     :ensure t
+     :bind (("C-c n" . operate-on-number-at-point)))
+   #+END_SRC
+** org-bullets
+   #+BEGIN_SRC emacs-lisp
+   (use-package org-bullets
+     :ensure t
+     :config
+       (add-hook 'org-mode-hook 'org-bullets-mode))
+   #+END_SRC
+** ox-twbs
+   #+BEGIN_SRC emacs-lisp
+   (use-package ox-twbs
+     :ensure t)
+   #+END_SRC
+** projectile
+   #+BEGIN_SRC emacs-lisp
+     (use-package projectile
+       :ensure t
+       :config
+         (progn
+           (setq projectile-enable-caching         t)
+           (setq projectile-indexing-method        'native)
+           (setq projectile-globally-ignored-files (append
+             '(".o" ".so" ".dylib" ".lib" ".dll")))
+           (projectile-mode)))
+   #+END_SRC
+** rainbow-delimiters
+   #+BEGIN_SRC emacs-lisp
+   (use-package rainbow-delimiters
+     :ensure t
+     :config
+       (progn (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+              (add-hook 'octaspire-dern-mode-hook #'rainbow-delimiters-mode)))
+   #+END_SRC
+** smart-mode-line
+   #+BEGIN_SRC emacs-lisp
+   (use-package smart-mode-line
+     :ensure t
+     :config
+       (progn
+         (setq sml/no-confirm-load-theme t)
+         (setq sml/theme 'light)
+         (sml/setup)))
+   #+End_SRC
+** theme
+   #+BEGIN_SRC emacs-lisp
+   (use-package zenburn-theme
+     :ensure t
+     :config (load-theme 'zenburn t))
+   #+END_SRC
+** undo-tree
+   #+BEGIN_SRC emacs-lisp
+   (use-package undo-tree
+     :ensure t
+     :init (global-undo-tree-mode))
+   #+END_SRC
+** yasnippet
+   #+BEGIN_SRC emacs-lisp
+   (use-package yasnippet
+     :ensure t
+     :config (yas-global-mode 1))
+   #+END_SRC
+** yasnippet-snippets
+   #+BEGIN_SRC emacs-lisp
+   (use-package yasnippet-snippets
+     :ensure t)
+   #+END_SRC
+** zoom-window
+   #+BEGIN_SRC emacs-lisp
+   (use-package zoom-window
+     :ensure t
+     :bind   (("M-C-z" . zoom-window-zoom))
+     :config (custom-set-variables '(zoom-window-mode-line-color "LightGreen")))
+   #+END_SRC
 * Backups and autosaves
   Save all backups into one directory. Disable autosaves.
   #+BEGIN_SRC emacs-lisp
