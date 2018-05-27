@@ -34,21 +34,22 @@
 * Interface tweaks
 ** UI
    #+BEGIN_SRC emacs-lisp
-   (setq inhibit-startup-message  t)             ; Do not show startup screen.
-   (tool-bar-mode                -1)             ; Hide tool bar.
-   (menu-bar-mode                -1)             ; Hide menu bar.
-   (scroll-bar-mode              -1)             ; Hide scroll bar.
-   (defalias 'yes-or-no-p        'y-or-n-p)      ; Save typing when answering confirmations.
-   (global-hl-line-mode           1)             ; Highlight current line.
-   (column-number-mode            1)             ; Show current column number.
-   (setq-default truncate-lines   1)             ; Truncate long lines.
-   (setq visible-bell             1)             ; Disable bell sound.
-   (setq display-time-24hr-format t)             ; Display time in 24 hour format.
-   (display-time-mode             1)             ; Display current time in the modeline.
-   (which-function-mode           1)             ; Show the name of the current function.
-   (show-paren-mode               1)             ; Highlight delimiter pairs.
-   (winner-mode                   1)             ; Undo and redo window configurations.
-   (windmove-default-keybindings)                ; Allow moving between windows.
+   (setq inhibit-startup-message     t)             ; Do not show startup screen.
+   (tool-bar-mode                   -1)             ; Hide tool bar.
+   (menu-bar-mode                   -1)             ; Hide menu bar.
+   (scroll-bar-mode                 -1)             ; Hide scroll bar.
+   (defalias 'yes-or-no-p           'y-or-n-p)      ; Save typing when answering confirmations.
+   (global-hl-line-mode              1)             ; Highlight current line.
+   (set-face-background hl-line-face "gray13")      ; Change color of highlighted line.
+   (column-number-mode               1)             ; Show current column number.
+   (setq-default truncate-lines      1)             ; Truncate long lines.
+   (setq visible-bell                1)             ; Disable bell sound.
+   (setq display-time-24hr-format    t)             ; Display time in 24 hour format.
+   (display-time-mode                1)             ; Display current time in the modeline.
+   (which-function-mode              1)             ; Show the name of the current function.
+   (show-paren-mode                  1)             ; Highlight delimiter pairs.
+   (winner-mode                      1)             ; Undo and redo window configurations.
+   (windmove-default-keybindings)                   ; Allow moving between windows.
    #+END_SRC
 ** Editing and history
    #+BEGIN_SRC emacs-lisp
@@ -208,6 +209,14 @@
      :ensure t
      :bind (("C-c n" . operate-on-number-at-point)))
    #+END_SRC
+** rainbow-delimiters
+   #+BEGIN_SRC emacs-lisp
+   (use-package rainbow-delimiters
+     :ensure t
+     :config
+       (progn (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+              (add-hook 'octaspire-dern-mode-hook #'rainbow-delimiters-mode)))
+   #+END_SRC
 ** smart-mode-line
    #+BEGIN_SRC emacs-lisp
    (use-package smart-mode-line
@@ -218,6 +227,12 @@
          (setq sml/theme 'light)
          (sml/setup)))
    #+End_SRC
+** theme
+   #+BEGIN_SRC emacs-lisp
+   (use-package zenburn-theme
+     :ensure t
+     :config (load-theme 'zenburn t))
+   #+END_SRC
 ** zoom-window
    #+BEGIN_SRC emacs-lisp
    (use-package zoom-window
@@ -343,10 +358,6 @@
   (setq-default org-html-htmlize-output-type 'inline-css)
   (setq org-export-html-style-include-scripts nil)
   (setq org-export-html-style-include-default nil)
-  #+END_SRC
-* Theme
-  #+BEGIN_SRC emacs-lisp
-  (load-theme 'leuven t)  
   #+END_SRC
 * Abbreviations
   #+BEGIN_SRC emacs-lisp
