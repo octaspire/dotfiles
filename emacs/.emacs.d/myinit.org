@@ -40,7 +40,7 @@
    (scroll-bar-mode                 -1)             ; Hide scroll bar.
    (defalias 'yes-or-no-p           'y-or-n-p)      ; Save typing when answering confirmations.
    (global-hl-line-mode              1)             ; Highlight current line.
-   (set-face-background hl-line-face "gray13")      ; Change color of highlighted line.
+   (set-face-background hl-line-face "brightblack") ; Change color of highlighted line.
    (set-face-attribute 'default nil  :height 120)   ; Change font size.
    (column-number-mode               1)             ; Show current column number.
    (setq-default truncate-lines      1)             ; Truncate long lines.
