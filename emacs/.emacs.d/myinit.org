@@ -505,6 +505,18 @@
           (concat "/sudo:root@localhost:"
                   buffer-file-name))))
    #+END_SRC
+** TAGS
+   Find existing TAGS file by searching parent directories. This function
+   is based on code from: https://www.emacswiki.org/emacs/EmacsTags
+   #+BEGIN_SRC emacs-lisp
+   (defun tags-file-find ()
+     "Find existing TAGS file by searching parent directories"
+     (interactive)
+     (let ((my-tags-file (locate-dominating-file default-directory "TAGS")))
+       (when my-tags-file
+         (message "Loading TAGS file: %s" my-tags-file)
+         (visit-tags-table my-tags-file))))
+   #+END_SRC
 * Keybindings
 ** New bindings
 *** Workspace
