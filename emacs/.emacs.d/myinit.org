@@ -51,6 +51,9 @@
    (show-paren-mode                  1)             ; Highlight delimiter pairs.
    (winner-mode                      1)             ; Undo and redo window configurations.
    (windmove-default-keybindings)                   ; Allow moving between windows.
+   ; Maximize frame at startup. This line is from:
+   ; https://emacs.stackexchange.com/questions/2999/how-to-maximize-my-emacs-frame-on-start-up
+   (add-to-list 'default-frame-alist '(fullscreen . maximized))
    #+END_SRC
 ** Editing and history
    #+BEGIN_SRC emacs-lisp
