@@ -31,65 +31,6 @@
    (when (eq system-type 'darwin)
      (setq ispell-program-name "/usr/local/bin/aspell"))
    #+END_SRC
-* Interface tweaks
-** UI
-   #+BEGIN_SRC emacs-lisp
-   (setq inhibit-startup-message     t)             ; Do not show startup screen.
-   (tool-bar-mode                   -1)             ; Hide tool bar.
-   (menu-bar-mode                   -1)             ; Hide menu bar.
-   (scroll-bar-mode                 -1)             ; Hide scroll bar.
-   (defalias 'yes-or-no-p           'y-or-n-p)      ; Save typing when answering confirmations.
-   (global-hl-line-mode              1)             ; Highlight current line.
-   (set-face-background hl-line-face "brightblack") ; Change color of highlighted line.
-   (set-face-attribute 'default nil  :height 140)   ; Change font size.
-   (column-number-mode               1)             ; Show current column number.
-   (setq-default truncate-lines      1)             ; Truncate long lines.
-   (setq visible-bell                1)             ; Disable bell sound.
-   (setq display-time-24hr-format    t)             ; Display time in 24 hour format.
-   (display-time-mode                1)             ; Display current time in the modeline.
-   (which-function-mode              1)             ; Show the name of the current function.
-   (show-paren-mode                  1)             ; Highlight delimiter pairs.
-   (winner-mode                      1)             ; Undo and redo window configurations.
-   (windmove-default-keybindings)                   ; Allow moving between windows.
-   ; Maximize frame at startup. This line is from:
-   ; https://emacs.stackexchange.com/questions/2999/how-to-maximize-my-emacs-frame-on-start-up
-   (add-to-list 'default-frame-alist '(fullscreen . maximized))
-   #+END_SRC
-** Editing and history
-   #+BEGIN_SRC emacs-lisp
-   (global-auto-revert-mode       1)                      ; Revert buffer automatically when file changes on filesystem.
-   (save-place-mode               1)                      ; When visiting a file, point goes to the last point of previous visit.
-   (savehist-mode                 1)                      ; Save history.
-   (electric-pair-mode            1)                      ; Close delimiters automatically.
-   (put 'upcase-region   'disabled nil)                   ; Enable upcase-region.
-   (put 'downcase-region 'disabled nil)                   ; Enable downcase-region.
-   (global-set-key [remap dabbrev-expand] 'hippie-expand) ; Use Hippie Expand instead of DAbbrev.
-   #+END_SRC
-** apropos
-   #+BEGIN_SRC emacs-lisp
-   (setq apropos-sort-by-scores   t)             ; Sort apropos results by relevancy.
-   #+END_SRC
-** artist
-   #+BEGIN_SRC emacs-lisp
-   ; Fix accessing the context menu of artist-mode in macOS.
-   (eval-after-load "artist"
-     '(define-key artist-mode-map [down-mouse-3] 'artist-mouse-choose-operation))
-   #+END_SRC
-** shell
-   Make =rgrep= to work with fish shell.
-   #+BEGIN_SRC emacs-lisp
-        (setq shell-file-name "/bin/sh")
-   #+END_SRC
-** Tramp
-   #+BEGIN_SRC emacs-lisp
-   (setq tramp-default-method "ssh")
-   #+END_SRC
-** dired-x
-  Enable /dired-x/ package. =F= visits all marked files (each in its own
-  window). =C-u F= opens them in the background.
-  #+BEGIN_SRC emacs-lisp
-      (require 'dired-x)
-  #+END_SRC
 * Spellchecking
   #+BEGIN_SRC emacs-lisp
   (require 'flyspell)
@@ -163,7 +104,6 @@
    #+BEGIN_SRC emacs-lisp
    (use-package company
      :ensure t
-     :init (add-hook 'after-init-hook 'global-company-mode)
      :config
        (progn
          (setq company-idle-delay            nil)
@@ -320,6 +260,70 @@
      :bind   (("M-C-z" . zoom-window-zoom))
      :config (custom-set-variables '(zoom-window-mode-line-color "LightGreen")))
    #+END_SRC
+* Interface tweaks
+** UI
+   #+BEGIN_SRC emacs-lisp
+   (setq inhibit-startup-message     t)             ; Do not show startup screen.
+   (tool-bar-mode                   -1)             ; Hide tool bar.
+   (menu-bar-mode                   -1)             ; Hide menu bar.
+   (scroll-bar-mode                 -1)             ; Hide scroll bar.
+   (defalias 'yes-or-no-p           'y-or-n-p)      ; Save typing when answering confirmations.
+   (global-hl-line-mode              1)             ; Highlight current line.
+   (set-face-background hl-line-face "IndianRed4")  ; Change color of highlighted line.
+   (set-face-attribute 'default nil  :height 140)   ; Change font size.
+   (column-number-mode               1)             ; Show current column number.
+   (setq-default truncate-lines      1)             ; Truncate long lines.
+   (setq visible-bell                1)             ; Disable bell sound.
+   (setq display-time-24hr-format    t)             ; Display time in 24 hour format.
+   (setq suggest-key-bindings        4)             ; Show key binding suggestions for N seconds.
+   (display-time-mode                1)             ; Display current time in the modeline.
+   (which-function-mode              1)             ; Show the name of the current function.
+   (show-paren-mode                  1)             ; Highlight delimiter pairs.
+   (winner-mode                      1)             ; Undo and redo window configurations.
+   (windmove-default-keybindings)                   ; Allow moving between windows.
+   ; Maximize frame at startup. This line is from:
+   ; https://emacs.stackexchange.com/questions/2999/how-to-maximize-my-emacs-frame-on-start-up
+   (add-to-list 'default-frame-alist '(fullscreen . maximized))
+   #+END_SRC
+** Editing and history
+   #+BEGIN_SRC emacs-lisp
+   (global-auto-revert-mode       1)                      ; Revert buffer automatically when file changes on filesystem.
+   (save-place-mode               1)                      ; When visiting a file, point goes to the last point of previous visit.
+   (savehist-mode                 1)                      ; Save history.
+   (electric-pair-mode            1)                      ; Close delimiters automatically.
+   (put 'upcase-region   'disabled nil)                   ; Enable upcase-region.
+   (put 'downcase-region 'disabled nil)                   ; Enable downcase-region.
+   (global-set-key [remap dabbrev-expand] 'hippie-expand) ; Use Hippie Expand instead of DAbbrev.
+   #+END_SRC
+** Completion
+   #+BEGIN_SRC emacs-lisp
+   (setq completion-cycle-threshold 4) ; Cycle completions when N or fewer alternatives.
+   #+END_SRC
+** apropos
+   #+BEGIN_SRC emacs-lisp
+   (setq apropos-sort-by-scores   t)             ; Sort apropos results by relevancy.
+   #+END_SRC
+** artist
+   #+BEGIN_SRC emacs-lisp
+   ; Fix accessing the context menu of artist-mode in macOS.
+   (eval-after-load "artist"
+     '(define-key artist-mode-map [down-mouse-3] 'artist-mouse-choose-operation))
+   #+END_SRC
+** shell
+   Make =rgrep= to work with fish shell.
+   #+BEGIN_SRC emacs-lisp
+        (setq shell-file-name "/bin/sh")
+   #+END_SRC
+** Tramp
+   #+BEGIN_SRC emacs-lisp
+   (setq tramp-default-method "ssh")
+   #+END_SRC
+** dired-x
+  Enable /dired-x/ package. =F= visits all marked files (each in its own
+  window). =C-u F= opens them in the background.
+  #+BEGIN_SRC emacs-lisp
+      (require 'dired-x)
+  #+END_SRC
 * Backups and autosaves
   Save all backups into one directory. Disable autosaves.
   #+BEGIN_SRC emacs-lisp
@@ -341,33 +345,6 @@
    #+BEGIN_SRC emacs-lisp
    (setq-default c-default-style "bsd" c-basic-offset 4 indent-tabs-mode nil)
    #+END_SRC
-* Hooks
-** Text
-   #+BEGIN_SRC emacs-lisp
-   (add-hook 'text-mode-hook 'flyspell-mode)
-   #+END_SRC
-** Programming
-   #+BEGIN_SRC emacs-lisp
-   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-   #+END_SRC
-** C
-  #+BEGIN_SRC emacs-lisp
-  (add-hook 'c-mode-hook #'(lambda () (progn (modify-syntax-entry ?_ "w")
-                                             (setq comment-start "//" comment-end ""))))
-  #+END_SRC
-* Org-mode
-  #+BEGIN_SRC emacs-lisp
-  (setq-default org-src-fontify-natively      1) ; syntax highlight code blocks.
-  (setq-default org-export-with-smart-quotes  1)
-  (setq-default org-html-htmlize-output-type 'inline-css)
-  (setq org-export-html-style-include-scripts nil)
-  (setq org-export-html-style-include-default nil)
-  #+END_SRC
-* Abbreviations
-  #+BEGIN_SRC emacs-lisp
-  (setq-default abbrev-mode  1)
-  (setq-default save-abbrevs 'silently)
-  #+END_SRC
 * Functions
 ** Terminal-mode
   #+BEGIN_SRC emacs-lisp
@@ -520,6 +497,43 @@
          (message "Loading TAGS file: %s" my-tags-file)
          (visit-tags-table my-tags-file))))
    #+END_SRC
+** After init
+   #+BEGIN_SRC emacs-lisp
+   (defun octaspire/after-init-hook ()
+     (setq debug-on-error t)
+     (global-company-mode))
+   #+END_SRC
+* Hooks
+** After init
+   #+BEGIN_SRC emacs-lisp
+   (add-hook 'after-init-hook 'octaspire/after-init-hook)
+   #+END_SRC
+** Text
+   #+BEGIN_SRC emacs-lisp
+   (add-hook 'text-mode-hook 'flyspell-mode)
+   #+END_SRC
+** Programming
+   #+BEGIN_SRC emacs-lisp
+   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+   #+END_SRC
+** C
+  #+BEGIN_SRC emacs-lisp
+  (add-hook 'c-mode-hook #'(lambda () (progn (modify-syntax-entry ?_ "w")
+                                             (setq comment-start "//" comment-end ""))))
+  #+END_SRC
+* Org-mode
+  #+BEGIN_SRC emacs-lisp
+  (setq-default org-src-fontify-natively      1) ; syntax highlight code blocks.
+  (setq-default org-export-with-smart-quotes  1)
+  (setq-default org-html-htmlize-output-type 'inline-css)
+  (setq org-export-html-style-include-scripts nil)
+  (setq org-export-html-style-include-default nil)
+  #+END_SRC
+* Abbreviations
+  #+BEGIN_SRC emacs-lisp
+  (setq-default abbrev-mode  1)
+  (setq-default save-abbrevs 'silently)
+  #+END_SRC
 * Keybindings
 ** New bindings
 *** Workspace
