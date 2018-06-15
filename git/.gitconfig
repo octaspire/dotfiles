@@ -19,7 +19,7 @@
 	name  = octaspire
 	signingkey = 9BD2CCD560E9E29C
 [core]
-	editor = emacs -nw
+	editor = emacsclient
 [push]
 	default = simple
 [alias]

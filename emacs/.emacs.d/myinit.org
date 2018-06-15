@@ -31,6 +31,20 @@
    (when (eq system-type 'darwin)
      (setq ispell-program-name "/usr/local/bin/aspell"))
    #+END_SRC
+** GNU/Linux
+*** EXWM
+  Use Emacs as window manager in GNU/Linux if environment variable
+  =OCTASPIRE_USE_EMACS_EXWM= is defined to have value =yes=.
+  #+BEGIN_SRC emacs-lisp
+  (when (and (eq system-type 'gnu/linux)
+             (string= (getenv "OCTASPIRE_USE_EMACS_EXWM") "yes"))
+    (use-package exwm
+      :ensure t
+      :config
+        (progn
+          (require 'exwm-config)
+          (exwm-config-default))))
+  #+END_SRC
 * Spellchecking
   #+BEGIN_SRC emacs-lisp
   (require 'flyspell)
@@ -280,6 +294,7 @@
    (which-function-mode              1)             ; Show the name of the current function.
    (show-paren-mode                  1)             ; Highlight delimiter pairs.
    (winner-mode                      1)             ; Undo and redo window configurations.
+   (put 'scroll-left 'disabled       nil)           ; Enable horizontal scrolling.
    (windmove-default-keybindings)                   ; Allow moving between windows.
    ; Maximize frame at startup. This line is from:
    ; https://emacs.stackexchange.com/questions/2999/how-to-maximize-my-emacs-frame-on-start-up
@@ -325,12 +340,13 @@
       (require 'dired-x)
   #+END_SRC
 * Backups and autosaves
-  Save all backups into one directory. Disable autosaves.
+  Save all backups into one directory, disable autosaves and
+  make all commands modifying bookmarks also to save them.
   #+BEGIN_SRC emacs-lisp
   (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-  (setq auto-save-default nil)
+  (setq auto-save-default      nil)
+  (setq bookmark-save-flag     1)
   #+END_SRC
-
 * Symbolic links
   Always follow symbolic links without being prompted.
   #+BEGIN_SRC emacs-lisp
