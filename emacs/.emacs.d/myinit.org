@@ -289,6 +289,7 @@
    (setq-default truncate-lines      1)             ; Truncate long lines.
    (setq visible-bell                1)             ; Disable bell sound.
    (setq display-time-24hr-format    t)             ; Display time in 24 hour format.
+   (setq display-battery-mode        t)             ; Display battery charge on the mode-line.
    (setq suggest-key-bindings        4)             ; Show key binding suggestions for N seconds.
    (display-time-mode                1)             ; Display current time in the modeline.
    (which-function-mode              1)             ; Show the name of the current function.
