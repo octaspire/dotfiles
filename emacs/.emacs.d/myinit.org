@@ -630,7 +630,6 @@
 *** TAGS
   #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "M-*") 'pop-tag-mark)
-  (global-set-key (kbd "M-s") 'tags-search)
   (global-set-key (kbd "M-,") 'tags-loop-continue)
   #+END_SRC
 ** Overriding existing bindings
