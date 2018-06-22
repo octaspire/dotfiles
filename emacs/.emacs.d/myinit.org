@@ -332,6 +332,38 @@
    #+BEGIN_SRC emacs-lisp
         (setq shell-file-name "/bin/sh")
    #+END_SRC
+** Eshell
+*** The Plan9 Smart Shell
+    This configuration is based on an example and comment
+    at [[https://www.masteringemacs.org/article/complete-guide-mastering-eshell][Mastering Eshell. ]]
+    #+BEGIN_SRC emacs-lisp
+    (require 'eshell)
+    (require 'em-smart)
+    (setq eshell-where-to-jump          'begin)
+    (setq eshell-review-quick-commands   nil)
+    (setq eshell-smart-space-goes-to-end t)
+    (add-hook 'eshell-mode-hook 'eshell-smart-initialize)
+    #+END_SRC
+*** Aliases
+    #+BEGIN_SRC emacs-lisp
+    (add-hook 'eshell-mode-hook (lambda ()
+      (eshell/alias "e" "find-file-other-window $1")
+      (eshell/alias "d" "dired-other-window $1")))
+    #+END_SRC
+*** No need for a pager
+    There is no need for an external pager because of the Plan9 Smart Shell.
+    #+BEGIN_SRC emacs-lisp
+    (setenv "PAGER" "cat")
+    #+END_SRC
+*** Clear
+    This is from [[https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org][github/howardabrams/dot-files]].
+    #+BEGIN_SRC emacs-lisp
+    (defun eshell/clear ()
+      "Clear the eshell buffer."
+      (let ((inhibit-read-only t))
+        (erase-buffer)
+        (eshell-send-input)))
+    #+END_SRC
 ** Tramp
    #+BEGIN_SRC emacs-lisp
    (setq tramp-default-method "ssh")
