@@ -244,6 +244,10 @@
        (progn
          (setq sml/no-confirm-load-theme t)
          (setq sml/theme 'light)
+         (setq sml/shorten-directory t)
+         (setq sml/shorten-modes     t)
+         (setq sml/name-width        5)
+         (setq sml/mode-width        5)
          (sml/setup)))
    #+End_SRC
 ** theme
@@ -286,7 +290,7 @@
    (defalias 'yes-or-no-p           'y-or-n-p)      ; Save typing when answering confirmations.
    (global-hl-line-mode              1)             ; Highlight current line.
    (set-face-background hl-line-face "IndianRed4")  ; Change color of highlighted line.
-   (set-face-attribute 'default nil  :height 140)   ; Change font size.
+   (set-face-attribute 'default nil  :height 120)   ; Change font size.
    (column-number-mode               1)             ; Show current column number.
    (setq-default truncate-lines      1)             ; Truncate long lines.
    (setq visible-bell                1)             ; Disable bell sound.
