@@ -401,6 +401,7 @@
 ** C
    #+BEGIN_SRC emacs-lisp
    (setq-default c-default-style "bsd" c-basic-offset 4 indent-tabs-mode nil)
+   (c-set-offset 'case-label '+) ; Indent 'case' labels in switch statements.
    #+END_SRC
 * Functions
 ** Terminal-mode
