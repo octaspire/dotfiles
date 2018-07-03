@@ -312,6 +312,7 @@
 ** Editing and history
    #+BEGIN_SRC emacs-lisp
    (global-auto-revert-mode       1)                      ; Revert buffer automatically when file changes on filesystem.
+   (setq global-auto-revert-non-file-buffers 1)           ; Auto revert also non-file buffers.
    (save-place-mode               1)                      ; When visiting a file, point goes to the last point of previous visit.
    (savehist-mode                 1)                      ; Save history.
    (electric-pair-mode            1)                      ; Close delimiters automatically.
