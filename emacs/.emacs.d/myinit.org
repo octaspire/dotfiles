@@ -31,22 +31,6 @@
    (when (eq system-type 'darwin)
      (setq ispell-program-name "/usr/local/bin/aspell"))
    #+END_SRC
-** GNU/Linux
-*** EXWM
-  Use Emacs as window manager in GNU/Linux if environment variable
-  =OCTASPIRE_USE_EMACS_EXWM= is defined to have value =yes= and
-  Emacs is not currently running in batch mode.
-  #+BEGIN_SRC emacs-lisp
-  (when (and (eq system-type 'gnu/linux)
-             (string= (getenv "OCTASPIRE_USE_EMACS_EXWM") "yes")
-             (not noninteractive))
-    (use-package exwm
-      :ensure t
-      :config
-        (progn
-          (require 'exwm-config)
-          (exwm-config-default))))
-  #+END_SRC
 * Spellchecking
   #+BEGIN_SRC emacs-lisp
   (require 'flyspell)
@@ -307,7 +291,7 @@
    (windmove-default-keybindings)                   ; Allow moving between windows.
    ; Maximize frame at startup. This line is from:
    ; https://emacs.stackexchange.com/questions/2999/how-to-maximize-my-emacs-frame-on-start-up
-   (add-to-list 'default-frame-alist '(fullscreen . maximized))
+   ;(add-to-list 'default-frame-alist '(fullscreen . maximized))
    #+END_SRC
 ** Editing and history
    #+BEGIN_SRC emacs-lisp

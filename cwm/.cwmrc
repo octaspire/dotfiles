@@ -1,0 +1,63 @@
+snapdist 10
+
+# Unmap some default keybindings and remap those.
+# 4-X means the Windows key and X.
+
+unbind-key CM-Return                     # Spawn a new terminal
+bind-key   4-Return   terminal
+
+unbind-key M-Tab                         # Forward cycle windows
+bind-key   4-Tab      window-cycle
+
+unbind-key MS-Tab                        # Reverse cycle windows
+bind-key   4S-Tab     window-rcycle
+
+unbind-key C-slash                       # Search for applications (swapping this also with window search)
+bind-key   4-slash    menu-window
+
+unbind-key M-slash                       # Search for windows
+bind-key   4S-slash   menu-cmd
+
+unbind-key M-period                      # ssh menu
+bind-key   4-period   menu-ssh
+
+unbind-key CM-s                          # Toggle stickiness of current window; not rebound.
+unbind-key CM-a                          # Toggle visibility of all groups; not rebound.
+unbind-key CM-n                          # Label current window; not rebound.
+unbind-key CM-w                          # wm switching; not rebound.
+
+unbind-key M-question                    # Spawn exec program dialog
+bind-key   4-question menu-exec
+
+unbind-key CM-f                          # Toggle fullscreen mode of current window.
+bind-key   4-f        window-fullscreen
+
+unbind-key CM-equal                      # Toggle vertical maximization of the current window.
+bind-key   4-equal    window-vmaximize
+unbind-key CMS-equal                     # Toggle horizontal maximization of the current window.
+bind-key   4S-equal   window-hmaximize
+
+unbind-key M-h                           # Move window a little; rebound to big movement.
+unbind-key CM-h                          # Resize window a little; rebound to big resize.
+bind-key   4-h        window-move-left-big
+bind-key   4S-h       window-resize-left-big
+
+unbind-key M-j                           # Move window a little; rebound to big movement.
+unbind-key CM-j                          # Resize window a little; rebound to big resize.
+bind-key   4-j        window-move-down-big
+bind-key   4S-j       window-resize-down-big
+
+unbind-key M-k                           # Move window a little; rebound to big movemnt.
+unbind-key CM-k                          # Resize window a little; rebound to big resize.
+bind-key   4-k        window-move-up-big
+bind-key   4S-k       window-resize-up-big
+
+unbind-key M-l                           # Move window a little; rebound to big movement.
+unbind-key CM-l                          # Resize window a little; rebound to big resize.
+bind-key   4-l        window-move-right-big
+bind-key   4S-l       window-resize-right-big
+
+bind-key   4-a        window-snap-left
+bind-key   4-s        window-snap-down
+bind-key   4-d        window-snap-right
+bind-key   4-w        window-snap-up

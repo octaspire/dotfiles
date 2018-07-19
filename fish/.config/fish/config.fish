@@ -13,8 +13,6 @@ switch (uname)
        # brew install coreutils
        set -x PATH /usr/local/opt/coreutils/libexec/gnubin $PATH
        set -x MANPATH /usr/local/opt/coreutils/libexec/gnuman $MANPATH
-       case Linux
-       set -x OCTASPIRE_USE_EMACS_EXWM yes
 end
 
 # Load private settings from a separate file, if it is present.
