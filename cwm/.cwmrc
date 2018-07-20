@@ -13,7 +13,7 @@ unbind-key MS-Tab                        # Reverse cycle windows
 bind-key   4S-Tab     window-rcycle
 
 unbind-key C-slash                       # Search for applications (swapping this also with window search)
-bind-key   4-slash    menu-window
+bind-key   4-slash    menu-window-hidden
 
 unbind-key M-slash                       # Search for windows
 bind-key   4S-slash   menu-cmd
@@ -27,7 +27,7 @@ unbind-key CM-n                          # Label current window; not rebound.
 unbind-key CM-w                          # wm switching; not rebound.
 
 unbind-key M-question                    # Spawn exec program dialog
-bind-key   4-question menu-exec
+bind-key   4-e menu-exec
 
 unbind-key CM-f                          # Toggle fullscreen mode of current window.
 bind-key   4-f        window-fullscreen
