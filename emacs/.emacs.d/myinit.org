@@ -50,6 +50,11 @@
   (setq-default whitespace-style          '(face tabs trailing lines lines-tail tab-mark))
   #+END_SRC
 * Packages
+** pinentry
+   #+BEGIN_SRC emacs-lisp
+   (use-package pinentry
+     :ensure t)
+   #+END_SRC
 ** ace-window
    #+BEGIN_SRC emacs-lisp
    (use-package ace-window
@@ -643,4 +648,9 @@
   (add-to-list 'load-path "~/.emacs.d/elisp")
   ; Octaspire Dern mode.
   (require 'octaspire-dern-mode)
+  #+END_SRC
+* GPG2
+  #+BEGIN_SRC emacs-lisp
+  (setq epa-pinentry-mode 'loopback)
+  (pinentry-start)
   #+END_SRC
