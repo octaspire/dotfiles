@@ -4,8 +4,8 @@ set autoindent
 set tabstop=4
 set shiftwidth=4
 
-map! jk 
-map ö :
+map! fj 
+map fj :
 
 set number
 set ruler
