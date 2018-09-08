@@ -22,7 +22,7 @@ set cst
 
 set fileencodings=utf-8
 
-let mapleader=" "
+let mapleader="`"
 
 if has("autocmd")
     au BufNewFile,BufRead *.dern set filetype=dern
@@ -34,11 +34,8 @@ endif
 set complete+=k**/*
 
 syntax enable
-set t_Co=256
-"let g:solarized_termcolors=256
 colorscheme default
-silent! colorscheme solarized
-set background=light
+"set background=light
 
 set tabstop=4
 set shiftwidth=4
@@ -52,8 +49,7 @@ set incsearch
 set ignorecase
 set smartcase
 set autoindent
-
-set cursorline
+set nowrap
 
 set nocompatible
 filetype plugin on
@@ -79,13 +75,13 @@ inoremap <expr> <enter> getline('.') =~ '^\s*//' ? '<enter><esc>S' : '<enter>'
 nnoremap <expr> O getline('.') =~ '\s*//' ? 'O<esc>S' : 'O'
 nnoremap <expr> o getline('.') =~ '\s*//' ? 'o<esc>S' : 'o'
 
-set timeout timeoutlen=200
+set timeout timeoutlen=100
 
 if has("nvim")
-    tnoremap ö <C-\><C-n>
+    tnoremap fj <C-\><C-n>
 endif
 
-inoremap ö <esc>
+inoremap fj <esc>
 inoremap <leader>a {
 inoremap <leader>aa }
 inoremap <Leader>f [
@@ -105,8 +101,8 @@ inoremap <Left> <nop>
 inoremap <Right> <nop>
 inoremap <esc> <nop>
 
-nnoremap ö :
-cnoremap ö <C-c>
+nnoremap fj :
+cnoremap fj <C-c>
 
 "This function or mapping doesn't work. Fix it.
 function! NumberToggle()

@@ -44,6 +44,7 @@
   (modify-face                            whitespace-tab nil "#F92672")
   (set-face-background                    'trailing-whitespace "yellow")
   (defface extra-whitespace-face          '((t (:background "pale green"))) "Color for tabs and such.")
+  (set-face-attribute 'whitespace-line nil :background "cyan")
   (defvar  bad-whitespace                 '(("\t" . 'extra-whitespace-face)))
   (setq-default show-trailing-whitespace  1)
   (setq-default whitespace-line-column    110)

@@ -1,5 +1,9 @@
 snapdist 10
 
+# Tiling
+
+bind-key 4-t window h-tile
+
 # Unmap some default keybindings and remap those.
 # 4-X means the Windows key and X.
 
@@ -61,3 +65,8 @@ bind-key   4-a        window-snap-left
 bind-key   4-s        window-snap-down
 bind-key   4-d        window-snap-right
 bind-key   4-w        window-snap-up
+
+# Application Menu
+
+command firefox /usr/local/bin/firefox
+command zathura /usr/local/bin/zathura
