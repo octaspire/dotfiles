@@ -75,12 +75,6 @@
             ("C-c M-l" . avy-goto-line)
             ("C-c M-t" . avy-goto-char-timer)))
    #+END_SRC
-** beacon
-   #+BEGIN_SRC emacs-lisp
-   (use-package beacon
-     :ensure t
-     :config (beacon-mode 1))
-   #+END_SRC
 ** completion packages
    The completion requires additional installation outside Emacs
    (/libclang/ and /global/). For example, in macOS =brew install llvm global=
