@@ -14,7 +14,6 @@ Those files are included here as a convenience and do not belong under this lice
 cd ~/dotfiles
 stow bash
 stow emacs
-stow emacs-with-evil
 stow git
 stow tmux
 stow vi
@@ -31,7 +30,6 @@ stow bin
 cd ~/some/path/dotfiles
 stow -t ~/ bash
 stow -t ~/ emacs
-stow -t ~/ emacs-with-evil
 stow -t ~/ git
 stow -t ~/ tmux
 stow -t ~/ vi
