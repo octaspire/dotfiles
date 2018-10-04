@@ -625,6 +625,11 @@
                  (define-key c-mode-base-map (kbd "C-c M-`") 'recompile)))
     #+END_SRC
 ** Overriding existing bindings
+*** Indenting
+     #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "C-c TAB") 'indent-relative)
+     #+END_SRC
+*** Misc
    #+BEGIN_SRC emacs-lisp
    ; Kill the current buffer instead of asking which buffer to kill.
    (global-set-key (kbd "C-x k")   'kill-this-buffer)
