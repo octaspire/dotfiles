@@ -274,6 +274,7 @@
    (setq display-time-24hr-format    t)             ; Display time in 24 hour format.
    (setq display-battery-mode        t)             ; Display battery charge on the mode-line.
    (setq suggest-key-bindings        4)             ; Show key binding suggestions for N seconds.
+   (setq transient-mark-mode         nil)           ; Disable transient mark mode.
    (display-time-mode                1)             ; Display current time in the modeline.
    (which-function-mode              1)             ; Show the name of the current function.
    (show-paren-mode                  1)             ; Highlight delimiter pairs.
