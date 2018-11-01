@@ -613,6 +613,7 @@
                                              (setq comment-start "//" comment-end ""))))
   #+END_SRC
 * Org-mode
+*** Export and syntax highlighting
   #+BEGIN_SRC emacs-lisp
   (setq-default org-src-fontify-natively      1) ; syntax highlight code blocks.
   (setq-default org-export-with-smart-quotes  1)
@@ -620,6 +621,10 @@
   (setq org-export-html-style-include-scripts nil)
   (setq org-export-html-style-include-default nil)
   #+END_SRC
+*** Keybindings
+    #+BEGIN_SRC emacs-lisp
+    (define-key org-mode-map (kbd "C-c M-l") nil) ; Use custom keybinding instead.
+    #+END_SRC
 * Abbreviations
   #+BEGIN_SRC emacs-lisp
   (setq-default abbrev-mode  1)
@@ -641,6 +646,10 @@
   (global-set-key (kbd "C-c i l") 'octaspire/init-file-load)
   #+END_SRC
 *** Editing
+**** Erasing
+     #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "C-c w") 'fixup-whitespace) ; Delete excess whitespace around objects.
+     #+END_SRC
 **** Opening lines
    #+BEGIN_SRC emacs-lisp
    (global-set-key (kbd "C-c O")   'octaspire/line-open-above)
