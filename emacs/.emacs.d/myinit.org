@@ -260,7 +260,7 @@
 ** mu4e
 *** Check if mu is installed
     #+BEGIN_SRC emacs-lisp
-    (if (executable-find "mu") (defvar octaspire-config-mu-found t))
+    (defvar octaspire-config-mu-found (executable-find "mu"))
     #+END_SRC
 *** Receiving mail
    Use /mu4e/ for handling email in GNU Emacs. This requires installation
