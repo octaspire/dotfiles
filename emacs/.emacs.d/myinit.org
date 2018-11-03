@@ -258,6 +258,10 @@
      :ensure t)
    #+END_SRC
 ** mu4e
+*** Check if mu is installed
+    #+BEGIN_SRC emacs-lisp
+    (if (executable-find "mu") (defvar octaspire-config-mu-found t))
+    #+END_SRC
 *** Receiving mail
    Use /mu4e/ for handling email in GNU Emacs. This requires installation
    of /mu/ and /offlineimap/ packages using the operating system's package
@@ -287,8 +291,10 @@
    in GNU Emacs:
 
    #+BEGIN_SRC emacs-lisp
-   (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
-   (require 'mu4e)
+   (if octaspire-config-mu-found
+     (progn
+       (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
+       (require 'mu4e)))
    #+END_SRC
 
    /mu4e/ can be started with =M-x mu4e=.
@@ -299,18 +305,20 @@
     somewhere, for example in the =~/.profile= file.
 
    #+BEGIN_SRC emacs-lisp
-   (setq message-send-mail-function   'smtpmail-send-it)
-   (setq smtpmail-smtp-server         (getenv "OCTASPIRE_SMTP_SERVER_ADDR"))
-   (setq smtpmail-default-smtp-server (getenv "OCTASPIRE_SMTP_SERVER_ADDR"))
-   (setq smtpmail-smtp-service        (getenv "OCTASPIRE_SMTP_SERVER_PORT"))
-   (setq smtpmail-smtp-user           (getenv "OCTASPIRE_SMTP_USER"))
-   (setq smtpmail-local-domain        (getenv "OCTASPIRE_SMTP_LOCAL_DOMAIN"))
+   (if octaspire-config-mu-found
+     (progn
+       (setq message-send-mail-function   'smtpmail-send-it)
+       (setq smtpmail-smtp-server         (getenv "OCTASPIRE_SMTP_SERVER_ADDR"))
+       (setq smtpmail-default-smtp-server (getenv "OCTASPIRE_SMTP_SERVER_ADDR"))
+       (setq smtpmail-smtp-service        (getenv "OCTASPIRE_SMTP_SERVER_PORT"))
+       (setq smtpmail-smtp-user           (getenv "OCTASPIRE_SMTP_USER"))
+       (setq smtpmail-local-domain        (getenv "OCTASPIRE_SMTP_LOCAL_DOMAIN"))
 
-   ; Use the next line, if your email server takes care of saving sent messages
-   ; into 'Sent Messages'.
-   (setq mu4e-sent-messages-behavior  'delete)
+       ; Use the next line, if your email server takes care of saving sent messages
+       ; into 'Sent Messages'.
+       (setq mu4e-sent-messages-behavior  'delete)
 
-   (setq message-kill-buffer-on-exit  t)
+       (setq message-kill-buffer-on-exit  t)))
    #+END_SRC
 
 * Interface tweaks
