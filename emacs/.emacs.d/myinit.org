@@ -349,6 +349,14 @@
    (windmove-default-keybindings)                   ; Allow moving between windows.
    #+END_SRC
 ** Editing and history
+   Files should usually end with a newline, unless the syntax of the file
+   forbids that - it makes UNIX tools to behave correctly with the file.
+
+   However, ask before adding a newline in a file that does not end in one.
+   #+BEGIN_SRC emacs-lisp
+   (setq-default require-final-newline 'ask)
+   #+END_SRC
+
    #+BEGIN_SRC emacs-lisp
    (set-language-environment      "UTF-8")
    (global-auto-revert-mode       1)                      ; Revert buffer automatically when file changes on filesystem.
@@ -658,10 +666,11 @@
      #+BEGIN_SRC emacs-lisp
      (global-set-key (kbd "C-c w") 'fixup-whitespace) ; Delete excess whitespace around objects.
      #+END_SRC
-**** Opening lines
+**** Opening and joining lines
    #+BEGIN_SRC emacs-lisp
    (global-set-key (kbd "C-c O")   'octaspire/line-open-above)
    (global-set-key (kbd "C-c o")   'octaspire/line-open-below)
+   (global-set-key (kbd "C-c j")   'join-line)
    #+END_SRC
 **** Copying lines
    #+BEGIN_SRC emacs-lisp
