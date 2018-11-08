@@ -23,9 +23,26 @@
   using 'use-package'. Everything else is installed automatically, but not octaspire
   Dern mode. Please make sure that the ~/.emacs.d/elisp directory has the following file:
   octaspire-dern-mode.el. See *Completion packages* for instructions on
-  installing tools needed for code completion.
+  installing tools needed for code completion. *Email* reading and sending
+  are configured, if =mu= executable is found in the system.
+
+  I *highly recommend* mapping of =CapsLock= into =Control= at the operating system
+  level. It is usually very easily done (at least in UNIX like systems) and allows one
+  to press CapsLock instead of Control in key-chords like =C-c C-j=. I think that
+  it makes a great difference in usability and ergonomics. Another possibility is
+  to use the evil-package, that gives quite good vi(m) emulation layer. This
+  configuration does not use evil.
+
 * Platform-specific configuration
 ** macOS
+   Add some macOS specific keybindings:
+   #+BEGIN_SRC emacs-lisp
+   (setq mac-option-key-is-meta  nil)
+   (setq mac-command-key-is-meta t)
+   (setq mac-command-modifier    'meta)
+   (setq mac-option-modifier     nil)
+   #+END_SRC
+
    It seems to be that in macOS Emacs cannot find the homebrew installed aspell.
    #+BEGIN_SRC emacs-lisp
    (when (eq system-type 'darwin)
@@ -383,6 +400,28 @@
      '(define-key artist-mode-map [down-mouse-3] 'artist-mouse-choose-operation))
    #+END_SRC
 ** shell
+*** term
+   For example in =ansi-term=, one can use the key-chords =C-c C-j= and =C-c C-k= to
+   change between line and char mode. However, it can be difficult to remember
+   when one or the other must be pressed and might require checking the mode
+   line for the current mode. Because of this, we map
+   =C-c C-j= to a new function, that just toggles between the line and
+   char mode. This leaves also =C-c C-k= free to be rebound in
+   =term-mode-map= (line mode) and =term-raw-map= (char mode).
+
+   #+BEGIN_SRC emacs-lisp
+   (require 'term)
+
+   (defun octaspire/term-mode-toggle ()
+      "Toggle between terminal's line and char modes."
+      (interactive)
+      (if (term-in-line-mode) (term-char-mode) (term-line-mode)))
+
+   (define-key term-mode-map (kbd "C-c C-j") 'octaspire/term-mode-toggle) ; Remap in line mode.
+   (define-key term-raw-map  (kbd "C-c C-j") 'octaspire/term-mode-toggle) ; Remap in char mode.
+#+END_SRC
+
+*** misc.
    Make =rgrep= to work with fish shell.
    #+BEGIN_SRC emacs-lisp
         (setq shell-file-name "/bin/sh")
