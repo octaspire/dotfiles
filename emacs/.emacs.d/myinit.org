@@ -649,6 +649,13 @@
      (setq debug-on-error t)
      (global-company-mode))
    #+END_SRC
+** Debugging
+   #+BEGIN_SRC emacs-lisp
+   (defun octaspire/gdb-hints-break ()
+     "Show quick reminder on how to set a breakpoint in GNU debugger conditionally."
+     (interactive)
+     (message "break test.c:6 if i == 5\nbreak test.c:label if i == 5"))
+   #+END_SRC
 * Hooks
 ** After init
    #+BEGIN_SRC emacs-lisp
@@ -725,6 +732,16 @@
      (global-set-key (kbd "<print>") 'kmacro-call-macro)
      #+END_SRC
 *** Searching
+    =M-x find-name-dired= allows one to find a file or files recursively
+    starting from a specific directory. The file name to be searched
+    is a shell wildcard. Add a key-chord for it.
+
+    #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "C-c f") 'find-name-dired)
+    #+END_SRC
+
+    Search (forward) for the symbol below the point.
+
     #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-c s") 'octaspire/search-symbol-at-point)
     #+END_SRC
@@ -747,6 +764,15 @@
       (lambda () (define-key c-mode-base-map (kbd "C-c `")   'compile)
                  (define-key c-mode-base-map (kbd "C-c M-`") 'recompile)))
     #+END_SRC
+*** Debugging
+    Emacs offers a nice UI for the GNU debugger. Add a key-chord
+    for starting the =gud-gdb= and also for a hint function:
+
+    #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "C-c d") 'gud-gdb)
+    (global-set-key (kbd "C-c g") 'octaspire/gdb-hints-break)
+    #+END_SRC
+
 ** Overriding existing bindings
 *** Indenting
      #+BEGIN_SRC emacs-lisp
