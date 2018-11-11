@@ -468,6 +468,12 @@
   #+BEGIN_SRC emacs-lisp
       (require 'dired-x)
   #+END_SRC
+** Calendar
+   Start weeks from Monday.
+
+   #+BEGIN_SRC emacs-lisp
+   (setq calendar-week-start-day 1)
+   #+END_SRC
 * Backups and autosaves
   Save all backups into one directory, disable autosaves and
   make all commands modifying bookmarks also to save them.
