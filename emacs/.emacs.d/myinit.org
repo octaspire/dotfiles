@@ -680,12 +680,17 @@
    (add-hook 'prog-mode-hook 'flyspell-prog-mode)
    (add-hook 'prog-mode-hook 'octaspire/whitespace-mode-enable)
    #+END_SRC
-** C
+*** C
   #+BEGIN_SRC emacs-lisp
   (add-hook 'c-mode-hook #'(lambda () (progn (modify-syntax-entry ?_ "w")
                                              (setq comment-start "//" comment-end ""))))
   #+END_SRC
-** XML
+*** Octaspire Dern
+    #+BEGIN_SRC emacs-lisp
+    (add-hook 'octaspire-dern-mode-hook 'flyspell-prog-mode)
+    (add-hook 'octaspire-dern-mode-hook 'octaspire/whitespace-mode-enable)
+    #+END_SRC
+*** XML
    #+BEGIN_SRC emacs-lisp
    (add-hook 'nxml-mode-hook 'octaspire/whitespace-mode-enable)
    #+END_SRC
