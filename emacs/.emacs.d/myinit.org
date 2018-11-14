@@ -53,20 +53,6 @@
   (require 'flyspell)
   (setq-default flyspell-issue-message-flag nil) ; Don't print message word every word.
   #+END_SRC
-* Whitespace
-  #+BEGIN_SRC emacs-lisp
-  ; Highlight bad whitespace.
-  (require 'whitespace)
-  (global-whitespace-mode                 1)
-  (modify-face                            whitespace-tab nil "#F92672")
-  (set-face-background                    'trailing-whitespace "yellow")
-  (defface extra-whitespace-face          '((t (:background "pale green"))) "Color for tabs and such.")
-  (set-face-attribute 'whitespace-line nil :background "cyan")
-  (defvar  bad-whitespace                 '(("\t" . 'extra-whitespace-face)))
-  (setq-default show-trailing-whitespace  1)
-  (setq-default whitespace-line-column    110)
-  (setq-default whitespace-style          '(face tabs trailing lines lines-tail tab-mark))
-  #+END_SRC
 * Packages
 ** pinentry
    #+BEGIN_SRC emacs-lisp
@@ -377,6 +363,7 @@
    #+BEGIN_SRC emacs-lisp
    (set-language-environment      "UTF-8")
    (global-auto-revert-mode       1)                      ; Revert buffer automatically when file changes on filesystem.
+   (setq auto-revert-interval     60)                     ; Wait a bit longer before reverting buffers.
    (setq global-auto-revert-non-file-buffers 1)           ; Auto revert also non-file buffers.
    (save-place-mode               1)                      ; When visiting a file, point goes to the last point of previous visit.
    (savehist-mode                 1)                      ; Save history.
@@ -662,6 +649,23 @@
      (interactive)
      (message "break test.c:6 if i == 5\nbreak test.c:label if i == 5"))
    #+END_SRC
+** Whitespace
+  #+BEGIN_SRC emacs-lisp
+    (defun octaspire/whitespace-mode-enable ()
+        "Turn on highlighting of bad white-space for programming modes."
+      (interactive)
+      (require 'whitespace)
+      (modify-face                            whitespace-tab nil "#F92672")
+      (set-face-background                    'trailing-whitespace "yellow")
+      (defface extra-whitespace-face          '((t (:background "pale green"))) "Color for tabs and such.")
+      (set-face-attribute 'whitespace-line nil :background "cyan")
+      (defvar  bad-whitespace                 '(("\t" . 'extra-whitespace-face)))
+      (setq-local show-trailing-whitespace    1)
+      (setq-local whitespace-line-column      110)
+      (setq-local whitespace-style            '(face tabs trailing lines lines-tail tab-mark))
+      (setq-local whitespace-mode             1)
+      (whitespace-mode))
+  #+END_SRC
 * Hooks
 ** After init
    #+BEGIN_SRC emacs-lisp
@@ -674,12 +678,18 @@
 ** Programming
    #+BEGIN_SRC emacs-lisp
    (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+   (add-hook 'prog-mode-hook 'octaspire/whitespace-mode-enable)
    #+END_SRC
 ** C
   #+BEGIN_SRC emacs-lisp
   (add-hook 'c-mode-hook #'(lambda () (progn (modify-syntax-entry ?_ "w")
                                              (setq comment-start "//" comment-end ""))))
   #+END_SRC
+** XML
+   #+BEGIN_SRC emacs-lisp
+   (add-hook 'nxml-mode-hook 'octaspire/whitespace-mode-enable)
+   #+END_SRC
+
 * Org-mode
 *** Export and syntax highlighting
   #+BEGIN_SRC emacs-lisp
