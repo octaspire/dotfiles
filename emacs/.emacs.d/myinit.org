@@ -158,12 +158,6 @@
        (("C-c l" . goto-last-change)
         ("C-c ;" . goto-last-change-reverse)))
    #+END_SRC
-** helm
-   #+BEGIN_SRC emacs-lisp
-   (use-package helm
-     :ensure t
-     :config (require 'helm-config))
-   #+END_SRC
 ** highlight
    #+BEGIN_SRC emacs-lisp
    (use-package highlight
@@ -324,6 +318,42 @@
        (setq message-kill-buffer-on-exit  t)))
    #+END_SRC
 
+** Ivy Et al.
+   #+BEGIN_SRC emacs-lisp
+   (use-package counsel
+     :ensure t
+     :after ivy
+     :config (counsel-mode))
+
+   (use-package swiper
+     :ensure t
+     :after ivy
+     :bind (("C-s" . swiper)))
+
+   (use-package ivy-rich
+     :ensure t
+     :after ivy
+     :config (ivy-rich-mode 1))
+
+   (use-package ivy
+     :ensure t
+     :diminish
+     :config
+       (ivy-mode 1)
+       (setq ivy-count-format "%d/%d ")
+       (setq ivy-use-virtual-buffers t)
+       (setq ivy-initial-inputs-alist nil) ; No ^ at the beginning
+       (setq ivy-re-builders-alist
+         '((t      . ivy--regex-fuzzy)
+           (swiper . ivy--regex-plus))))
+   #+END_SRC
+** which-key
+   #+BEGIN_SRC emacs-lisp
+   (use-package which-key
+     :ensure t
+     :diminish
+     :config (which-key-mode))
+   #+END_SRC
 * Interface tweaks
 ** UI
    #+BEGIN_SRC emacs-lisp
