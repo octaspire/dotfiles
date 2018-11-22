@@ -335,6 +335,12 @@
      :after ivy
      :config (ivy-rich-mode 1))
 
+   (use-package flx
+     :ensure t)
+
+   (use-package smex
+     :ensure t)
+
    (use-package ivy
      :ensure t
      :diminish
@@ -357,29 +363,30 @@
 * Interface tweaks
 ** UI
    #+BEGIN_SRC emacs-lisp
-   (setq inhibit-startup-message     t)             ; Do not show startup screen.
-   (tool-bar-mode                   -1)             ; Hide tool bar.
-   (menu-bar-mode                   -1)             ; Hide menu bar.
-   (scroll-bar-mode                 -1)             ; Hide scroll bar.
-   (defalias 'yes-or-no-p           'y-or-n-p)      ; Save typing when answering confirmations.
-   (global-hl-line-mode              1)             ; Highlight current line.
-   (load-theme 'leuven)                             ; Load color theme.
-   (set-face-attribute 'default nil  :height 120)   ; Change font size.
-   (column-number-mode               1)             ; Show current column number.
-   (setq-default truncate-lines      1)             ; Truncate long lines.
-   (setq visible-bell                1)             ; Disable bell sound.
-   (setq display-time-24hr-format    t)             ; Display time in 24 hour format.
-   (setq display-battery-mode        t)             ; Display battery charge on the mode-line.
-   (setq suggest-key-bindings        4)             ; Show key binding suggestions for N seconds.
-   (setq transient-mark-mode         nil)           ; Disable transient mark mode.
-   (display-time-mode                1)             ; Display current time in the modeline.
-   (which-function-mode              1)             ; Show the name of the current function.
-   (show-paren-mode                  1)             ; Highlight delimiter pairs.
-   (winner-mode                      1)             ; Undo and redo window configurations.
-   (put 'scroll-left      'disabled  nil)           ; Enable horizontal scrolling.
-   (put 'narrow-to-region 'disabled  nil)           ; Enable narrowing to a region.
-   (put 'narrow-to-page   'disabled  nil)           ; Enable narrowing to a page.
-   (windmove-default-keybindings)                   ; Allow moving between windows.
+   (setq large-file-warning-threshold nil)           ; Do not ask for confirmation when opening large files.
+   (setq inhibit-startup-message      t)             ; Do not show startup screen.
+   (tool-bar-mode                    -1)             ; Hide tool bar.
+   (menu-bar-mode                    -1)             ; Hide menu bar.
+   (scroll-bar-mode                  -1)             ; Hide scroll bar.
+   (defalias 'yes-or-no-p            'y-or-n-p)      ; Save typing when answering confirmations.
+   (global-hl-line-mode               1)             ; Highlight current line.
+   (load-theme                       'leuven)        ; Load color theme.
+   (set-face-attribute 'default nil   :height 120)   ; Change font size.
+   (column-number-mode                1)             ; Show current column number.
+   (setq-default truncate-lines       1)             ; Truncate long lines.
+   (setq visible-bell                 1)             ; Disable bell sound.
+   (setq display-time-24hr-format     t)             ; Display time in 24 hour format.
+   (setq display-battery-mode         t)             ; Display battery charge on the mode-line.
+   (setq suggest-key-bindings         4)             ; Show key binding suggestions for N seconds.
+   (setq transient-mark-mode          nil)           ; Disable transient mark mode.
+   (display-time-mode                 1)             ; Display current time in the modeline.
+   (which-function-mode               1)             ; Show the name of the current function.
+   (show-paren-mode                   1)             ; Highlight delimiter pairs.
+   (winner-mode                       1)             ; Undo and redo window configurations.
+   (put 'scroll-left      'disabled   nil)           ; Enable horizontal scrolling.
+   (put 'narrow-to-region 'disabled   nil)           ; Enable narrowing to a region.
+   (put 'narrow-to-page   'disabled   nil)           ; Enable narrowing to a page.
+   (windmove-default-keybindings)                    ; Allow moving between windows.
    #+END_SRC
 ** Editing and history
    Files should usually end with a newline, unless the syntax of the file
@@ -450,6 +457,8 @@
     #+BEGIN_SRC emacs-lisp
     (require 'eshell)
     (require 'em-smart)
+    (require 'em-term)
+    (add-to-list 'eshell-visual-subcommands '(("git" "log" "diff" "show")))
     (setq eshell-where-to-jump          'begin)
     (setq eshell-review-quick-commands   nil)
     (setq eshell-smart-space-goes-to-end t)
@@ -796,6 +805,11 @@
     #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-c s") 'octaspire/search-symbol-at-point)
     #+END_SRC
+
+    #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "C-c C-f") 'find-file-at-point)
+    #+END_SRC
+
 *** Completion
     #+BEGIN_SRC emacs-lisp
     (define-key company-active-map (kbd "M-n") nil)
@@ -813,7 +827,8 @@
     #+BEGIN_SRC emacs-lisp
     (add-hook 'c-mode-common-hook
       (lambda () (define-key c-mode-base-map (kbd "C-c `")   'compile)
-                 (define-key c-mode-base-map (kbd "C-c M-`") 'recompile)))
+                 (define-key c-mode-base-map (kbd "C-c M-`") 'recompile)
+                 (define-key c-mode-base-map (kbd "C-c M-f") 'ff-find-other-file)))
     #+END_SRC
 *** Debugging
     Emacs offers a nice UI for the GNU debugger. Add a key-chord
