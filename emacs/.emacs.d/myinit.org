@@ -374,7 +374,7 @@
    (set-face-attribute 'default nil   :height 120)   ; Change font size.
    (column-number-mode                1)             ; Show current column number.
    (setq-default truncate-lines       1)             ; Truncate long lines.
-   (setq visible-bell                 1)             ; Disable bell sound.
+   (setq ring-bell-function          'ignore)        ; Disable visual and audible bell altogether.
    (setq display-time-24hr-format     t)             ; Display time in 24 hour format.
    (setq display-battery-mode         t)             ; Display battery charge on the mode-line.
    (setq suggest-key-bindings         4)             ; Show key binding suggestions for N seconds.
@@ -734,6 +734,13 @@
    (add-hook 'nxml-mode-hook 'octaspire/whitespace-mode-enable)
    #+END_SRC
 
+** Eshell
+   Set Eshell's =<TAB>= completion to use Ivy.
+
+   #+BEGIN_SRC emacs-lisp
+   (add-hook 'eshell-mode-hook '(lambda ()
+     (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)))
+   #+END_SRC
 * Org-mode
 *** Export and syntax highlighting
   #+BEGIN_SRC emacs-lisp

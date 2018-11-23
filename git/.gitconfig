@@ -27,7 +27,11 @@
 	br = branch
 	ci = commit
 	st = status
-
+[color]
+        diff   = always
+        status = always
+        branch = always
+        ui     = always
 [commit]
 	gpgsign = true
 [gpg]
