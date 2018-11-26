@@ -360,9 +360,17 @@
      :diminish
      :config (which-key-mode))
    #+END_SRC
+** chronos
+   #+BEGIN_SRC emacs-lisp
+   (use-package chronos
+     :ensure t
+     :config (setq chronos-expiry-functions
+                   'chronos-message-notify))
+   #+END_SRC
 * Interface tweaks
 ** UI
    #+BEGIN_SRC emacs-lisp
+   (setq tags-add-tables              t)             ; Add new tags tables without asking.
    (setq large-file-warning-threshold nil)           ; Do not ask for confirmation when opening large files.
    (setq inhibit-startup-message      t)             ; Do not show startup screen.
    (tool-bar-mode                    -1)             ; Hide tool bar.
