@@ -74,7 +74,7 @@
    #+BEGIN_SRC emacs-lisp
    (use-package avy
      :ensure t
-     :bind (("C-c M-c" . avy-goto-char)
+     :bind (("C-c M-a" . avy-goto-char)
             ("C-c M-l" . avy-goto-line)
             ("C-c M-t" . avy-goto-char-timer)))
    #+END_SRC
@@ -318,48 +318,6 @@
        (setq message-kill-buffer-on-exit  t)))
    #+END_SRC
 
-** Ivy Et al.
-   #+BEGIN_SRC emacs-lisp
-   (use-package counsel
-     :ensure t
-     :after ivy
-     :config (counsel-mode))
-
-   (use-package swiper
-     :ensure t
-     :after ivy
-     :bind (("C-s" . swiper)))
-
-   (use-package ivy-rich
-     :ensure t
-     :after ivy
-     :config (ivy-rich-mode 1))
-
-   (use-package flx
-     :ensure t)
-
-   (use-package smex
-     :ensure t)
-
-   (use-package ivy
-     :ensure t
-     :diminish
-     :config
-       (ivy-mode 1)
-       (setq ivy-count-format "%d/%d ")
-       (setq ivy-use-virtual-buffers t)
-       (setq ivy-initial-inputs-alist nil) ; No ^ at the beginning
-       (setq ivy-re-builders-alist
-         '((t      . ivy--regex-fuzzy)
-           (swiper . ivy--regex-plus))))
-   #+END_SRC
-** which-key
-   #+BEGIN_SRC emacs-lisp
-   (use-package which-key
-     :ensure t
-     :diminish
-     :config (which-key-mode))
-   #+END_SRC
 ** chronos
    #+BEGIN_SRC emacs-lisp
    (use-package chronos
