@@ -74,7 +74,7 @@
    #+BEGIN_SRC emacs-lisp
    (use-package avy
      :ensure t
-     :bind (("C-c M-a" . avy-goto-char)
+     :bind (("C-c M-c" . avy-goto-char)
             ("C-c M-l" . avy-goto-line)
             ("C-c M-t" . avy-goto-char-timer)))
    #+END_SRC
