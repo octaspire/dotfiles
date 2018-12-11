@@ -325,6 +325,49 @@
      :config (setq chronos-expiry-functions
                    'chronos-message-notify))
    #+END_SRC
+** xcscope
+   This package allows one to interact with =cscope= using Emacs as an UI.
+
+   =cscope= must be already installed in the system. In most systems
+   it can be installed through the OS package manager. For example in
+   OpenBSD, it can be installed by issuing command:
+
+   #+BEGIN_SRC sh
+   sudo pkg_add cscope
+   #+END_SRC
+
+   For example, to use it with Octaspire Dern development, one can issue
+   the following command:
+
+   #+BEGIN_SRC sh
+   make cscope
+   #+END_SRC
+
+   This creates the required =cscope= databases. Then tell Emacs where to
+   find these files by issuing the following Emacs extended-command:
+
+   #+BEGIN_SRC
+   M-x cscope-set-initial-directory
+   #+END_SRC
+
+   ...and navigate into the Dern directory and press =<ENTER>=.
+
+   Now everything should be working. For example, to find all
+   functions that call the function under the point, issue
+   the following Emacs extended-command:
+
+   #+BEGIN_SRC
+   M-x cscope-find-functions-calling-this-function
+   #+END_SRC
+
+   See =cscope= and =xcscope= documentation for more information
+   and usage examples.
+
+   #+BEGIN_SRC emacs-lisp
+   (use-package xcscope
+     :ensure t
+     :config (cscope-setup))
+   #+END_SRC
 * Interface tweaks
 ** UI
    #+BEGIN_SRC emacs-lisp
@@ -687,8 +730,10 @@
    #+END_SRC
 *** C
   #+BEGIN_SRC emacs-lisp
-  (add-hook 'c-mode-hook #'(lambda () (progn (modify-syntax-entry ?_ "w")
-                                             (setq comment-start "//" comment-end ""))))
+  (add-hook 'c-mode-hook #'(lambda ()
+    (progn (modify-syntax-entry ?_ "w")
+           (setq comment-start "//" comment-end "")
+           (local-set-key (kbd "C-c C-s") 'octaspire/search-symbol-at-point))))
   #+END_SRC
 *** Octaspire Dern
     #+BEGIN_SRC emacs-lisp
@@ -726,8 +771,7 @@
   (setq-default save-abbrevs 'silently)
   #+END_SRC
 * Keybindings
-** New bindings
-*** Workspace
+** Workspace
   #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-c a 2") 'octaspire/workspace-2-windows-ansi)
   (global-set-key (kbd "C-c a 3") 'octaspire/workspace-3-windows-ansi)
@@ -735,12 +779,12 @@
   (global-set-key (kbd "C-c e 2") 'octaspire/workspace-2-windows-eshell)
   (global-set-key (kbd "C-c e 3") 'octaspire/workspace-3-windows-eshell)
   #+END_SRC
-*** Initialization-file
+** Initialization-file
   #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-c i o") 'octaspire/init-file-open)
   (global-set-key (kbd "C-c i l") 'octaspire/init-file-load)
   #+END_SRC
-*** Editing
+** Editing
 **** Erasing
      #+BEGIN_SRC emacs-lisp
      (global-set-key (kbd "C-c w") 'fixup-whitespace) ; Delete excess whitespace around objects.
@@ -764,7 +808,7 @@
      #+BEGIN_SRC emacs-lisp
      (global-set-key (kbd "<print>") 'kmacro-call-macro)
      #+END_SRC
-*** Searching
+** Searching
     =M-x find-name-dired= allows one to find a file or files recursively
     starting from a specific directory. The file name to be searched
     is a shell wildcard. Add a key-chord for it.
@@ -776,14 +820,14 @@
     Search (forward) for the symbol below the point.
 
     #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-c s") 'octaspire/search-symbol-at-point)
+    (global-set-key (kbd "C-c C-s") 'octaspire/search-symbol-at-point)
     #+END_SRC
 
     #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-c C-f") 'find-file-at-point)
     #+END_SRC
 
-*** Completion
+** Completion
     #+BEGIN_SRC emacs-lisp
     (define-key company-active-map (kbd "M-n") nil)
     (define-key company-active-map (kbd "M-p") nil)
@@ -791,19 +835,19 @@
     (define-key company-active-map (kbd "C-p") #'company-select-previous)
     (global-set-key (kbd "C-c c") 'company-complete-common)
     #+END_SRC
-*** TAGS
+** TAGS
   #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "M-*") 'pop-tag-mark)
   (global-set-key (kbd "M-,") 'tags-loop-continue)
   #+END_SRC
-*** C-mode
+** C-mode
     #+BEGIN_SRC emacs-lisp
     (add-hook 'c-mode-common-hook
       (lambda () (define-key c-mode-base-map (kbd "C-c `")   'compile)
                  (define-key c-mode-base-map (kbd "C-c M-`") 'recompile)
                  (define-key c-mode-base-map (kbd "C-c M-f") 'ff-find-other-file)))
     #+END_SRC
-*** Debugging
+** Debugging
     Emacs offers a nice UI for the GNU debugger. Add a key-chord
     for starting the =gud-gdb= and also for a hint function:
 
@@ -812,12 +856,11 @@
     (global-set-key (kbd "C-c g") 'octaspire/gdb-hints-break)
     #+END_SRC
 
-** Overriding existing bindings
-*** Indenting
+** Indenting
      #+BEGIN_SRC emacs-lisp
      (global-set-key (kbd "C-c TAB") 'indent-relative)
      #+END_SRC
-*** Misc
+** Misc
    #+BEGIN_SRC emacs-lisp
    ; Kill the current buffer instead of asking which buffer to kill.
    (global-set-key (kbd "C-x k")   'kill-this-buffer)
