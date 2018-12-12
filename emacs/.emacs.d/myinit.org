@@ -1,5 +1,6 @@
-#+STARTIP: overview
-* License and credits
+#+STARTUP: overview
+* Octaspire's GNU Emacs configuration
+** License and credits
 
   Octaspire dotfiles - Various configuration files
   Copyright 2017, 2018 www.octaspire.com
@@ -18,7 +19,7 @@
 
   This configuration file is based partially on a very nice [[https://www.youtube.com/watch?v%3D49kBWM3RQQ8][video tutorial series.]]
 
-* Prerequisites
+** Prerequisites
   Emacs 26.1 and internet connection, so that packages can be installed automatically
   using 'use-package'. Everything else is installed automatically, but not octaspire
   Dern mode. Please make sure that the ~/.emacs.d/elisp directory has the following file:
@@ -32,9 +33,186 @@
   it makes a great difference in usability and ergonomics. Another possibility is
   to use the evil-package, that gives quite good vi(m) emulation layer. This
   configuration does not use evil.
+** Installation
+*** Using GNU Stow
+  Recommended and probably the most straightforward way of installing
+  and using this configuration is to use GNU Stow (GNU Stow and
+  git must be installed in the system):
 
-* Platform-specific configuration
-** macOS
+  #+BEGIN_SRC sh :tangle no
+  git clone https://github.com/octaspire/dotfiles.git
+  cd dotfiles
+  stow emacs
+  #+END_SRC
+
+  That's it. GNU Stow will take care of creating and linking
+  all the required directories and files into your home directory.
+  At the same time the files stay easily under version control
+  in the repository. If you edit the files in your home directory,
+  the changes are visible automatically in the repository too.
+
+  When you start Emacs first time after taking the configuration
+  into use, Emacs will automagically install and configure all
+  the required packages.
+
+*** Manual installation
+   The GNU Stow alternative described above is the recommended way of
+   using this configuration. However, manual installation can be done
+   as follows.
+
+   Create a Emacs configuration directory under your home directory
+   and copy this file into that directory:
+
+   #+BEGIN_SRC sh
+   mkdir ~/.emacs.d
+   cp myinit.org ~/.emacs.d
+   #+END_SRC
+
+   Create and start to edit a new file, =init.el=, in the
+   configuration directory:
+
+   #+BEGIN_SRC sh :tangle no
+   emacs ~/.emacs.d/init.el
+   #+END_SRC
+
+   Paste the following Emacs Lisp code into that file and save it:
+
+   #+BEGIN_SRC emacs-lisp :tangle no
+   (require 'package)
+
+   (add-to-list 'package-archives
+                '("melpa" . "https://melpa.org/packages/"))
+   (add-to-list 'package-archives
+                '("org"   . "https://orgmode.org/elpa/"))
+
+   (package-initialize)
+
+   (unless package-archive-contents
+     (package-refresh-contents))
+
+   (unless (package-installed-p 'use-package)
+     (package-refresh-contents)
+     (package-install 'use-package))
+
+   (use-package org
+     :ensure t
+     :mode (("\\.org$" . org-mode)))
+
+   (org-babel-load-file (locate-user-emacs-file "myinit.org"))
+
+   (custom-set-faces
+    '(rainbow-delimiters-depth-1-face ((t (:foreground "dark orange"))))
+    '(rainbow-delimiters-depth-2-face ((t (:foreground "dark gray"))))
+    '(rainbow-delimiters-depth-3-face ((t (:foreground "tomato"))))
+    '(rainbow-delimiters-depth-4-face ((t (:foreground "dark olive green"))))
+    '(rainbow-delimiters-depth-5-face ((t (:foreground "dark cyan"))))
+    '(rainbow-delimiters-depth-6-face ((t (:foreground "deep pink"))))
+    '(rainbow-delimiters-depth-7-face ((t (:foreground "red4"))))
+    '(rainbow-delimiters-depth-8-face ((t (:foreground "magenta1")))))
+   #+END_SRC
+
+   Create a new directory under Emacs configuration directory.
+   Then create and edit a new file =octaspire-dern-mode.el=:
+   in that new directory:
+
+   #+BEGIN_SRC sh :tangle no
+   mkdir ~/.emacs.d/elisp
+   emacs ~/.emacs.d/elisp/octaspire-dern-mode.el
+   #+END_SRC
+
+   Paste the following Emacs Lisp code into that file and save it:
+
+   #+BEGIN_SRC emacs-lisp :tangle no
+     ; Based on tutorial on emacswiki.org/emacs/ModeTutorial
+     (require 'highlight)
+
+     (defvar octaspire-dern-mode-hook
+       (lambda ()
+         (hlt-highlight-regexp-region nil nil "|newline|"       'highlight)
+         (hlt-highlight-regexp-region nil nil "|tab|"           'highlight)
+         (hlt-highlight-regexp-region nil nil "|bar|"           'highlight)
+         (hlt-highlight-regexp-region nil nil "|string\-start|" 'highlight)
+         (hlt-highlight-regexp-region nil nil "|string\-end|"   'highlight)
+         (hlt-highlight-regexp-region nil nil "|[0-9a-fA-F]+|"  'highlight)))
+
+     (defvar octaspire-dern-mode-map
+       (let ((map (make-keymap)))
+         (define-key map "\C-j"        'newline-and-indent)
+         (define-key map (kbd "<tab>") 'indent-for-tab-command)
+         map)
+       "Keymap for octaspire-dern major mode")
+
+     ;;;###autoload
+     (add-to-list 'auto-mode-alist '("\\.dern\\'" . octaspire-dern-mode))
+
+     (defconst octaspire-dern-lock-keywords-1
+       (list
+        (cons (concat "\\_<" (regexp-opt '("!=" "*" "+" "++" "+=" "-" "--" "-=" "-==" "/" "<" "<=" "="
+                            "==" "===" ">" ">=" "abort" "acos" "asin" "atan" "and" "cos" "define" "distance" "do"
+                            "doc" "env-current" "env-global" "env-new" "eval" "exit" "find" "fn" "for" "hash-map"
+                            "if" "input-file-open" "io-file-open" "len" "mod" "not" "ln@" "cp@" "or" "pop-front"
+                            "port-close" "port-dist" "port-flush" "port-length" "port-read" "port-seek"
+                            "port-write" "pow" "print" "println" "quote" "read-and-eval-path"
+                            "read-and-eval-string" "return" "select" "sin" "sqrt" "starts-with?"
+                            "string-format" "tan" "to-integer" "to-string" "uid" "vector" "while"
+                            "output-file-open" "port-supports-output?" "port-supports-input?" "require"
+                            "queue" "queue-with-max-length" "list" "howto" "howto-ok" "howto-no" "as"
+                            "in" "pop-back"
+                            ) t) "\\_>") font-lock-builtin-face)
+        (cons (regexp-opt '("nil" "false" "true") t) font-lock-constant-face)
+        (cons "\\('\\w*'\\)" font-lock-variable-name-face)
+        (cons "\\('{[DB][+-][0-9 .]+}'\\)" font-lock-constant-face))
+        "Minimal highlighting expressions for octaspire-dern mode")
+
+     (defvar octaspire-dern-font-lock-keywords octaspire-dern-lock-keywords-1
+       "Default highlighting expressions for octaspire-dern mode")
+
+     (defvar octaspire-dern-mode-syntax-table
+       (let ((st (make-syntax-table)))
+         (modify-syntax-entry ?\; "<"       st)
+         (modify-syntax-entry ?\n ">"       st)
+         (modify-syntax-entry ?'  "'"       st)
+         (modify-syntax-entry ?\( "()"      st)
+         (modify-syntax-entry ?\) ")("      st)
+         (modify-syntax-entry ?\[ "|"       st)
+         (modify-syntax-entry ?\] "|"       st)
+         (modify-syntax-entry ?|  "\""      st)
+         (modify-syntax-entry ?#  ". 14b"   st)
+         (modify-syntax-entry ?!  ". 23b"   st)
+         (modify-syntax-entry ??  "w"       st)
+         st)
+       "Syntax table for octaspire-dern-mode")
+
+     (defun octaspire-dern-mode ()
+      "Major mode for editing octaspire dern language files"
+      (interactive)
+      (kill-all-local-variables)
+      (set-syntax-table octaspire-dern-mode-syntax-table)
+      (use-local-map octaspire-dern-mode-map)
+      (set (make-local-variable 'font-lock-defaults) '(octaspire-dern-font-lock-keywords))
+      (setq major-mode 'octaspire-dern-mode)
+      (setq mode-name "OCTASPIRE DERN")
+      (setq-local indent-line-function 'lisp-indent-line)
+      (set (make-local-variable 'comment-start) ";;")
+      (set (make-local-variable 'comment-end)   "\n")
+      (setq-local comment-indent-function 'lisp-comment-indent)
+      (run-hooks 'octaspire-dern-mode-hook))
+
+     (show-paren-mode 1)
+
+     (provide 'octaspire-dern-mode)
+
+   #+END_SRC
+
+   That should be all that is required. When you start Emacs the first time after
+   taking the new configuration into use, Emacs will automagically
+   install and configure all the required packages.
+
+   But again, I would recommend using GNU Stow, as described above,
+   to install this configuration.
+
+** Platform-specific configuration
+*** macOS
    Add some macOS specific keybindings:
    #+BEGIN_SRC emacs-lisp
    (setq mac-option-key-is-meta  nil)
@@ -48,18 +226,18 @@
    (when (eq system-type 'darwin)
      (setq ispell-program-name "/usr/local/bin/aspell"))
    #+END_SRC
-* Spellchecking
+** Spellchecking
   #+BEGIN_SRC emacs-lisp
   (require 'flyspell)
   (setq-default flyspell-issue-message-flag nil) ; Don't print message word every word.
   #+END_SRC
-* Packages
-** pinentry
+** Packages
+*** pinentry
    #+BEGIN_SRC emacs-lisp
    (use-package pinentry
      :ensure t)
    #+END_SRC
-** ace-window
+*** ace-window
    #+BEGIN_SRC emacs-lisp
    (use-package ace-window
      :ensure t
@@ -70,7 +248,7 @@
            '(aw-leading-char-face
             ((t (:inherit ace-jump-face-foreground :height 3.0)))))))
    #+END_SRC
-** avy
+*** avy
    #+BEGIN_SRC emacs-lisp
    (use-package avy
      :ensure t
@@ -78,12 +256,12 @@
             ("C-c M-l" . avy-goto-line)
             ("C-c M-t" . avy-goto-char-timer)))
    #+END_SRC
-** completion packages
+*** completion packages
    The completion requires additional installation outside Emacs
    (/libclang/ and /global/). For example, in macOS =brew install llvm global=
    and in Ubuntu =sudo apt-get install libclang-5.0-dev global=.
    Then, inside Emacs, give command =M-x irony-install-server=.
-*** irony-mode
+**** irony-mode
    #+BEGIN_SRC emacs-lisp
      (use-package irony
        :ensure t
@@ -98,12 +276,12 @@
            (add-hook 'irony-mode-hook 'octaspire-irony-mode-hook)
            (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)))
    #+END_SRC
-*** company-irony
+**** company-irony
    #+BEGIN_SRC emacs-lisp
      (use-package company-irony
        :ensure t)
    #+END_SRC
-*** company
+**** company
    #+BEGIN_SRC emacs-lisp
    (use-package company
      :ensure t
@@ -115,7 +293,7 @@
          (setq company-dabbrev-downcase      nil)
          (setq company-backends '((company-files company-irony company-gtags company-capf company-dabbrev-code company-dabbrev company-ispell)))))
     #+END_SRC
-** dashboard
+*** dashboard
    #+BEGIN_SRC emacs-lisp
    (use-package dashboard
      :ensure t
@@ -124,7 +302,7 @@
          (setq dashboard-startup-banner nil)
          (dashboard-setup-startup-hook)))
    #+END_SRC
-** exec-path-from-shell
+*** exec-path-from-shell
    #+BEGIN_SRC emacs-lisp
    (use-package exec-path-from-shell
      :ensure t
@@ -132,13 +310,13 @@
        (when (memq window-system '(mac ns x))
          (exec-path-from-shell-initialize)))
    #+END_SRC
-** expand-region
+*** expand-region
    #+BEGIN_SRC emacs-lisp
    (use-package expand-region
      :ensure t
      :config (global-set-key (kbd "C-c M-e") 'er/expand-region))
    #+END_SRC
-** flx-ido
+*** flx-ido
    #+BEGIN_SRC emacs-lisp
      (use-package flx-ido
        :ensure t
@@ -150,7 +328,7 @@
            (setq ido-enable-flex-mathing t)
            (setq ido-use-faces           nil)))
    #+END_SRC
-** goto-chg
+*** goto-chg
    #+BEGIN_SRC emacs-lisp
    (use-package goto-chg
      :ensure t
@@ -158,46 +336,46 @@
        (("C-c l" . goto-last-change)
         ("C-c ;" . goto-last-change-reverse)))
    #+END_SRC
-** highlight
+*** highlight
    #+BEGIN_SRC emacs-lisp
    (use-package highlight
      :ensure t)
    #+END_SRC
-** htmlize
+*** htmlize
    #+BEGIN_SRC emacs-lisp
      (use-package htmlize
        :ensure t)
    #+END_SRC
-** keychain-environment
+*** keychain-environment
    #+BEGIN_SRC emacs-lisp
    (use-package keychain-environment
      :ensure t)
    #+END_SRC
-** magit
+*** magit
    #+BEGIN_SRC emacs-lisp
    (use-package magit
      :ensure t
      :bind (("C-x g" . magit-status)))
    #+END_SRC
-** operate-on-number
+*** operate-on-number
    #+BEGIN_SRC emacs-lisp
    (use-package operate-on-number
      :ensure t
      :bind (("C-c n" . operate-on-number-at-point)))
    #+END_SRC
-** org-bullets
+*** org-bullets
    #+BEGIN_SRC emacs-lisp
    (use-package org-bullets
      :ensure t
      :config
        (add-hook 'org-mode-hook 'org-bullets-mode))
    #+END_SRC
-** ox-twbs
+*** ox-twbs
    #+BEGIN_SRC emacs-lisp
    (use-package ox-twbs
      :ensure t)
    #+END_SRC
-** projectile
+*** projectile
    #+BEGIN_SRC emacs-lisp
      (use-package projectile
        :ensure t
@@ -209,7 +387,7 @@
              '(".o" ".so" ".dylib" ".lib" ".dll")))
            (projectile-mode)))
    #+END_SRC
-** rainbow-delimiters
+*** rainbow-delimiters
    #+BEGIN_SRC emacs-lisp
    (use-package rainbow-delimiters
      :ensure t
@@ -217,7 +395,7 @@
        (progn (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
               (add-hook 'octaspire-dern-mode-hook #'rainbow-delimiters-mode)))
    #+END_SRC
-** smart-mode-line
+*** smart-mode-line
    #+BEGIN_SRC emacs-lisp
    (use-package smart-mode-line
      :ensure t
@@ -231,35 +409,35 @@
          (setq sml/mode-width        5)
          (sml/setup)))
    #+End_SRC
-** yasnippet
+*** yasnippet
    #+BEGIN_SRC emacs-lisp
    (use-package yasnippet
      :ensure t
      :config (yas-global-mode 1))
    #+END_SRC
-** yasnippet-snippets
+*** yasnippet-snippets
    #+BEGIN_SRC emacs-lisp
    (use-package yasnippet-snippets
      :ensure t)
    #+END_SRC
-** zoom-window
+*** zoom-window
    #+BEGIN_SRC emacs-lisp
    (use-package zoom-window
      :ensure t
      :bind   (("M-C-z" . zoom-window-zoom))
      :config (custom-set-variables '(zoom-window-mode-line-color "LightGreen")))
    #+END_SRC
-** slime
+*** slime
    #+BEGIN_SRC emacs-lisp
    (use-package slime
      :ensure t)
    #+END_SRC
-** mu4e
-*** Check if mu is installed
+*** mu4e
+**** Check if mu is installed
     #+BEGIN_SRC emacs-lisp
     (defvar octaspire-config-mu-found (executable-find "mu"))
     #+END_SRC
-*** Receiving mail
+**** Receiving mail
    Use /mu4e/ for handling email in GNU Emacs. This requires installation
    of /mu/ and /offlineimap/ packages using the operating system's package
    manager. The =load-path= below might also be different in different systems
@@ -296,7 +474,7 @@
 
    /mu4e/ can be started with =M-x mu4e=.
 
-*** Sending mail
+**** Sending mail
     To be able to send email, the environment variables used in the
     block below (things starting with 'getenv') must be defined
     somewhere, for example in the =~/.profile= file.
@@ -318,14 +496,14 @@
        (setq message-kill-buffer-on-exit  t)))
    #+END_SRC
 
-** chronos
+*** chronos
    #+BEGIN_SRC emacs-lisp
    (use-package chronos
      :ensure t
      :config (setq chronos-expiry-functions
                    'chronos-message-notify))
    #+END_SRC
-** xcscope
+*** xcscope
    This package allows one to interact with =cscope= using Emacs as an UI.
 
    =cscope= must be already installed in the system. In most systems
@@ -368,8 +546,8 @@
      :ensure t
      :config (cscope-setup))
    #+END_SRC
-* Interface tweaks
-** UI
+** Interface tweaks
+*** UI
    #+BEGIN_SRC emacs-lisp
    (setq tags-add-tables              t)             ; Add new tags tables without asking.
    (setq large-file-warning-threshold nil)           ; Do not ask for confirmation when opening large files.
@@ -397,7 +575,7 @@
    (put 'narrow-to-page   'disabled   nil)           ; Enable narrowing to a page.
    (windmove-default-keybindings)                    ; Allow moving between windows.
    #+END_SRC
-** Editing and history
+*** Editing and history
    Files should usually end with a newline, unless the syntax of the file
    forbids that - it makes UNIX tools to behave correctly with the file.
 
@@ -418,22 +596,22 @@
    (put 'downcase-region 'disabled nil)                   ; Enable downcase-region.
    (global-set-key [remap dabbrev-expand] 'hippie-expand) ; Use Hippie Expand instead of DAbbrev.
    #+END_SRC
-** Completion
+*** Completion
    #+BEGIN_SRC emacs-lisp
    (setq completion-cycle-threshold 4) ; Cycle completions when N or fewer alternatives.
    #+END_SRC
-** apropos
+*** apropos
    #+BEGIN_SRC emacs-lisp
    (setq apropos-sort-by-scores   t)             ; Sort apropos results by relevancy.
    #+END_SRC
-** artist
+*** artist
    #+BEGIN_SRC emacs-lisp
    ; Fix accessing the context menu of artist-mode in macOS.
    (eval-after-load "artist"
      '(define-key artist-mode-map [down-mouse-3] 'artist-mouse-choose-operation))
    #+END_SRC
-** shell
-*** term
+*** shell
+**** term
    For example in =ansi-term=, one can use the key-chords =C-c C-j= and =C-c C-k= to
    change between line and char mode. However, it can be difficult to remember
    when one or the other must be pressed and might require checking the mode
@@ -454,13 +632,13 @@
    (define-key term-raw-map  (kbd "C-c C-j") 'octaspire/term-mode-toggle) ; Remap in char mode.
 #+END_SRC
 
-*** misc.
+**** misc.
    Make =rgrep= to work with fish shell.
    #+BEGIN_SRC emacs-lisp
         (setq shell-file-name "/bin/sh")
    #+END_SRC
-** Eshell
-*** The Plan9 Smart Shell
+*** Eshell
+**** The Plan9 Smart Shell
     This configuration is based on an example and comment
     at [[https://www.masteringemacs.org/article/complete-guide-mastering-eshell][Mastering Eshell. ]]
     #+BEGIN_SRC emacs-lisp
@@ -473,18 +651,18 @@
     (setq eshell-smart-space-goes-to-end t)
     (add-hook 'eshell-mode-hook 'eshell-smart-initialize)
     #+END_SRC
-*** Aliases
+**** Aliases
     #+BEGIN_SRC emacs-lisp
     (add-hook 'eshell-mode-hook (lambda ()
       (eshell/alias "e" "find-file-other-window $1")
       (eshell/alias "d" "dired-other-window $1")))
     #+END_SRC
-*** No need for a pager
+**** No need for a pager
     There is no need for an external pager because of the Plan9 Smart Shell.
     #+BEGIN_SRC emacs-lisp
     (setenv "PAGER" "cat")
     #+END_SRC
-*** Clear
+**** Clear
     This is from [[https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org][github/howardabrams/dot-files]].
     #+BEGIN_SRC emacs-lisp
     (defun eshell/clear ()
@@ -493,23 +671,23 @@
         (erase-buffer)
         (eshell-send-input)))
     #+END_SRC
-** Tramp
+*** Tramp
    #+BEGIN_SRC emacs-lisp
    (setq tramp-default-method "ssh")
    #+END_SRC
-** dired-x
+*** dired-x
   Enable /dired-x/ package. =F= visits all marked files (each in its own
   window). =C-u F= opens them in the background.
   #+BEGIN_SRC emacs-lisp
       (require 'dired-x)
   #+END_SRC
-** Calendar
+*** Calendar
    Start weeks from Monday.
 
    #+BEGIN_SRC emacs-lisp
    (setq calendar-week-start-day 1)
    #+END_SRC
-* Backups and autosaves
+** Backups and autosaves
   Save all backups into one directory, disable autosaves and
   make all commands modifying bookmarks also to save them.
   #+BEGIN_SRC emacs-lisp
@@ -517,23 +695,23 @@
   (setq auto-save-default      nil)
   (setq bookmark-save-flag     1)
   #+END_SRC
-* Symbolic links
+** Symbolic links
   Always follow symbolic links without being prompted.
   #+BEGIN_SRC emacs-lisp
     (setq vc-follow-symlinks t)
   #+END_SRC
-* Coding style
-** Common
+** Coding style
+*** Common
    #+BEGIN_SRC emacs-lisp
    (setq-default indent-tabs-mode nil)
    #+END_SRC
-** C
+*** C
    #+BEGIN_SRC emacs-lisp
    (setq-default c-default-style "bsd" c-basic-offset 4 indent-tabs-mode nil)
    (c-set-offset 'case-label '+) ; Indent 'case' labels in switch statements.
    #+END_SRC
-* Functions
-** Terminal-mode
+** Functions
+*** Terminal-mode
   #+BEGIN_SRC emacs-lisp
     (defun octaspire/terminal-mode-settings ()
       "Turn on settings for terminal mode."
@@ -543,7 +721,7 @@
       (setq-local show-trailing-whitespace (null show-trailing-whitespace))
       (linum-mode -1))
   #+END_SRC
-** Window layout
+*** Window layout
    #+BEGIN_SRC emacs-lisp
     (defun octaspire/layout-2-windows ()
       "Create layout with two windows."
@@ -558,8 +736,8 @@
       (balance-windows)
       (other-window 1))
    #+END_SRC
-** Workspace
-*** 2 windows
+*** Workspace
+**** 2 windows
     #+BEGIN_SRC emacs-lisp
     (defun octaspire/workspace-2-windows-ansi ()
       "Create workspace with octaspire/layout-2-windows"
@@ -578,7 +756,7 @@
       (other-window -1)
       (switch-to-buffer "scratch"))
     #+END_SRC
-*** 3 windows
+**** 3 windows
     #+BEGIN_SRC emacs-lisp
     (defun octaspire/workspace-3-windows-ansi ()
       "Create workspace with octaspire/layout-3-windows"
@@ -603,7 +781,7 @@
       (switch-to-buffer "scratch")
       (other-window -1))
     #+END_SRC
-** Initialization-file
+*** Initialization-file
    #+BEGIN_SRC emacs-lisp
     (defun octaspire/init-file-load ()
       "(Re)Load Emacs initialization file."
@@ -614,8 +792,8 @@
       (interactive)
       (find-file "~/.emacs.d/myinit.org"))
    #+END_SRC
-** Editing
-*** Opening lines
+*** Editing
+**** Opening lines
     #+BEGIN_SRC emacs-lisp
       (defun octaspire/line-open-above ()
         "Open new empty line above the line that has Point."
@@ -630,7 +808,7 @@
         (end-of-line)
         (newline-and-indent))
     #+END_SRC
-*** Copying lines
+**** Copying lines
     #+BEGIN_SRC emacs-lisp
       (defun octaspire/line-copy ()
         "Copy the line that has Point."
@@ -642,7 +820,7 @@
           (kill-ring-save 0 0 t))
           (message "Line copied"))
     #+END_SRC
-*** Buffers
+**** Buffers
     Kill all other buffers than the current one. This function is from
     [[https://www.emacswiki.org/emacs/KillingBuffers][EmacsWiki.]]
     #+BEGIN_SRC emacs-lisp
@@ -651,7 +829,7 @@
       (interactive)
       (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
     #+END_SRC
-** Searching
+*** Searching
    #+BEGIN_SRC emacs-lisp
      (defun octaspire/search-symbol-at-point ()
        "Do a search for the symbol at the Point, including words that have '.' or '-' after them."
@@ -659,7 +837,7 @@
        (isearch-forward-word nil 1)
        (isearch-yank-string (thing-at-point 'symbol)))
    #+END_SRC
-** Tramp
+*** Tramp
    This function is from the book /Mastering Emacs/ by Mickey Petersen.
    When invoked as =M-x sudo=, it uses =TRAMP= to edit the current file
    as *root*.
@@ -672,7 +850,7 @@
           (concat "/sudo:root@localhost:"
                   buffer-file-name))))
    #+END_SRC
-** TAGS
+*** TAGS
    Find existing TAGS file by searching parent directories. This function
    is based on code from: https://www.emacswiki.org/emacs/EmacsTags
    #+BEGIN_SRC emacs-lisp
@@ -684,20 +862,20 @@
          (message "Loading TAGS file: %s" my-tags-file)
          (visit-tags-table my-tags-file))))
    #+END_SRC
-** After init
+*** After init
    #+BEGIN_SRC emacs-lisp
    (defun octaspire/after-init-hook ()
      (setq debug-on-error t)
      (global-company-mode))
    #+END_SRC
-** Debugging
+*** Debugging
    #+BEGIN_SRC emacs-lisp
    (defun octaspire/gdb-hints-break ()
      "Show quick reminder on how to set a breakpoint in GNU debugger conditionally."
      (interactive)
      (message "break test.c:6 if i == 5\nbreak test.c:label if i == 5"))
    #+END_SRC
-** Whitespace
+*** Whitespace
   #+BEGIN_SRC emacs-lisp
     (defun octaspire/whitespace-mode-enable ()
         "Turn on highlighting of bad white-space for programming modes."
@@ -714,46 +892,46 @@
       (setq-local whitespace-mode             1)
       (whitespace-mode))
   #+END_SRC
-* Hooks
-** After init
+** Hooks
+*** After init
    #+BEGIN_SRC emacs-lisp
    (add-hook 'after-init-hook 'octaspire/after-init-hook)
    #+END_SRC
-** Text
+*** Text
    #+BEGIN_SRC emacs-lisp
    (add-hook 'text-mode-hook 'flyspell-mode)
    #+END_SRC
-** Programming
+*** Programming
    #+BEGIN_SRC emacs-lisp
    (add-hook 'prog-mode-hook 'flyspell-prog-mode)
    (add-hook 'prog-mode-hook 'octaspire/whitespace-mode-enable)
    #+END_SRC
-*** C
+**** C
   #+BEGIN_SRC emacs-lisp
   (add-hook 'c-mode-hook #'(lambda ()
     (progn (modify-syntax-entry ?_ "w")
            (setq comment-start "//" comment-end "")
            (local-set-key (kbd "C-c C-s") 'octaspire/search-symbol-at-point))))
   #+END_SRC
-*** Octaspire Dern
+**** Octaspire Dern
     #+BEGIN_SRC emacs-lisp
     (add-hook 'octaspire-dern-mode-hook 'flyspell-prog-mode)
     (add-hook 'octaspire-dern-mode-hook 'octaspire/whitespace-mode-enable)
     #+END_SRC
-*** XML
+**** XML
    #+BEGIN_SRC emacs-lisp
    (add-hook 'nxml-mode-hook 'octaspire/whitespace-mode-enable)
    #+END_SRC
 
-** Eshell
+*** Eshell
    Set Eshell's =<TAB>= completion to use Ivy.
 
    #+BEGIN_SRC emacs-lisp
    (add-hook 'eshell-mode-hook '(lambda ()
      (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)))
    #+END_SRC
-* Org-mode
-*** Export and syntax highlighting
+** Org-mode
+**** Export and syntax highlighting
   #+BEGIN_SRC emacs-lisp
   (setq-default org-src-fontify-natively      1) ; syntax highlight code blocks.
   (setq-default org-export-with-smart-quotes  1)
@@ -761,17 +939,17 @@
   (setq org-export-html-style-include-scripts nil)
   (setq org-export-html-style-include-default nil)
   #+END_SRC
-*** Keybindings
+**** Keybindings
     #+BEGIN_SRC emacs-lisp
     (define-key org-mode-map (kbd "C-c M-l") nil) ; Use custom keybinding instead.
     #+END_SRC
-* Abbreviations
+** Abbreviations
   #+BEGIN_SRC emacs-lisp
   (setq-default abbrev-mode  1)
   (setq-default save-abbrevs 'silently)
   #+END_SRC
-* Keybindings
-** Workspace
+** Keybindings
+*** Workspace
   #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-c a 2") 'octaspire/workspace-2-windows-ansi)
   (global-set-key (kbd "C-c a 3") 'octaspire/workspace-3-windows-ansi)
@@ -779,36 +957,36 @@
   (global-set-key (kbd "C-c e 2") 'octaspire/workspace-2-windows-eshell)
   (global-set-key (kbd "C-c e 3") 'octaspire/workspace-3-windows-eshell)
   #+END_SRC
-** Initialization-file
+*** Initialization-file
   #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-c i o") 'octaspire/init-file-open)
   (global-set-key (kbd "C-c i l") 'octaspire/init-file-load)
   #+END_SRC
-** Editing
-**** Erasing
+*** Editing
+***** Erasing
      #+BEGIN_SRC emacs-lisp
      (global-set-key (kbd "C-c w") 'fixup-whitespace) ; Delete excess whitespace around objects.
      #+END_SRC
-**** Opening and joining lines
+***** Opening and joining lines
    #+BEGIN_SRC emacs-lisp
    (global-set-key (kbd "C-c O")   'octaspire/line-open-above)
    (global-set-key (kbd "C-c o")   'octaspire/line-open-below)
    (global-set-key (kbd "C-c j")   'join-line)
    #+END_SRC
-**** Copying lines
+***** Copying lines
    #+BEGIN_SRC emacs-lisp
    (global-set-key (kbd "C-c k")   'octaspire/line-copy)
    #+END_SRC
-**** Scrolling without moving the point
+***** Scrolling without moving the point
      #+BEGIN_SRC emacs-lisp
      (global-set-key (kbd "M-n") (kbd "C-u 1 C-v"))
      (global-set-key (kbd "M-p") (kbd "C-u 1 M-v"))
      #+END_SRC
-**** Keyboard macros
+***** Keyboard macros
      #+BEGIN_SRC emacs-lisp
      (global-set-key (kbd "<print>") 'kmacro-call-macro)
      #+END_SRC
-** Searching
+*** Searching
     =M-x find-name-dired= allows one to find a file or files recursively
     starting from a specific directory. The file name to be searched
     is a shell wildcard. Add a key-chord for it.
@@ -827,7 +1005,7 @@
     (global-set-key (kbd "C-c C-f") 'find-file-at-point)
     #+END_SRC
 
-** Completion
+*** Completion
     #+BEGIN_SRC emacs-lisp
     (define-key company-active-map (kbd "M-n") nil)
     (define-key company-active-map (kbd "M-p") nil)
@@ -835,19 +1013,19 @@
     (define-key company-active-map (kbd "C-p") #'company-select-previous)
     (global-set-key (kbd "C-c c") 'company-complete-common)
     #+END_SRC
-** TAGS
+*** TAGS
   #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "M-*") 'pop-tag-mark)
   (global-set-key (kbd "M-,") 'tags-loop-continue)
   #+END_SRC
-** C-mode
+*** C-mode
     #+BEGIN_SRC emacs-lisp
     (add-hook 'c-mode-common-hook
       (lambda () (define-key c-mode-base-map (kbd "C-c `")   'compile)
                  (define-key c-mode-base-map (kbd "C-c M-`") 'recompile)
                  (define-key c-mode-base-map (kbd "C-c M-f") 'ff-find-other-file)))
     #+END_SRC
-** Debugging
+*** Debugging
     Emacs offers a nice UI for the GNU debugger. Add a key-chord
     for starting the =gud-gdb= and also for a hint function:
 
@@ -856,11 +1034,11 @@
     (global-set-key (kbd "C-c g") 'octaspire/gdb-hints-break)
     #+END_SRC
 
-** Indenting
+*** Indenting
      #+BEGIN_SRC emacs-lisp
      (global-set-key (kbd "C-c TAB") 'indent-relative)
      #+END_SRC
-** Misc
+*** Misc
    #+BEGIN_SRC emacs-lisp
    ; Kill the current buffer instead of asking which buffer to kill.
    (global-set-key (kbd "C-x k")   'kill-this-buffer)
@@ -870,13 +1048,13 @@
    ; than the default "C-x o".
    (global-set-key (kbd "M-o")     'ace-window)
    #+END_SRC
-* Additional modes
+** Additional modes
   #+BEGIN_SRC emacs-lisp
   (add-to-list 'load-path "~/.emacs.d/elisp")
   ; Octaspire Dern mode.
   (require 'octaspire-dern-mode)
   #+END_SRC
-* GPG2
+** GPG2
   #+BEGIN_SRC emacs-lisp
   (setq epa-pinentry-mode 'loopback)
   (pinentry-start)
