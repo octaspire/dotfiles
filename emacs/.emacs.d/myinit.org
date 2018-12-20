@@ -213,7 +213,7 @@
 
 ** Platform-specific configuration
 *** macOS
-   Add some macOS specific keybindings:
+   Add some macOS specific key bindings:
    #+BEGIN_SRC emacs-lisp
    (setq mac-option-key-is-meta  nil)
    (setq mac-command-key-is-meta t)
@@ -226,7 +226,7 @@
    (when (eq system-type 'darwin)
      (setq ispell-program-name "/usr/local/bin/aspell"))
    #+END_SRC
-** Spellchecking
+** Spell checking
   #+BEGIN_SRC emacs-lisp
   (require 'flyspell)
   (setq-default flyspell-issue-message-flag nil) ; Don't print message word every word.
@@ -717,8 +717,8 @@
       "Turn on settings for terminal mode."
       (interactive)
       (setq-local whitespace-mode -1)
-      (setq-local global-hl-line-mode (null global-hl-line-mode))
-      (setq-local show-trailing-whitespace (null show-trailing-whitespace))
+      (setq-local global-hl-line-mode nil)
+      (setq-local show-trailing-whitespace nil)
       (linum-mode -1))
   #+END_SRC
 *** Window layout
@@ -901,6 +901,10 @@
    #+BEGIN_SRC emacs-lisp
    (add-hook 'text-mode-hook 'flyspell-mode)
    #+END_SRC
+*** Org
+    #+BEGIN_SRC emacs-lisp
+    (add-hook 'org-mode-hook 'octaspire/whitespace-mode-enable)
+    #+END_SRC
 *** Programming
    #+BEGIN_SRC emacs-lisp
    (add-hook 'prog-mode-hook 'flyspell-prog-mode)
@@ -923,12 +927,18 @@
    (add-hook 'nxml-mode-hook 'octaspire/whitespace-mode-enable)
    #+END_SRC
 
-*** Eshell
+*** Terminals
+    #+BEGIN_SRC emacs-lisp
+    (add-hook 'term-mode-hook
+              (lambda () (octaspire/terminal-mode-settings)))
+    #+END_SRC
+**** Eshell
    Set Eshell's =<TAB>= completion to use Ivy.
 
    #+BEGIN_SRC emacs-lisp
    (add-hook 'eshell-mode-hook '(lambda ()
-     (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)))
+     (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
+     (octaspire/terminal-mode-settings)))
    #+END_SRC
 ** Org-mode
 **** Export and syntax highlighting
