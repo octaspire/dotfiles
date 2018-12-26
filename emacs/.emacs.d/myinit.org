@@ -211,21 +211,6 @@
    But again, I would recommend using GNU Stow, as described above,
    to install this configuration.
 
-** Platform-specific configuration
-*** macOS
-   Add some macOS specific key bindings:
-   #+BEGIN_SRC emacs-lisp
-   (setq mac-option-key-is-meta  nil)
-   (setq mac-command-key-is-meta t)
-   (setq mac-command-modifier    'meta)
-   (setq mac-option-modifier     nil)
-   #+END_SRC
-
-   It seems to be that in macOS Emacs cannot find the homebrew installed aspell.
-   #+BEGIN_SRC emacs-lisp
-   (when (eq system-type 'darwin)
-     (setq ispell-program-name "/usr/local/bin/aspell"))
-   #+END_SRC
 ** Spell checking
   #+BEGIN_SRC emacs-lisp
   (require 'flyspell)
@@ -1069,3 +1054,29 @@
   (setq epa-pinentry-mode 'loopback)
   (pinentry-start)
   #+END_SRC
+
+** Platform-specific configuration
+*** macOS
+   Add some macOS specific key bindings:
+   #+BEGIN_SRC emacs-lisp
+   (setq mac-option-key-is-meta  nil)
+   (setq mac-command-key-is-meta t)
+   (setq mac-command-modifier    'meta)
+   (setq mac-option-modifier     nil)
+   #+END_SRC
+
+   It seems to be that in macOS Emacs cannot find the homebrew installed aspell.
+   #+BEGIN_SRC emacs-lisp
+   (when (eq system-type 'darwin)
+     (setq ispell-program-name "/usr/local/bin/aspell"))
+   #+END_SRC
+
+*** Berkeley Unix
+    For example OpenBSD. Make =make= an alias for the GNU make =gmake=.
+
+    #+BEGIN_SRC emacs-lisp
+    (when (eq system-type 'berkeley-unix)
+      (require 'eshell)
+      (add-hook 'eshell-mode-hook (lambda ()
+        (eshell/alias "make" "gmake"))))
+    #+END_SRC
