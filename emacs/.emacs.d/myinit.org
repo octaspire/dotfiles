@@ -1072,11 +1072,11 @@
    #+END_SRC
 
 *** Berkeley Unix
-    For example OpenBSD. Make =make= an alias for the GNU make =gmake=.
+    For example OpenBSD. Make =make= an Eshell alias for the GNU make =gmake=.
 
     #+BEGIN_SRC emacs-lisp
     (when (eq system-type 'berkeley-unix)
       (require 'eshell)
       (add-hook 'eshell-mode-hook (lambda ()
-        (eshell/alias "make" "gmake"))))
+        (eshell/alias "make" "gmake $1"))))
     #+END_SRC
