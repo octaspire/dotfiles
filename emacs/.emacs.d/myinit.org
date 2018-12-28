@@ -899,8 +899,7 @@
 **** C
   #+BEGIN_SRC emacs-lisp
   (add-hook 'c-mode-hook #'(lambda ()
-    (progn (modify-syntax-entry ?_ "w")
-           (setq comment-start "//" comment-end "")
+    (progn (setq comment-start "//" comment-end "")
            (local-set-key (kbd "C-c C-s") 'octaspire/search-symbol-at-point))))
   #+END_SRC
 **** Octaspire Dern
