@@ -261,6 +261,13 @@
            (add-hook 'irony-mode-hook 'octaspire-irony-mode-hook)
            (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)))
    #+END_SRC
+**** irony-eldoc
+     #+BEGIN_SRC emacs-lisp
+     (use-package irony-eldoc
+       :ensure t
+       :config
+         (add-hook 'irony-mode-hook 'irony-eldoc))
+     #+END_SRC
 **** company-irony
    #+BEGIN_SRC emacs-lisp
      (use-package company-irony
