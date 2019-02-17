@@ -422,7 +422,8 @@
 *** slime
    #+BEGIN_SRC emacs-lisp
    (use-package slime
-     :ensure t)
+     :ensure t
+     :config (setq inferior-lisp-program "clisp"))
    #+END_SRC
 *** mu4e
 **** Check if mu is installed
