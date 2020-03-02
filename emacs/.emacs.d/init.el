@@ -1,9 +1,21 @@
+;; Octaspire dotfiles - Various configuration files
+;; Copyright 2017, 2018, 2020  www.octaspire.com
+;;
+;; Licensed under the Apache License, Version 2.0 (the "License");
+;; you may not use this file except in compliance with the License.
+;; You may obtain a copy of the License at
+;;
+;;    http://www.apache.org/licenses/LICENSE-2.0
+;;
+;; Unless required by applicable law or agreed to in writing, software
+;; distributed under the License is distributed on an "AS IS" BASIS,
+;; WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+;; See the License for the specific language governing permissions and
+;; limitations under the License.
 (require 'package)
 
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives
-             '("org"   . "https://orgmode.org/elpa/"))
+	     '("melpa" . "https://melpa.org/packages/") t)
 
 (package-initialize)
 
@@ -14,18 +26,298 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(use-package org
+(defun octaspire/init-file-open ()
+  "Visit Emacs initialization file."
+  (interactive)
+  (find-file user-init-file))
+
+(defun octaspire/open-and-goto-line-below()
+  "Create new indented line below current one and go there."
+  (interactive)
+  (end-of-line)
+  (newline-and-indent))
+
+(defun octaspire/ensure-at-beginning-of-defun ()
+  "Make sure that point is at beginning of current list"
+  (unless (eq ?\( (char-after))
+    (beginning-of-defun)))
+
+(defun octaspire/cl/form-to-1am-test ()
+  "Create a Common Lisp 1am unit test for the form at point."
+  (interactive)
+  (octaspire/ensure-at-beginning-of-defun)
+  (let* ((thing-as-string (thing-at-point 'list))
+	 (normalized-string (s-replace-all '(("'" . "Q")
+					     (")" . "]")
+					     ("(" . "["))
+					   (string-trim  thing-as-string "(" ")")))
+	 (name (string-join (split-string normalized-string " ") "-"))
+	 (result (concat "(test " name "-test\n(is (equal " thing-as-string " )))")))
+    (insert result)
+    (indent-for-tab-command)
+    (kill-sexp)
+    (left-char 3)))
+
+(use-package dashboard
   :ensure t
-  :mode (("\\.org$" . org-mode)))
+  :config (progn
+	    (setq dashboard-set-footer nil)
+	    (dashboard-setup-startup-hook)))
 
-(org-babel-load-file (locate-user-emacs-file "myinit.org"))
+(when (executable-find "git")
+  (use-package magit
+    :ensure t
+    :bind (("C-c M-m" . magit-status))))
 
-(custom-set-faces
- '(rainbow-delimiters-depth-1-face ((t (:foreground "dark orange"))))
- '(rainbow-delimiters-depth-2-face ((t (:foreground "dark gray"))))
- '(rainbow-delimiters-depth-3-face ((t (:foreground "tomato"))))
- '(rainbow-delimiters-depth-4-face ((t (:foreground "dark olive green"))))
- '(rainbow-delimiters-depth-5-face ((t (:foreground "dark cyan"))))
- '(rainbow-delimiters-depth-6-face ((t (:foreground "deep pink"))))
- '(rainbow-delimiters-depth-7-face ((t (:foreground "red4"))))
- '(rainbow-delimiters-depth-8-face ((t (:foreground "magenta1")))))
+(use-package projectile
+  :ensure t
+  :bind (("C-c p" . projectile-command-map))
+  :config (projectile-mode +1))
+
+(let ((name (executable-find "aspell")))
+  (when name
+    (setq ispell-program-name name)))
+
+(use-package smart-mode-line
+  :ensure t)
+
+ (use-package company
+  :ensure t
+  :config (progn
+	    (setq company-idle-delay            0.5
+		  company-minimum-prefix-length 2
+		  company-dabbrev-other-buffers 'all
+		  company-dabbrev-downcase      nil
+		  company-backends              '((company-etags)
+						  (company-capf)
+						  (company-dabbrev-code)
+						  (company-dabbrev))
+		  company-global-modes          '(not lisp-mode
+						      sly-mrepl-mode
+						      sly-db-mode))
+	    (global-company-mode))
+  :bind (("C-c c" . company-complete-common)))
+
+(use-package remember
+  :ensure t
+  :bind (("C-c r" . remember)
+	 ("C-c R" . remember-region)))
+
+(use-package expand-region
+  :ensure t
+  :bind (("C-c M-e" . er/expand-region)))
+
+(use-package speed-type
+  :ensure t)
+
+(use-package which-key
+  :ensure t
+  :config (which-key-mode))
+
+(when (executable-find "cscope")
+  (use-package xcscope
+    :ensure t
+    :config (cscope-setup)))
+
+(when (executable-find "go")
+  (use-package go-mode
+    :ensure t))
+
+(when (executable-find "drracket")
+  (use-package racket-mode
+    :ensure t))
+
+(when (executable-find "gforth")
+  (use-package forth-mode
+    :ensure t))
+
+(when (executable-find "nasm")
+  (use-package nasm-mode
+    :ensure t
+    :config (add-to-list 'auto-mode-alist '("\\.nasm\\'" . nasm-mode))))
+
+(when (executable-find "sbcl")
+  (let ((style "sbcl"))
+    (setq inferior-lisp-program     style
+	  common-lisp-style         style
+	  common-lisp-style-default style))
+  (let ((path (expand-file-name "~/common-lisp/HyperSpec-7-0/HyperSpec/")))
+    (when (file-directory-p path)
+      (setq common-lisp-hyperspec-root (concat "file://" path))))
+  (use-package lispy
+    :ensure t
+    :config (progn
+	      (setq-default lispy-no-space t)
+	      (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
+	      (add-hook 'sly-mode-hook (lambda () (lispy-mode 1)))
+	      (add-hook 'sly-db-mode-hook (lambda () (setq lispy-mode nil)))))
+  (use-package sly
+    :ensure t
+    :config (setq sly-complete-symbol-function 'sly-flex-completions)))
+
+(use-package counsel
+	     :ensure t)
+
+(use-package swiper
+	     :ensure t
+	     :config (progn
+		       (require 'ivy)
+		       (require 'swiper)
+		       (ivy-mode 1)
+		       (counsel-mode)
+		       (setq ivy-wrap t
+			     ivy-use-virtual-buffers t
+			     ivy-count-format "(%d/%d) "))
+	     :bind (("C-s" . swiper-isearch)))
+
+(use-package avy
+  :ensure t
+  :bind (("C-=" . avy-goto-char)))
+
+(use-package operate-on-number
+  :ensure t
+  :bind (("C-c n" . operate-on-number-at-point)))
+
+(use-package dumb-jump
+  :ensure t
+  :bind (("M-g j" . dumb-jump-go)
+	 ("M-g o" . dumb-jump-go-other-window)
+	 ("M-g b" . dumb-jump-back)
+	 ("M-g i" . dumb-jump-go-prompt))
+  :config (setq dumb-jump-selector 'ivy))
+
+(use-package goto-last-change
+	     :ensure t
+	     :bind (("C-c C-/" . goto-last-change)))
+
+(use-package buffer-move
+  :ensure t
+  :bind (("<C-S-up>"    . buf-move-up)
+	 ("<C-S-down>"  . buf-move-down)
+	 ("<C-S-left>"  . buf-move-left)
+	 ("<C-S-right>" . buf-move-right)))
+
+(when (and (executable-find "pkg-config")
+           (string-prefix-p
+            "-I"
+            (shell-command-to-string "pkg-config --cflags-only-I poppler-glib")))
+  (use-package pdf-tools
+    :ensure t))
+
+(use-package s
+  :ensure t)
+
+(use-package htmlize
+  :ensure t)
+
+(when (and module-file-suffix (executable-find "cmake"))
+  (use-package vterm
+    :ensure t))
+
+(use-package exec-path-from-shell
+  :ensure t
+  :config (when (memq window-system '(mac ns x))
+	    (exec-path-from-shell-initialize)))
+
+(use-package elfeed
+  :ensure t
+  :config (setq elfeed-feeds
+                '()))
+
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(column-number-mode 1)
+(which-function-mode 1)
+(set-language-environment "UTF-8")
+(save-place-mode 1)
+(savehist-mode 1)
+(show-paren-mode 1)
+(global-auto-revert-mode 1)
+(electric-pair-mode 1)
+(defalias 'yes-or-no-p 'y-or-n-p)
+(windmove-default-keybindings)
+
+(setq inhibit-startup-message        t
+      browse-url-browser-function    'eww-browse-url
+      ring-bell-function             'ignore
+      display-time-24hr-format       t
+      calendar-week-start-day        1
+      large-file-warning-threshold   nil
+      tags-add-tables                t
+      backup-directory-alist         `((".*" . ,temporary-file-directory))
+      auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
+      ;; Make windmove keys S-up, S-down, etc. to work also in Org-mode.
+      org-replace-disputed-keys      t
+      windmove-wrap-around           t
+      org-src-fontify-natively       1
+      org-export-with-smart-quotes   1
+      org-html-htmlize-output-type   'inline-css
+      user-full-name                 ""
+      user-mail-address              "")
+
+(when (string= user-full-name "")
+  (setq user-full-name
+	(read-string "No full name configured. Give name to be used: ")))
+
+(when (string= user-mail-address "")
+  (setq user-mail-address
+	(read-string "No email address configured. Give address to be used: ")))
+
+(defun octaspire/whitespace-mode ()
+  "Enable whitespace mode."
+  (set-face-background 'trailing-whitespace "yellow")
+  (setq show-trailing-whitespace 1
+	whitespace-style         '(trailing))
+  (whitespace-mode))
+
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+(add-hook 'prog-mode-hook 'subword-mode)
+(add-hook 'prog-mode-hook 'octaspire/whitespace-mode)
+(add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+
+(global-set-key (kbd "C-c i")      'octaspire/init-file-open)
+(global-set-key (kbd "C-c m")      'recompile) ; build with 'make -k'
+(global-set-key (kbd "C-c <down>") 'octaspire/open-and-goto-line-below)
+(global-set-key (kbd "C-c e")      'eval-buffer)
+(global-set-key (kbd "C-c M-.")    'swiper-isearch-thing-at-point)
+(global-set-key (kbd "C-c t")      'octaspire/cl/form-to-1am-test)
+(global-set-key (kbd "s-u")        'up-list)
+
+(put 'narrow-to-region 'disabled nil)
+(load-theme 'tsdh-light)
+
+(when (eq system-type 'darwin)
+  (setq mac-option-key-is-meta  nil
+	mac-command-key-is-meta t
+	mac-command-modifier    'meta
+	mac-option-modifier     nil))
+
+;; C coding style
+(defun octaspire/c-mode-hook ()
+  (let ((spaces 4))
+    (setq c-default-style  "bsd"
+	  indent-tabs-mode nil
+	  tab-width        spaces
+	  c-basic-offset   spaces
+	  c-basic-offset   '+)
+    ;; Indent 'case' labels in switch statements.
+    (c-set-offset 'case-label '+)
+    ;; Don't indent '{' after 'if' (when on its own line).
+    (c-set-offset 'substatement-open 0)
+    ;; Continued lines should be indented by one depth.
+    (c-set-offset 'statement-cont spaces)
+    (c-set-offset 'arglist-cont-nonempty '+)
+    (c-set-offset 'arglist-intro '+)
+    (c-set-offset 'statement-block-intro '+)))
+
+(add-hook 'c-mode-hook 'octaspire/c-mode-hook)
+
+(when (file-exists-p "~/.fonts/IBMPlexMono-Regular.ttf")
+  (custom-set-faces
+   '(default ((t (:height 110 :family "IBM Plex Mono"))))
+   '(bold ((t (:weight bold :family "IBM Plex Mono"))))
+   '(bold-italic ((t (:slant italic :weight bold :family "IBM Plex Mono"))))
+   '(italic ((t (:slant italic :family "IBM Plex Mono"))))
+   '(variable-pitch ((t (:family "IBM Plex Sans"))))))
