@@ -13,6 +13,7 @@
 ;; See the License for the specific language governing permissions and
 ;; limitations under the License.
 (setq octaspire/ledger/timelog "~/.ledger.timelog")
+(setq octaspire/ledger/time-format "%Y-%m-%d %H:%M:%S")
 
 (setq octaspire/ledger/tasks
       '(TODO
@@ -33,7 +34,7 @@
 (defun octaspire/ledger/clock-in ()
   (interactive)
   (let* ((task (completing-read "clock-in: " octaspire/ledger/tasks))
-	 (line (concat "i " (format-time-string "%Y-%m-%d %H:%M:%S") " " task "\n")))
+	 (line (concat "i " (format-time-string octaspire/ledger/time-format) " " task "\n")))
     (write-region
      line
      nil
@@ -43,7 +44,7 @@
 
 (defun octaspire/ledger/clock-out ()
   (interactive)
-  (let ((line (concat "o " (format-time-string "%Y-%m-%d %H:%M:%S") "\n")))
+  (let ((line (concat "o " (format-time-string octaspire/ledger/time-format) "\n")))
     (write-region
      line
      nil
