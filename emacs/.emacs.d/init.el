@@ -288,6 +288,11 @@
 (global-set-key (kbd "C-c t")      'octaspire/cl/form-to-1am-test)
 (global-set-key (kbd "s-u")        'up-list)
 
+(when (executable-find "ledger")
+  (load (concat (file-name-as-directory user-emacs-directory)
+		(file-name-as-directory "elisp")
+		"octaspire-ledger.el")))
+
 (put 'narrow-to-region 'disabled nil)
 (load-theme 'tsdh-light)
 
