@@ -12,6 +12,7 @@
 ;; WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 ;; See the License for the specific language governing permissions and
 ;; limitations under the License.
+(require 'notifications)
 (setq octaspire/ledger/timelog "~/.ledger.timelog")
 (setq octaspire/ledger/time-format "%Y-%m-%d %H:%M:%S")
 
@@ -40,7 +41,7 @@
      nil
      octaspire/ledger/timelog
      t)
-    (message line)))
+    (message "clocked-in task %s" task)))
 
 (defun octaspire/ledger/clock-out ()
   (interactive)
@@ -50,7 +51,7 @@
      nil
      octaspire/ledger/timelog
      t)
-    (message line)))
+    (message "clocked out")))
 
 (defun octaspire/ledger/clock-change ()
   (interactive)
@@ -61,3 +62,19 @@
 (global-set-key (kbd "C-c C-l o")  'octaspire/ledger/clock-out)
 (global-set-key (kbd "C-c C-l c")  'octaspire/ledger/clock-change)
 (global-set-key (kbd "C-c C-l b")  'octaspire/ledger/balance-for-day)
+
+(defun octaspire/ledger/ensure-clocked-in ()
+  "Ensure that Ledger timelog is in clocked-in state."
+  (with-temp-buffer
+    (insert-file-contents octaspire/ledger/timelog)
+    (goto-char (buffer-size))
+    (beginning-of-line)
+    (let* ((start (point))
+	   (line (buffer-substring-no-properties start (buffer-size))))
+      (unless (char-equal (elt line 0) ?i)
+	(display-warning '(octaspire/ledger) "--- NOT CLOCKED-IN ---")
+	(notifications-notify
+	 :title "Not Clocked-In"
+	 :body "You are currently <b>NOT</b> clocked in.")))))
+
+(run-at-time "1 min" 60 'octaspire/ledger/ensure-clocked-in)
