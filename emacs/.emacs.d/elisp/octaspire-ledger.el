@@ -73,7 +73,9 @@
     (insert-file-contents octaspire/ledger/timelog)
     (goto-char (buffer-size))
     (beginning-of-line)
-    (buffer-substring-no-properties (point) (buffer-size))))
+    (if (> (buffer-size) 3)
+	(buffer-substring-no-properties (point) (buffer-size))
+      "")))
 
 (defun octaspire/ledger/get-nth-token-from-last-line (index)
   (let* ((line (octaspire/ledger/get-last-line))
