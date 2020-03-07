@@ -31,6 +31,15 @@
   (interactive)
   (find-file user-init-file))
 
+(defun octaspire/notify-warning (type title body)
+  "Notify used of a warning."
+  (display-warning type body)
+  (message "ERROR: %s" body)
+  (notifications-notify
+   :title title
+   :body body
+   :urgency 'critical))
+
 (defun octaspire/open-and-goto-line-below()
   "Create new indented line below current one and go there."
   (interactive)
