@@ -26,6 +26,12 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(setq octaspire/root-dir (concat (file-name-as-directory user-emacs-directory)
+				 (file-name-as-directory "octaspire")))
+
+(setq octaspire/elisp-dir (concat octaspire/root-dir
+				  (file-name-as-directory "elisp")))
+
 (defun octaspire/init-file-open ()
   "Visit Emacs initialization file."
   (interactive)
@@ -298,8 +304,7 @@
 (global-set-key (kbd "s-u")        'up-list)
 
 (when (executable-find "ledger")
-  (load (concat (file-name-as-directory user-emacs-directory)
-		(file-name-as-directory "elisp")
+  (load (concat octaspire/elisp-dir
 		"octaspire-ledger.el")))
 
 (put 'narrow-to-region 'disabled nil)
@@ -330,6 +335,11 @@
     (c-set-offset 'statement-block-intro '+)))
 
 (add-hook 'c-mode-hook 'octaspire/c-mode-hook)
+
+(let ((private (concat octaspire/elisp-dir
+		       "octaspire-private.el")))
+  (when (file-exists-p private)
+    (load private)))
 
 (when (or (file-exists-p "~/.fonts/IBMPlexMono-Regular.ttf")
 	  (file-exists-p "~/Library/Fonts/IBMPlexMono-Regular.ttf"))

@@ -14,13 +14,15 @@
 ;; limitations under the License.
 (require 'cl-lib)
 (require 'notifications)
-(setq octaspire/ledger/timelog "~/.ledger.timelog")
+(setq octaspire/ledger/timelog (concat octaspire/root-dir "ledger.timelog"))
 (setq octaspire/ledger/time-format "%Y-%m-%d %H:%M:%S")
 
-(setq octaspire/ledger/tasks
-      '(TODO
-	FILL-HERE
-	TASK-NAMES))
+(unless (file-exists-p octaspire/ledger/timelog)
+  (with-temp-buffer (write-file octaspire/ledger/timelog)))
+
+(defvar octaspire/ledger/tasks '(TODO
+				 FILL-HERE
+				 TASK-NAMES))
 
 (defun octaspire/ledger/balance-for-day ()
   (interactive)
