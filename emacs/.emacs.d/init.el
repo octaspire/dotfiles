@@ -237,11 +237,6 @@
   :config (when (memq window-system '(mac ns x))
 	    (exec-path-from-shell-initialize)))
 
-(use-package elfeed
-  :ensure t
-  :config (setq elfeed-feeds
-                '()))
-
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
@@ -272,7 +267,18 @@
       org-export-with-smart-quotes   1
       org-html-htmlize-output-type   'inline-css
       user-full-name                 ""
-      user-mail-address              "")
+      user-mail-address              ""
+      octaspire/elfeed/feeds         '())
+
+(let ((private (concat octaspire/elisp-dir
+		       "octaspire-private.el")))
+  (when (file-exists-p private)
+    (load private)))
+
+(use-package elfeed
+  :ensure t
+  :config (setq elfeed-feeds
+		octaspire/elfeed/feeds))
 
 (when (string= user-full-name "")
   (setq user-full-name
@@ -335,11 +341,6 @@
     (c-set-offset 'statement-block-intro '+)))
 
 (add-hook 'c-mode-hook 'octaspire/c-mode-hook)
-
-(let ((private (concat octaspire/elisp-dir
-		       "octaspire-private.el")))
-  (when (file-exists-p private)
-    (load private)))
 
 (when (or (file-exists-p "~/.fonts/IBMPlexMono-Regular.ttf")
 	  (file-exists-p "~/Library/Fonts/IBMPlexMono-Regular.ttf"))
