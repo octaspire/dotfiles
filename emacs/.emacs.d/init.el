@@ -295,6 +295,13 @@
 	whitespace-style         '(trailing))
   (whitespace-mode))
 
+(defun octaspire/terminal-launch ()
+  "Launch vterm if installed, otherwise eshell."
+  (interactive)
+  (if (featurep 'vterm)
+      (vterm)
+    (eshell)))
+
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 (add-hook 'prog-mode-hook 'subword-mode)
@@ -304,6 +311,7 @@
 (global-set-key (kbd "C-c i")      'octaspire/init-file-open)
 (global-set-key (kbd "C-c m")      'recompile) ; build with 'make -k'
 (global-set-key (kbd "C-c <down>") 'octaspire/open-and-goto-line-below)
+(global-set-key (kbd "C-c !")      'octaspire/terminal-launch)
 (global-set-key (kbd "C-c e")      'eval-buffer)
 (global-set-key (kbd "C-c M-.")    'swiper-isearch-thing-at-point)
 (global-set-key (kbd "C-c t")      'octaspire/cl/form-to-1am-test)
@@ -340,7 +348,7 @@
     (c-set-offset 'arglist-intro '+)
     (c-set-offset 'statement-block-intro '+)))
 
-(add-hook 'c-mode-hook 'octaspire/c-mode-hook)
+(add-hook 'c-mode-common-hook 'octaspire/c-mode-hook)
 
 (when (or (file-exists-p "~/.fonts/IBMPlexMono-Regular.ttf")
 	  (file-exists-p "~/Library/Fonts/IBMPlexMono-Regular.ttf"))
