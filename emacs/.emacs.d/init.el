@@ -336,8 +336,7 @@
     (setq c-default-style  "bsd"
 	  indent-tabs-mode nil
 	  tab-width        spaces
-	  c-basic-offset   spaces
-	  c-basic-offset   '+)
+	  c-basic-offset   spaces)
     ;; Indent 'case' labels in switch statements.
     (c-set-offset 'case-label '+)
     ;; Don't indent '{' after 'if' (when on its own line).
