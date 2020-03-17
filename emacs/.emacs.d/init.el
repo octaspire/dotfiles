@@ -164,7 +164,6 @@
     :config (progn
 	      (setq-default lispy-no-space t)
 	      (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
-	      (add-hook 'octaspire-dern-mode-hook (lambda () (lispy-mode 1)))
 	      (add-hook 'sly-mode-hook (lambda () (lispy-mode 1)))
 	      (add-hook 'sly-db-mode-hook (lambda () (setq lispy-mode nil)))))
   (use-package sly
