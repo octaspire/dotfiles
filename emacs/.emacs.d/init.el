@@ -164,6 +164,7 @@
     :config (progn
 	      (setq-default lispy-no-space t)
 	      (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
+	      (add-hook 'octaspire-dern-mode-hook (lambda () (lispy-mode 1)))
 	      (add-hook 'sly-mode-hook (lambda () (lispy-mode 1)))
 	      (add-hook 'sly-db-mode-hook (lambda () (setq lispy-mode nil)))))
   (use-package sly
@@ -320,6 +321,9 @@
 (when (executable-find "ledger")
   (load (concat octaspire/elisp-dir
 		"octaspire-ledger.el")))
+
+(load (concat octaspire/elisp-dir
+	      "octaspire-dern-mode.el"))
 
 (put 'narrow-to-region 'disabled nil)
 (load-theme 'tsdh-light)
