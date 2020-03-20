@@ -218,9 +218,14 @@
             (shell-command-to-string "pkg-config --cflags-only-I poppler-glib")))
   (use-package pdf-tools
     :ensure t
-    :config (when (eq system-type 'darwin)
-	      (setq pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo")
-	      (pdf-tools-install))))
+    :config (progn (when (eq system-type 'darwin)
+		     (setq pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo"))
+		   (pdf-tools-install)
+		   (setq pdf-view-midnight-colors '("DarkOliveGreen3" . "Black"))
+		   (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode)
+		   (add-hook 'doc-view-mode-hook (lambda ()
+						   (when (eq doc-view-doc-type 'pdf)
+						     (pdf-view-mode)))))))
 
 (use-package s
   :ensure t)
@@ -325,7 +330,9 @@
 	      "octaspire-dern-mode.el"))
 
 (put 'narrow-to-region 'disabled nil)
-(load-theme 'tsdh-light)
+
+(use-package modus-vivendi-theme
+  :ensure t)
 
 (when (eq system-type 'darwin)
   (setq mac-option-key-is-meta  nil
