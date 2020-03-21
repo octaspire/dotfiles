@@ -41,10 +41,19 @@
   "Notify used of a warning."
   (display-warning type body)
   (message "ERROR: %s" body)
-  (notifications-notify
-   :title title
-   :body body
-   :urgency 'critical))
+  (if (eq system-type 'darwin)
+      (let ((terminal-notifier (executable-find "terminal-notifier")))
+	(when terminal-notifier
+	  (start-process "terminal-notifier"
+			 "*terminal-notifier*"
+			 terminal-notifier
+			 "-title" title
+			 "-message" body
+			 "-sender" "org.gnu.Emacs")))
+    (notifications-notify
+     :title title
+     :body body
+     :urgency 'critical)))
 
 (defun octaspire/open-and-goto-line-below()
   "Create new indented line below current one and go there."

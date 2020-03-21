@@ -110,13 +110,13 @@
 		       '(octaspire/ledger)
 		       "You are not clocked-in"
 		       "Ledger timelog is currently empty.
-You are <b>NOT clocked-in</b>.")
+You are NOT clocked-in.")
 		      nil)
       ('clocked-in t)
       ('clocked-out (octaspire/notify-warning
 		     '(octaspire/ledger)
 		     "You are not clocked-in"
-		     "Ledger timelog is currently <b>clocked-out</b>.
+		     "Ledger timelog is currently clocked-out.
 You should be clocked-in.")
 		    nil))))
 
@@ -128,7 +128,7 @@ You should be clocked-in.")
       ('clocked-in (octaspire/notify-warning
 		    '(octaspire/ledger)
 		    "You are not clocked-out"
-		    "Ledger timelog is currently <b>clocked-in</b>.
+		    "Ledger timelog is currently clocked-in.
 You should be clocked-out.")
 		   nil)
       ('clocked-out t))))
