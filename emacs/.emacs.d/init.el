@@ -61,6 +61,15 @@
   (end-of-line)
   (newline-and-indent))
 
+(defun octaspire/kill-path-of-buffer ()
+  "Copy path of current buffer into kill ring"
+  (interactive)
+  (let ((path (buffer-file-name)))
+    (when path
+      (let ((truename (file-truename path)))
+	(kill-new truename)
+	(message truename)))))
+
 (defun octaspire/ensure-at-beginning-of-defun ()
   "Make sure that point is at beginning of current list"
   (unless (eq ?\( (char-after))
@@ -329,6 +338,7 @@
 (global-set-key (kbd "C-c e")      'eval-buffer)
 (global-set-key (kbd "C-c M-.")    'swiper-isearch-thing-at-point)
 (global-set-key (kbd "C-c t")      'octaspire/cl/form-to-1am-test)
+(global-set-key (kbd "C-c M-p")    'octaspire/kill-path-of-buffer)
 (global-set-key (kbd "s-u")        'up-list)
 
 (when (executable-find "ledger")
