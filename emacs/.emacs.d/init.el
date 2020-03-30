@@ -186,6 +186,11 @@
 	      (add-hook 'sly-db-mode-hook (lambda () (setq lispy-mode nil)))))
   (use-package sly
     :ensure t
+    :bind (:map sly-mode-map
+		("C-c C-l" . nil)
+		("C-c i"   . nil)
+		("C-c TAB" . nil)
+		("C-c c"   . completion-at-point))
     :config (setq sly-complete-symbol-function 'sly-flex-completions)))
 
 (use-package counsel

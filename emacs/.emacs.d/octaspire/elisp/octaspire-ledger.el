@@ -16,6 +16,13 @@
 (require 'notifications)
 (setq octaspire/ledger/timelog (concat octaspire/root-dir "ledger.timelog"))
 (setq octaspire/ledger/time-format "%Y-%m-%d %H:%M:%S")
+(setq octaspire/ledger/busy nil)
+
+(defmacro octaspire/ledger/with-busy (&rest body)
+  `(progn
+     (setq octaspire/ledger/busy t)
+     ,@body
+     (setq octaspire/ledger/busy nil)))
 
 (unless (file-exists-p octaspire/ledger/timelog)
   (with-temp-buffer (write-file octaspire/ledger/timelog)))
@@ -37,15 +44,16 @@
 
 (defun octaspire/ledger/clock-in ()
   (interactive)
-  (when (octaspire/ledger/ensure-clocked-out-or-empty)
-    (let* ((task (completing-read "clock-in: " octaspire/ledger/tasks))
-	   (line (concat "i " (format-time-string octaspire/ledger/time-format) " " task "\n")))
-      (write-region
-       line
-       nil
-       octaspire/ledger/timelog
-       t)
-      (message "clocked-in task %s" task))))
+  (octaspire/ledger/with-busy
+   (when (octaspire/ledger/ensure-clocked-out-or-empty)
+     (let* ((task (completing-read "clock-in: " octaspire/ledger/tasks))
+	    (line (concat "i " (format-time-string octaspire/ledger/time-format) " " task "\n")))
+       (write-region
+	line
+	nil
+	octaspire/ledger/timelog
+	t)
+       (message "clocked-in task %s" task)))))
 
 (defun octaspire/ledger/clock-out ()
   (interactive)
@@ -104,21 +112,23 @@
 
 (defun octaspire/ledger/ensure-clocked-in ()
   "Ensure that Ledger timelog is in clocked-in state."
-  (let ((status (octaspire/ledger/get-current-state)))
-    (cl-ecase status
-      ('timelog-empty (octaspire/notify-warning
+  (if octaspire/ledger/busy
+      t
+    (let ((status (octaspire/ledger/get-current-state)))
+      (cl-ecase status
+	('timelog-empty (octaspire/notify-warning
+			 '(octaspire/ledger)
+			 "You are not clocked-in"
+			 "Ledger timelog is currently empty.
+You are NOT clocked-in.")
+			nil)
+	('clocked-in t)
+	('clocked-out (octaspire/notify-warning
 		       '(octaspire/ledger)
 		       "You are not clocked-in"
-		       "Ledger timelog is currently empty.
-You are NOT clocked-in.")
-		      nil)
-      ('clocked-in t)
-      ('clocked-out (octaspire/notify-warning
-		     '(octaspire/ledger)
-		     "You are not clocked-in"
-		     "Ledger timelog is currently clocked-out.
+		       "Ledger timelog is currently clocked-out.
 You should be clocked-in.")
-		    nil))))
+		      nil)))))
 
 (defun octaspire/ledger/ensure-clocked-out-or-empty ()
   "Ensure that Ledger timelog is in clocked-out state."
