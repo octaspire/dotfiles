@@ -182,14 +182,15 @@
     :config (progn
 	      (setq-default lispy-no-space t)
 	      (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
-	      (add-hook 'sly-mode-hook (lambda () (lispy-mode 1)))
+	      (add-hook 'sly-mode-hook (lambda ()
+					 (lispy-mode 1)
+					 (define-key sly-mode-map (kbd "C-c C-l") nil)
+					 (define-key sly-mode-map (kbd "C-c i")   nil)
+					 (define-key sly-mode-map (kbd "C-c TAB") nil)))
 	      (add-hook 'sly-db-mode-hook (lambda () (setq lispy-mode nil)))))
   (use-package sly
     :ensure t
     :bind (:map sly-mode-map
-		("C-c C-l" . nil)
-		("C-c i"   . nil)
-		("C-c TAB" . nil)
 		("C-c c"   . completion-at-point))
     :config (setq sly-complete-symbol-function 'sly-flex-completions)))
 
