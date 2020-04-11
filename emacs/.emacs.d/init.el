@@ -100,7 +100,7 @@
 (when (executable-find "git")
   (use-package magit
     :ensure t
-    :bind (("C-c M-m" . magit-status))))
+    :bind (("C-c M-s" . magit-status))))
 
 (use-package projectile
   :ensure t
