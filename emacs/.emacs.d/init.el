@@ -184,6 +184,7 @@
 	      (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
 	      (add-hook 'sly-mode-hook (lambda ()
 					 (lispy-mode 1)
+					 (define-key sly-mode-map (kbd "C-c e")   'sly-eval-buffer)
 					 (define-key sly-mode-map (kbd "C-c C-l") nil)
 					 (define-key sly-mode-map (kbd "C-c i")   nil)
 					 (define-key sly-mode-map (kbd "C-c TAB") nil)))
