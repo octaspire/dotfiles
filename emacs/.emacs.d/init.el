@@ -338,15 +338,15 @@
 (add-hook 'prog-mode-hook 'octaspire/whitespace-mode)
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 
-(global-set-key (kbd "C-c i")      'octaspire/init-file-open)
-(global-set-key (kbd "C-c m")      'recompile) ; build with 'make -k'
-(global-set-key (kbd "C-c <down>") 'octaspire/open-and-goto-line-below)
-(global-set-key (kbd "C-c !")      'octaspire/terminal-launch)
-(global-set-key (kbd "C-c e")      'eval-buffer)
-(global-set-key (kbd "C-c M-.")    'swiper-isearch-thing-at-point)
-(global-set-key (kbd "C-c t")      'octaspire/cl/form-to-1am-test)
-(global-set-key (kbd "C-c M-p")    'octaspire/kill-path-of-buffer)
-(global-set-key (kbd "s-u")        'up-list)
+(global-set-key (kbd "C-c i")   'octaspire/init-file-open)
+(global-set-key (kbd "C-c m")   'recompile) ; build with 'make -k'
+(global-set-key (kbd "C-c j")   'octaspire/open-and-goto-line-below)
+(global-set-key (kbd "C-c !")   'octaspire/terminal-launch)
+(global-set-key (kbd "C-c e")   'eval-buffer)
+(global-set-key (kbd "C-c M-.") 'swiper-isearch-thing-at-point)
+(global-set-key (kbd "C-c t")   'octaspire/cl/form-to-1am-test)
+(global-set-key (kbd "C-c M-p") 'octaspire/kill-path-of-buffer)
+(global-set-key (kbd "s-u")     'up-list)
 
 (when (executable-find "ledger")
   (load (concat octaspire/elisp-dir
