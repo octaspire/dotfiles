@@ -366,6 +366,10 @@
 	mac-command-modifier    'meta
 	mac-option-modifier     nil))
 
+(add-hook 'latex-mode-hook
+	  (lambda ()
+	    (define-key latex-mode-map (kbd "C-c C-l") nil)))
+
 ;; C coding style
 (defun octaspire/c-mode-hook ()
   (let ((spaces 4))
