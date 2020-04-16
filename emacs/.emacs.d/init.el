@@ -370,6 +370,11 @@
 	  (lambda ()
 	    (define-key latex-mode-map (kbd "C-c C-l") nil)))
 
+(add-hook 'eshell-mode-hook
+	  (lambda ()
+	    (define-key eshell-mode-map (kbd "C-c l") 'eshell-list-history)
+	    (define-key eshell-mode-map (kbd "C-c C-l") nil)))
+
 ;; C coding style
 (defun octaspire/c-mode-hook ()
   (let ((spaces 4))
