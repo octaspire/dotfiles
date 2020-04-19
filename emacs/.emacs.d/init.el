@@ -188,9 +188,15 @@
 					 (define-key sly-mode-map (kbd "C-c C-l") nil)
 					 (define-key sly-mode-map (kbd "C-c i")   nil)
 					 (define-key sly-mode-map (kbd "C-c TAB") nil)))
-	      (add-hook 'sly-db-mode-hook (lambda () (setq lispy-mode nil)))))
+	      (add-hook 'sly-db-mode-hook (lambda () (setq lispy-mode nil)))
+	      (add-hook 'sly-stickers--replay-mode-hook (lambda () (setq lispy-mode nil)))))
+  (use-package sly-quicklisp
+    :ensure t)
+  (use-package sly-macrostep
+    :ensure t)
   (use-package sly
     :ensure t
+    :after (sly-quicklisp sly-macrostep)
     :bind (:map sly-mode-map
 		("C-c c"   . completion-at-point))
     :config (setq sly-complete-symbol-function 'sly-flex-completions)))
