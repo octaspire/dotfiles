@@ -55,6 +55,12 @@
      :body body
      :urgency 'critical)))
 
+(defun octaspire/counsel-ag-in-project ()
+  "Use `counsel-ag' to search in the current (projectile) project.
+See also `counsel-git-grep'."
+  (interactive)
+  (counsel-ag nil (projectile-project-root)))
+
 (defun octaspire/open-and-goto-line-below()
   "Create new indented line below current one and go there."
   (interactive)
@@ -194,12 +200,16 @@
     :ensure t)
   (use-package sly-macrostep
     :ensure t)
+  (use-package sly-asdf
+    :ensure t)
   (use-package sly
     :ensure t
     :after (sly-quicklisp sly-macrostep)
     :bind (:map sly-mode-map
 		("C-c c"   . completion-at-point))
-    :config (setq sly-complete-symbol-function 'sly-flex-completions)))
+    :config (progn
+	      (add-to-list 'sly-contribs 'sly-asdf 'append)
+	      (setq sly-complete-symbol-function 'sly-flex-completions))))
 
 (use-package counsel
 	     :ensure t)
@@ -352,6 +362,7 @@
 (global-set-key (kbd "C-c M-.") 'swiper-isearch-thing-at-point)
 (global-set-key (kbd "C-c t")   'octaspire/cl/form-to-1am-test)
 (global-set-key (kbd "C-c M-p") 'octaspire/kill-path-of-buffer)
+(global-set-key (kbd "C-c M-g") 'octaspire/counsel-ag-in-project)
 (global-set-key (kbd "s-u")     'up-list)
 
 (when (executable-find "ledger")
