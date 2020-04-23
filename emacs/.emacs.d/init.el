@@ -111,7 +111,13 @@ See also `counsel-git-grep'."
 (use-package projectile
   :ensure t
   :bind (("C-c p" . projectile-command-map))
-  :config (projectile-mode +1))
+  :config (progn
+	    (when (or (eq system-type 'darwin)
+		      (eq system-type 'gnu/linux)
+		      (eq system-type 'berkeley-unix))
+	      (setq projectile-project-search-path
+		    '("~/quicklisp/local-projects/")))
+	    (projectile-mode +1)))
 
 (let ((name (executable-find "aspell")))
   (when name
@@ -419,3 +425,15 @@ See also `counsel-git-grep'."
    '(bold-italic ((t (:slant italic :weight bold :family "IBM Plex Mono"))))
    '(italic ((t (:slant italic :family "IBM Plex Mono"))))
    '(variable-pitch ((t (:family "IBM Plex Sans"))))))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(dashboard-items
+   (quote
+    ((bookmarks . 8)
+     (projects . 8)
+     (agenda . 5)
+     (recents . 5)))))
