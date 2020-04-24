@@ -268,7 +268,7 @@ See also `counsel-git-grep'."
     :config (progn (when (eq system-type 'darwin)
 		     (setq pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo"))
 		   (pdf-tools-install)
-		   (setq pdf-view-midnight-colors '("DarkOliveGreen3" . "Black"))
+		   (setq pdf-view-midnight-colors '("#000000" . "#ffffea"))
 		   (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode)
 		   (add-hook 'doc-view-mode-hook (lambda ()
 						   (when (eq doc-view-doc-type 'pdf)
@@ -380,7 +380,7 @@ See also `counsel-git-grep'."
 
 (put 'narrow-to-region 'disabled nil)
 
-(use-package modus-vivendi-theme
+(use-package parchment-theme
   :ensure t)
 
 (when (eq system-type 'darwin)
