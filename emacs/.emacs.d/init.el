@@ -194,28 +194,25 @@ See also `counsel-git-grep'."
     :config (progn
 	      (setq-default lispy-no-space t)
 	      (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
-	      (add-hook 'sly-mode-hook (lambda ()
-					 (lispy-mode 1)
-					 (define-key sly-mode-map (kbd "C-c e")   'sly-eval-buffer)
-					 (define-key sly-mode-map (kbd "C-c C-l") nil)
-					 (define-key sly-mode-map (kbd "C-c i")   nil)
-					 (define-key sly-mode-map (kbd "C-c TAB") nil)))
-	      (add-hook 'sly-db-mode-hook (lambda () (setq lispy-mode nil)))
-	      (add-hook 'sly-stickers--replay-mode-hook (lambda () (setq lispy-mode nil)))))
-  (use-package sly-quicklisp
-    :ensure t)
-  (use-package sly-macrostep
-    :ensure t)
-  (use-package sly-asdf
-    :ensure t)
-  (use-package sly
+	      (add-hook 'slime-mode-hook
+			(lambda ()
+			  (lispy-mode 1)
+			  (define-key slime-mode-map (kbd "C-c e") 'slime-eval-buffer)
+			  (define-key slime-mode-map (kbd "C-c C-l") nil)))
+	      (add-hook 'slime-repl-mode-hook (lambda () (lispy-mode 1)))))
+  (use-package slime-company
     :ensure t
-    :after (sly-quicklisp sly-macrostep)
-    :bind (:map sly-mode-map
-		("C-c c"   . completion-at-point))
-    :config (progn
-	      (add-to-list 'sly-contribs 'sly-asdf 'append)
-	      (setq sly-complete-symbol-function 'sly-flex-completions))))
+    :after (slime company)
+    :config (setq slime-company-completion 'fuzzy))
+  (use-package slime
+    :ensure t
+    :config (slime-setup '(slime-fancy
+			   slime-asdf
+			   slime-quicklisp
+			   slime-scratch
+			   slime-fuzzy
+			   slime-company
+			   slime-banner))))
 
 (use-package counsel
 	     :ensure t)
