@@ -199,7 +199,10 @@ See also `counsel-git-grep'."
 			  (lispy-mode 1)
 			  (define-key slime-mode-map (kbd "C-c e") 'slime-eval-buffer)
 			  (define-key slime-mode-map (kbd "C-c C-l") nil)))
-	      (add-hook 'slime-repl-mode-hook (lambda () (lispy-mode 1)))))
+	      (add-hook 'slime-repl-mode-hook (lambda () (lispy-mode 1)))
+	      (add-hook 'slime-editing-mode-hook
+			(lambda ()
+			  (define-key slime-editing-map (kbd "C-c C-l") nil)))))
   (use-package slime-company
     :ensure t
     :after (slime company)
@@ -397,6 +400,8 @@ See also `counsel-git-grep'."
 
 ;; C coding style
 (defun octaspire/c-mode-hook ()
+  (define-key c-mode-base-map (kbd "C-j") 'newline)
+  (define-key c-mode-base-map (kbd "C-c C-l") nil)
   (let ((spaces 4))
     (setq c-default-style  "bsd"
 	  indent-tabs-mode nil
