@@ -419,6 +419,14 @@ See also `counsel-git-grep'."
 
 (add-hook 'c-mode-common-hook 'octaspire/c-mode-hook)
 
+(defun octaspire/indenting-advice (orig-fun &rest args)
+  (let ((transient-mark-mode nil))
+    (apply orig-fun args)
+    (indent-region (region-beginning) (region-end))))
+
+(advice-add 'yank :around #'octaspire/indenting-advice)
+(advice-add 'yank-pop :around #'octaspire/indenting-advice)
+
 (when (or (file-exists-p "~/.fonts/IBMPlexMono-Regular.ttf")
 	  (file-exists-p "~/Library/Fonts/IBMPlexMono-Regular.ttf"))
   (custom-set-faces
