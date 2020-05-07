@@ -32,10 +32,15 @@
 (setq octaspire/elisp-dir (concat octaspire/root-dir
 				  (file-name-as-directory "elisp")))
 
-(defun octaspire/init-file-open ()
+(setq octaspire/private-config-file (concat octaspire/elisp-dir
+					    "octaspire-private.el"))
+
+(defun octaspire/init-file-open (arg)
   "Visit Emacs initialization file."
-  (interactive)
-  (find-file user-init-file))
+  (interactive "P")
+  (if arg
+      (find-file octaspire/private-config-file)
+    (find-file user-init-file)))
 
 (defun octaspire/notify-warning (type title body)
   "Notify used of a warning."
@@ -322,8 +327,7 @@ See also `counsel-git-grep'."
       user-mail-address              ""
       octaspire/elfeed/feeds         '())
 
-(let ((private (concat octaspire/elisp-dir
-		       "octaspire-private.el")))
+(let ((private octaspire/private-config-file))
   (when (file-exists-p private)
     (load private)))
 
