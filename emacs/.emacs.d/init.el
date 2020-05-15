@@ -291,6 +291,10 @@ See also `counsel-git-grep'."
   :config (when (memq window-system '(mac ns x))
 	    (exec-path-from-shell-initialize)))
 
+(use-package yasnippet
+  :ensure t
+  :config (yas-global-mode 1))
+
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)

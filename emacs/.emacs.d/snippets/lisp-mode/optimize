@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: optimize
+# key: optimize
+# --
+(declaim (optimize (speed ${1:0}) (safety ${2:3}) (debug ${3:3})))
