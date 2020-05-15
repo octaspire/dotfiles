@@ -141,10 +141,7 @@ See also `counsel-git-grep'."
 		  company-backends              '((company-etags)
 						  (company-capf)
 						  (company-dabbrev-code)
-						  (company-dabbrev))
-		  company-global-modes          '(not lisp-mode
-						      sly-mrepl-mode
-						      sly-db-mode))
+						  (company-dabbrev)))
 	    (global-company-mode))
   :bind (("C-c c" . company-complete-common)))
 
