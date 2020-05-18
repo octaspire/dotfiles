@@ -427,7 +427,8 @@ See also `counsel-git-grep'."
 (defun octaspire/indenting-advice (orig-fun &rest args)
   (let ((transient-mark-mode nil))
     (apply orig-fun args)
-    (indent-region (region-beginning) (region-end))))
+    (unless (member major-mode '(latex-mode org-mode))
+      (indent-region (region-beginning) (region-end)))))
 
 (advice-add 'yank :around #'octaspire/indenting-advice)
 (advice-add 'yank-pop :around #'octaspire/indenting-advice)
