@@ -120,8 +120,9 @@ See also `counsel-git-grep'."
 	    (when (or (eq system-type 'darwin)
 		      (eq system-type 'gnu/linux)
 		      (eq system-type 'berkeley-unix))
-	      (setq projectile-project-search-path
-		    '("~/quicklisp/local-projects/")))
+	      (when (octaspire/lisp-found-p)
+		(setq projectile-project-search-path
+		      '("~/quicklisp/local-projects/"))))
 	    (projectile-mode +1)))
 
 (let ((name (executable-find "aspell")))
@@ -183,7 +184,17 @@ See also `counsel-git-grep'."
     :ensure t
     :config (add-to-list 'auto-mode-alist '("\\.nasm\\'" . nasm-mode))))
 
-(when (executable-find "sbcl")
+(defun octaspire/lisp-found-p ()
+  "Tell if Common Lisp is available in the system."
+  (executable-find "sbcl"))
+
+(use-package lispy
+    :ensure t
+    :config (progn
+	      (setq-default lispy-no-space t)
+	      (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))))
+
+(when (octaspire/lisp-found-p)
   (let ((style "sbcl"))
     (setq inferior-lisp-program     style
 	  common-lisp-style         style
@@ -191,33 +202,28 @@ See also `counsel-git-grep'."
   (let ((path (expand-file-name "~/common-lisp/HyperSpec-7-0/HyperSpec/")))
     (when (file-directory-p path)
       (setq common-lisp-hyperspec-root (concat "file://" path))))
-  (use-package lispy
-    :ensure t
-    :config (progn
-	      (setq-default lispy-no-space t)
-	      (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
-	      (add-hook 'slime-mode-hook
-			(lambda ()
-			  (lispy-mode 1)
-			  (define-key slime-mode-map (kbd "C-c e") 'slime-eval-buffer)
-			  (define-key slime-mode-map (kbd "C-c C-l") nil)))
-	      (add-hook 'slime-repl-mode-hook (lambda () (lispy-mode 1)))
-	      (add-hook 'slime-editing-mode-hook
-			(lambda ()
-			  (define-key slime-editing-map (kbd "C-c C-l") nil)))))
   (use-package slime-company
     :ensure t
     :after (slime company)
     :config (setq slime-company-completion 'fuzzy))
   (use-package slime
     :ensure t
-    :config (slime-setup '(slime-fancy
-			   slime-asdf
-			   slime-quicklisp
-			   slime-scratch
-			   slime-fuzzy
-			   slime-company
-			   slime-banner))))
+    :config (progn (slime-setup '(slime-fancy
+				  slime-asdf
+				  slime-quicklisp
+				  slime-scratch
+				  slime-fuzzy
+				  slime-company
+				  slime-banner))
+		   (add-hook 'slime-mode-hook
+			     (lambda ()
+			       (lispy-mode 1)
+			       (define-key slime-mode-map (kbd "C-c e") 'slime-eval-buffer)
+			       (define-key slime-mode-map (kbd "C-c C-l") nil)))
+		   (add-hook 'slime-repl-mode-hook (lambda () (lispy-mode 1)))
+		   (add-hook 'slime-editing-mode-hook
+			     (lambda ()
+			       (define-key slime-editing-map (kbd "C-c C-l") nil))))))
 
 (use-package counsel
 	     :ensure t)
