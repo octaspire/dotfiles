@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [[ ! $# -eq 1 ]]; then
+   echo "One filename expected"
+   exit 1
+fi
+
+INFILE=$1
+OUTFILE_TMP1=${INFILE%.*}-tmp1.gif
+OUTFILE_TMP2=${INFILE%.*}-tmp2.gif
+OUTFILE=${INFILE%.*}.gif
+echo "Converting to gif..."
+ffmpeg -loglevel warning -i "$INFILE" -pix_fmt rgb8 -r 10 -vf scale=-1:-1 "$OUTFILE_TMP1"
+echo "Adding progress bar..."
+gif-progress < "$OUTFILE_TMP1" > "$OUTFILE_TMP2"
+echo "Optimizing..."
+gifsicle -i "$OUTFILE_TMP2" -O3 -o "$OUTFILE"
+echo "Cleaning up..."
+rm "$OUTFILE_TMP1" "$OUTFILE_TMP2"
+echo "Done."
