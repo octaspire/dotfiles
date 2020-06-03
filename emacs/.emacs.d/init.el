@@ -382,10 +382,6 @@ See also `counsel-git-grep'."
 (global-set-key (kbd "C-c M-g") 'octaspire/counsel-ag-in-project)
 (global-set-key (kbd "s-u")     'up-list)
 
-(when (executable-find "ledger")
-  (load (concat octaspire/elisp-dir
-		"octaspire-ledger.el")))
-
 (load (concat octaspire/elisp-dir
 	      "octaspire-dern-mode.el"))
 
