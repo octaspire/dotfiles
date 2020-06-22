@@ -381,6 +381,8 @@ See also `counsel-git-grep'."
 (global-set-key (kbd "C-c M-p") 'octaspire/kill-path-of-buffer)
 (global-set-key (kbd "C-c M-g") 'octaspire/counsel-ag-in-project)
 (global-set-key (kbd "s-u")     'up-list)
+(global-set-key (kbd "C-x M-f") 'counsel-file-jump) ; or find-name-dired, counsel-fzf
+(global-set-key (kbd "C-c M-f") 'counsel-git-grep)
 
 (load (concat octaspire/elisp-dir
 	      "octaspire-dern-mode.el"))
@@ -388,6 +390,9 @@ See also `counsel-git-grep'."
 (put 'narrow-to-region 'disabled nil)
 
 (use-package parchment-theme
+  :ensure t)
+
+(use-package forth-mode
   :ensure t)
 
 (when (eq system-type 'darwin)
