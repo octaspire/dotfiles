@@ -26,6 +26,8 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(setq org-replace-disputed-keys t)
+
 (setq octaspire/root-dir (concat (file-name-as-directory user-emacs-directory)
 				 (file-name-as-directory "octaspire")))
 
