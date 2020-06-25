@@ -394,9 +394,6 @@ See also `counsel-git-grep'."
 (use-package parchment-theme
   :ensure t)
 
-(use-package forth-mode
-  :ensure t)
-
 (when (eq system-type 'darwin)
   (setq mac-option-key-is-meta  nil
 	mac-command-key-is-meta t
