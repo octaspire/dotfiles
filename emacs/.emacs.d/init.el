@@ -26,8 +26,6 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(setq org-replace-disputed-keys t)
-
 (setq octaspire/root-dir (concat (file-name-as-directory user-emacs-directory)
 				 (file-name-as-directory "octaspire")))
 
@@ -334,7 +332,9 @@ See also `counsel-git-grep'."
       org-html-htmlize-output-type   'inline-css
       user-full-name                 ""
       user-mail-address              ""
-      octaspire/elfeed/feeds         '())
+      octaspire/elfeed/feeds         '()
+      org-replace-disputed-keys      t
+      org-src-preserve-indentation   t)
 
 (let ((private octaspire/private-config-file))
   (when (file-exists-p private)
@@ -371,6 +371,7 @@ See also `counsel-git-grep'."
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 (add-hook 'prog-mode-hook 'subword-mode)
 (add-hook 'prog-mode-hook 'octaspire/whitespace-mode)
+(add-hook 'org-mode-hook  'octaspire/whitespace-mode)
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 
 (global-set-key (kbd "C-c i")   'octaspire/init-file-open)
