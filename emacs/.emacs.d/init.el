@@ -392,8 +392,9 @@ See also `counsel-git-grep'."
 
 (put 'narrow-to-region 'disabled nil)
 
-(use-package parchment-theme
-  :ensure t)
+(use-package acme-theme
+  :ensure t
+  :config (load-theme 'acme t))
 
 (when (eq system-type 'darwin)
   (setq mac-option-key-is-meta  nil
