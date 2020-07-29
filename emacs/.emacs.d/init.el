@@ -334,7 +334,11 @@ See also `counsel-git-grep'."
       user-mail-address              ""
       octaspire/elfeed/feeds         '()
       org-replace-disputed-keys      t
-      org-src-preserve-indentation   t)
+      org-src-preserve-indentation   t
+      org-html-checkbox-type         'html
+      global-hl-line-sticky-flag     t)
+
+(global-hl-line-mode)
 
 (let ((private octaspire/private-config-file))
   (when (file-exists-p private)
@@ -409,7 +413,16 @@ See also `counsel-git-grep'."
 (add-hook 'eshell-mode-hook
 	  (lambda ()
 	    (define-key eshell-mode-map (kbd "C-c l") 'eshell-list-history)
-	    (define-key eshell-mode-map (kbd "C-c C-l") nil)))
+	    (define-key eshell-mode-map (kbd "C-c C-l") nil)
+	    (setq-local global-hl-line-mode nil)))
+
+(add-hook 'vterm-mode-hook
+	  (lambda ()
+	    (setq-local global-hl-line-mode nil)))
+
+(add-hook 'dashboard-mode-hook
+	  (lambda ()
+	    (setq-local global-hl-line-mode nil)))
 
 ;; C coding style
 (defun octaspire/c-mode-hook ()
