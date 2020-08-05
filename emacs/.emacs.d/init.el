@@ -113,6 +113,9 @@ See also `counsel-git-grep'."
     :ensure t
     :bind (("C-c M-s" . magit-status))))
 
+(use-package nhexl-mode
+  :ensure t)
+
 (use-package projectile
   :ensure t
   :bind (("C-c p" . projectile-command-map))
@@ -242,7 +245,8 @@ See also `counsel-git-grep'."
 
 (use-package avy
   :ensure t
-  :bind (("C-=" . avy-goto-char)))
+  :bind (("C-=" . avy-goto-char)
+	 ("M-=" . avy-goto-line)))
 
 (use-package operate-on-number
   :ensure t
@@ -376,6 +380,7 @@ See also `counsel-git-grep'."
 (add-hook 'prog-mode-hook 'subword-mode)
 (add-hook 'prog-mode-hook 'octaspire/whitespace-mode)
 (add-hook 'org-mode-hook  'octaspire/whitespace-mode)
+(add-hook 'nxml-mode-hook 'octaspire/whitespace-mode)
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 
 (global-set-key (kbd "C-c i")   'octaspire/init-file-open)
@@ -453,6 +458,12 @@ See also `counsel-git-grep'."
 
 (advice-add 'yank :around #'octaspire/indenting-advice)
 (advice-add 'yank-pop :around #'octaspire/indenting-advice)
+
+(defun octaspire/swiper-isearch-advice (orig-fun &rest args)
+  (apply orig-fun args)
+  (recenter))
+
+(advice-add 'swiper-isearch :around #'octaspire/swiper-isearch-advice)
 
 (when (or (file-exists-p "~/.fonts/IBMPlexMono-Regular.ttf")
 	  (file-exists-p "~/Library/Fonts/IBMPlexMono-Regular.ttf"))
