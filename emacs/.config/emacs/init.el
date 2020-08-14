@@ -13,6 +13,9 @@
 ;; See the License for the specific language governing permissions and
 ;; limitations under the License.
 (require 'package)
+;; This must be set before org is loaded,
+;; or it doesn't have any effect.
+(setq org-replace-disputed-keys t)
 
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/") t)
@@ -34,6 +37,9 @@
 
 (setq octaspire/private-config-file (concat octaspire/elisp-dir
 					    "octaspire-private.el"))
+
+(setq octaspire/ox-base64-html-file (concat octaspire/elisp-dir
+					    "ox-base64-html.el"))
 
 (defun octaspire/init-file-open (arg)
   "Visit Emacs initialization file."
@@ -329,7 +335,6 @@ See also `counsel-git-grep'."
       backup-directory-alist         `((".*" . ,temporary-file-directory))
       auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
       ;; Make windmove keys S-up, S-down, etc. to work also in Org-mode.
-      org-replace-disputed-keys      t
       windmove-wrap-around           t
       org-src-fontify-natively       1
       org-export-with-smart-quotes   1
@@ -344,9 +349,13 @@ See also `counsel-git-grep'."
 
 (global-hl-line-mode)
 
-(let ((private octaspire/private-config-file))
-  (when (file-exists-p private)
-    (load private)))
+(defun octaspire/load-if-exists (name)
+  "Load Emacs lisp file NAME, if it exists"
+  (when (file-exists-p name)
+    (load name)))
+
+(octaspire/load-if-exists octaspire/private-config-file)
+(octaspire/load-if-exists octaspire/ox-base64-html-file)
 
 (use-package elfeed
   :ensure t
