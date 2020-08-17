@@ -122,6 +122,9 @@ See also `counsel-git-grep'."
 (use-package nhexl-mode
   :ensure t)
 
+(use-package lorem-ipsum
+  :ensure t)
+
 (use-package projectile
   :ensure t
   :bind (("C-c p" . projectile-command-map))
