@@ -29,6 +29,14 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; Package 'exec-path-from-shell' should be installed as early as possible,
+;; because without it all the tests using 'executable-find' might fail to find
+;; existing executables in macOS.
+(use-package exec-path-from-shell
+  :ensure t
+  :config (when (memq window-system '(mac ns x))
+	    (exec-path-from-shell-initialize)))
+
 (setq octaspire/root-dir (concat (file-name-as-directory user-emacs-directory)
 				 (file-name-as-directory "octaspire")))
 
@@ -305,11 +313,6 @@ See also `counsel-git-grep'."
   (use-package vterm
     :ensure t))
 
-(use-package exec-path-from-shell
-  :ensure t
-  :config (when (memq window-system '(mac ns x))
-	    (exec-path-from-shell-initialize)))
-
 (use-package yasnippet
   :ensure t
   :config (yas-global-mode 1))
@@ -492,8 +495,7 @@ See also `counsel-git-grep'."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(dashboard-items
-   (quote
-    ((bookmarks . 8)
+   '((bookmarks . 8)
      (projects . 8)
      (agenda . 5)
-     (recents . 5)))))
+     (recents . 5))))

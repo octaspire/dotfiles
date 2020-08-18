@@ -8,11 +8,6 @@ alias la='ls -lath'
 alias e='emacsclient -nw'
 alias em='emacs -nw'
 
-# Eternal bash history (from stackoverflow)
-export HISTFILE=~/.bash_eternal_history
-# Force prompt to write history after every command
-PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
-
 # From coderwall.com
 function b64() {
     cat $1 | base64 | xclip -selection clipboard;

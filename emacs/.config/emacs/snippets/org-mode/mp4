@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: mp4
+# key: mp4
+# --
+#+ATTR_HTML: :controls controls :width $1
+#+BEGIN_video
+#+HTML: <source src="$2" type="video/mp4">
+#+END_video
