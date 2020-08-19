@@ -474,12 +474,6 @@ See also `counsel-git-grep'."
 (advice-add 'yank :around #'octaspire/indenting-advice)
 (advice-add 'yank-pop :around #'octaspire/indenting-advice)
 
-(defun octaspire/swiper-isearch-advice (orig-fun &rest args)
-  (apply orig-fun args)
-  (recenter))
-
-(advice-add 'swiper-isearch :around #'octaspire/swiper-isearch-advice)
-
 (when (or (file-exists-p "~/.fonts/IBMPlexMono-Regular.ttf")
 	  (file-exists-p "~/Library/Fonts/IBMPlexMono-Regular.ttf"))
   (custom-set-faces
@@ -495,7 +489,7 @@ See also `counsel-git-grep'."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(dashboard-items
-   '((bookmarks . 8)
+   '((bookmarks . 10)
      (projects . 8)
      (agenda . 5)
-     (recents . 5))))
+     (recents . 10))))
