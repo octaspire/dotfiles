@@ -62,26 +62,54 @@ Your browser does not support the video tag.\n</%s>"
   (let ((type (org-element-property :type link))
 	(path (org-element-property :path link)))
     (if (and (string= type "file") (not (org-export-inline-image-p link)))
-	(format "<a download=\"%s\" href=\"%s\">%S</a>"
+	(format "<a download=\"%s\" href=\"%s\">%s</a>"
 		path
 		(octaspire/get-data-url path)
 		path)
       (cl-letf (((symbol-function 'org-html--format-image) 'octaspire/org-html--format-image))
 	(org-export-with-backend 'html link desc info)))))
 
-(defun octaspire/org-html-export-to-base64-html (&optional async subtree visible body)
+(defun octaspire/org-html-export-to-base64-html-buffer (&optional async subtreep visible-only body-only ext-plist)
   (interactive)
   (let ((org-html-doctype "html5")
 	(org-html-html5-fancy t)
 	(html-inline-images t)
 	(org-html-inline-images t))
     (cl-letf (((symbol-function 'org-html--format-image) 'octaspire/org-html--format-image))
-      (org-export-to-buffer 'octaspire/html-base64 "*Org OCTASPIRE/HTML-BASE64 Export*"))))
+      (org-export-to-buffer
+	  'octaspire/html-base64
+	  "*Org OCTASPIRE/HTML-BASE64 Export*"
+	async
+	subtreep
+	visible-only
+	body-only
+	ext-plist
+	(lambda () (set-auto-mode t))))))
+
+(defun octaspire/org-html-export-to-base64-html-file (&optional async subtreep visible-only body-only ext-plist)
+  (interactive)
+  (let ((org-html-doctype "html5")
+	(org-html-html5-fancy t)
+	(html-inline-images t)
+	(org-html-inline-images t)
+	(file (org-export-output-file-name ".html" subtreep))
+	(org-export-coding-system org-html-coding-system))
+    (cl-letf (((symbol-function 'org-html--format-image) 'octaspire/org-html--format-image))
+      (org-export-to-file 'octaspire/html-base64 file async subtreep visible-only body-only ext-plist))))
 
 (org-export-define-derived-backend 'octaspire/html-base64 'html
   :translate-alist '((link                   . octaspire/ox-base64-html-link)
                      (org-html-special-block . octaspire/org-html-special-block))
   :menu-entry
-  '(?h "Export to HTML"
-       ((?b "As base64 data URL (images, mp4) HTML file"
-	    octaspire/org-html-export-to-base64-html))))
+  '(?b "As base64 data URL HTML"
+       ((?H "As HTML buffer"
+	    octaspire/org-html-export-to-base64-html-buffer)
+	(?h "As HTML file"
+	    octaspire/org-html-export-to-base64-html-file)
+	(?o "As HTML file and open"
+	    (lambda (a s v b)
+	      (if a
+		  (octaspire/org-html-export-to-base64-html-file t s v b)
+		(org-open-file
+		 (octaspire/org-html-export-to-base64-html-file nil s v b))))
+	    octaspire/org-html-export-to-base64-html-file))))
