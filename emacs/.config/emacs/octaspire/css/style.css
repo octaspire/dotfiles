@@ -43,6 +43,10 @@ nav {
     color: gray;
 }
 
+#text-table-of-contents {
+    font-size: smaller;
+}
+
 .outline-1, .outline-2, .outline-3, .outline-4 {
     max-width: 60ch;
     line-height: 1.4;
@@ -59,11 +63,22 @@ p {
     margin-right: auto;
 }
 
+img {
+    max-width: 100%;
+    display: block;
+    width: auto;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 figure {
     max-width: 100%;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    width: auto;
+    height: auto;
 }
 
 a {
@@ -73,6 +88,64 @@ a {
 pre {
     overflow-x: auto;
     font-size: 74%;
+}
+
+.src::before {
+    border: 2px solid black;
+    background-color: #aeeeee;
+    display: block;
+    font-weight: bold;
+    padding: 0.125em;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+
+.src-c::before {
+    content: "C";
+}
+
+.src-elisp::before {
+    content: "Emacs Lisp";
+}
+
+.src-lisp::before {
+    content: "Common Lisp";
+}
+
+.src-dern::before {
+    content: "Dern";
+}
+
+.src-s::before {
+    content: "GNU Assembler";
+}
+
+.src-diff::before {
+    content: "Diff"
+}
+
+.src-shell::before {
+    content: "Shell"
+}
+
+.src-css::before {
+    content: "CSS"
+}
+
+.src-make::before {
+    content: "Make"
+}
+
+.src-json::before {
+    content: "JSON"
+}
+
+.src-xml::before {
+    content: "XML"
+}
+
+pre {
+    padding-bottom: 0.5em;
 }
 
 code, pre {
