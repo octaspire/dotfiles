@@ -13,6 +13,7 @@
 ;; See the License for the specific language governing permissions and
 ;; limitations under the License.
 (require 'package)
+(require 'server)
 ;; This must be set before org is loaded,
 ;; or it doesn't have any effect.
 (setq org-replace-disputed-keys t)
@@ -473,6 +474,9 @@ See also `counsel-git-grep'."
 
 (advice-add 'yank :around #'octaspire/indenting-advice)
 (advice-add 'yank-pop :around #'octaspire/indenting-advice)
+
+(unless (server-running-p)
+  (server-start))
 
 (when (or (file-exists-p "~/.fonts/IBMPlexMono-Regular.ttf")
 	  (file-exists-p "~/Library/Fonts/IBMPlexMono-Regular.ttf"))
