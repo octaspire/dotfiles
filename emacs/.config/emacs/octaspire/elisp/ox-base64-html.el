@@ -58,6 +58,47 @@ Your browser does not support the video tag.\n</%s>"
 		  block-type)
 	""))))
 
+(defun octaspire/html-copy-button (id text)
+  (concat "<button title='copy to clipboard' class='src-copy-button' id='button_"
+	  id
+	  "'>copy to clipboard</button>\n"
+	  "<textarea readonly id='area_" id "' style='opacity:.01;height:0;position:absolute;z-index:-1;overflow:hidden;'>"
+	  (s-replace "'" "&apos;"
+		     (s-replace "\"" "&quot;"
+				(s-replace ">" "&gt;"
+					   (s-replace "<" "&lt;"
+						      (s-replace "&" "&amp"
+								 (s-chop-prefix "\"" (s-chop-suffix "\"" text)))))))
+	  "</textarea>\n"))
+
+(defun octaspire/html-copy-script (id)
+  (concat "<script type='text/javascript'>\n"
+	  "  var button = document.querySelector('#button_" id "');\n"
+	  "  button.addEventListener('click', function(event) {\n"
+	  "    var area = document.querySelector('#area_" id "');\n"
+	  "    area.select();\n"
+	  "    document.execCommand('copy');"
+          "  });\n"
+          "</script>"))
+
+(defun octaspire/org-src-block-to-string (src-block info)
+  (let ((print-escape-newlines nil))
+    (prin1-to-string (org-export-format-code-default src-block info) t)))
+
+(defun octaspire/org-src-block (src-block content info)
+  (let* ((id (symbol-name (cl-gensym)))
+	 (text (octaspire/org-src-block-to-string src-block info))
+	 (button (octaspire/html-copy-button id text))
+	 (script (octaspire/html-copy-script id)))
+    (concat
+     "\n\n"
+     button
+     "\n"
+     script
+     "\n"
+     (org-export-with-backend 'html src-block content info)
+     "\n")))
+
 (defun octaspire/ox-base64-html-link (link desc info)
   (let ((type (org-element-property :type link))
 	(path (org-element-property :path link)))
@@ -99,7 +140,8 @@ Your browser does not support the video tag.\n</%s>"
 
 (org-export-define-derived-backend 'octaspire/html-base64 'html
   :translate-alist '((link                   . octaspire/ox-base64-html-link)
-                     (org-html-special-block . octaspire/org-html-special-block))
+                     (org-html-special-block . octaspire/org-html-special-block)
+		     (src-block              . octaspire/org-src-block))
   :menu-entry
   '(?b "As base64 data URL HTML"
        ((?H "As HTML buffer"

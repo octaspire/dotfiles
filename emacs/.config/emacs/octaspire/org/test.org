@@ -1,0 +1,164 @@
+#+SETUPFILE: base64-style.org
+
+#+BEGIN_COMMENT
+#+SETUPFILE: file-style.org
+#+END_COMMENT
+
+* Nunc Aliquet Augue Nec Adipiscing
+
+ [[http://google.com]]
+
+ [[file:test1.zip]]
+
+ Pellentesque dapibus suscipit ligula.  Donec posuere augue in quam.
+ Etiam vel tortor sodales tellus ultricies commodo.  Suspendisse
+ potenti.  Aenean in sem ac leo mollis blandit.  Donec neque quam,
+ dignissim in, mollis nec, sagittis eu, wisi.  Phasellus lacus.  Etiam
+ laoreet quam sed arcu.  Phasellus at dui in ligula mollis ultricies.
+ Integer placerat tristique nisl.  Praesent augue.  Fusce commodo.
+ Vestibulum convallis, lorem a tempus semper, dui dui euismod elit,
+ vitae placerat urna tortor vitae lacus.  Nullam libero mauris,
+ consequat quis, varius et, dictum id, arcu.  Mauris mollis tincidunt
+ felis.  Aliquam feugiat tellus ut neque.  Nulla facilisis, risus a
+ rhoncus fermentum, tellus tellus lacinia purus, et dictum nunc justo
+ sit amet elit.
+
+ [[./acme.jpg]]
+
+ Praesent fermentum tempor tellus.  Nullam tempus.  Mauris ac felis
+ vel velit tristique imperdiet.  Donec at pede.  Etiam vel neque nec
+ dui dignissim bibendum.  Vivamus id enim.  Phasellus neque orci,
+
+#+begin_example
+Test.
+#+end_example
+
+#+ATTR_HTML: :controls controls :width 100%
+#+BEGIN_video
+#+HTML: <source src="test.mp4" type="video/mp4">
+#+END_video
+
+ Nullam eu ante vel est convallis[fn:1] dignissim.  Fusce suscipit, wisi nec
+ facilisis facilisis, est dui fermentum leo, quis tempor ligula erat
+ quis odio.  Nunc porta vulputate tellus.  Nunc rutrum turpis sed pede.
+ Sed bibendum.  Aliquam posuere.  Nunc aliquet, augue nec adipiscing
+ interdum, lacus tellus malesuada massa, quis varius mi purus non odio.
+ Pellentesque condimentum, magna ut suscipit hendrerit, ipsum augue
+ ornare nulla, non luctus diam neque sit amet urna.  Curabitur
+ vulputate vestibulum lorem.  Fusce sagittis, libero non molestie
+ mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia
+ eros.  Sed id ligula quis est convallis tempor[fn:2].  Curabitur lacinia
+ pulvinar nibh.  Nam a sapien.
+
+#+BEGIN_aside
+Nullam eu ante vel est convallis dignissim.  Fusce suscipit, wisi nec
+facilisis facilisis, est dui fermentum leo, quis tempor ligula erat
+quis odio.  Nunc porta vulputate tellus.  Nunc rutrum turpis sed pede.
+Sed bibendum.  Aliquam posuere.  Nunc aliquet, augue nec adipiscing
+interdum, lacus tellus malesuada massa, quis varius mi purus non odio.
+Pellentesque condimentum, magna ut suscipit hendrerit, ipsum augue
+ornare nulla, non luctus diam neque sit amet urna.  Curabitur
+vulputate vestibulum lorem.  Fusce sagittis, libero non molestie
+mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia
+eros.  Sed id ligula quis est convallis tempor.  Curabitur lacinia
+pulvinar nibh.  Nam a sapien.
+#+END_aside
+
+
+| Name | Age | Phone |
+|------+-----+-------|
+| aaa  | bbb | ccc   |
+| skd  | ddd | djd   |
+
+** Cras Placerat Accumsan Nulla
+
+ Sodales ~int main(void);~ dapibus suscipit ligula.  Donec posuere augue in quam.
+ Etiam vel tortor sodales tellus ultricies commodo.  Suspendisse
+ potenti.  Aenean in sem ac leo mollis blandit.  Donec neque quam,
+ dignissim in, mollis nec, sagittis eu, wisi.  Phasellus lacus.
+ Etiam laoreet quam sed arcu.  Phasellus at dui in ligula mollis
+ ultricies.  Integer placerat tristique nisl.  Praesent augue.
+ Fusce commodo.  Vestibulum convallis, lorem a tempus semper, dui
+ dui euismod elit, vitae placerat urna tortor vitae lacus.  Nullam
+ libero mauris, consequat quis, varius et, dictum id, arcu.  Mauris
+ mollis tincidunt felis.  Aliquam feugiat tellus ut neque.  Nulla
+ facilisis, risus a rhoncus fermentum, tellus tellus lacinia purus,
+ et dictum nunc justo sit amet elit.
+
+#+BEGIN_SRC elisp
+(add-hook 'dashboard-mode-hook
+	  (lambda ()
+	    (setq-local global-hl-line-mode nil)))
+#+END_SRC
+
+#+BEGIN_SRC c
+int main(void)
+{
+  int x = 123;
+  char const * const tmp = "Nullam rutrum.  Etiam laoreet quam sed arcu.  Donec pretium posuere tellus.\n";
+  return 0;
+}
+#+END_SRC
+
+#+BEGIN_SRC lisp
+;; This is a comment
+(defun square (x)
+   (* x x))
+#+END_SRC
+
+#+BEGIN_SRC dern
+(+ 1 2 3)
+#+END_SRC
+
+#+BEGIN_SRC shell
+cd ~/Documents
+#+END_SRC
+
+#+BEGIN_SRC css
+.src-diff::before {
+    content: "Diff"
+}
+#+END_SRC
+
+#+BEGIN_SRC xml
+<root a="1">
+  <a/>
+</root>
+#+END_SRC
+
+#+BEGIN_SRC json
+{
+  "firstName": "John",
+  "lastName": "Smith"
+}
+#+END_SRC
+
+#+BEGIN_SRC make
+all: test
+
+.PHONY: clean
+
+test: test.c
+    gcc test.c
+
+clean:
+    rm -f test.o test
+#+END_SRC
+
+#+BEGIN_SRC diff
+2c2
+< 2
+---
+> a
+4a5
+> b
+#+END_SRC
+
+
+#+BEGIN_SRC s
+movl -4(%abp), %eax   # This is a comment.
+#+END_SRC
+
+
+[fn:1]This is the first footnote.
+[fn:2]And this is the second one.
