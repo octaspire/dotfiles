@@ -27,7 +27,8 @@
   (base64-encode-string
    (with-temp-buffer
      (insert-file-contents-literally name)
-     (buffer-string))))
+     (buffer-string))
+   t))
 
 (defun octaspire/get-data-url (name)
   "Get the full data URL for the given file NAME."
@@ -36,7 +37,7 @@
 	    (octaspire/get-file-as-base64-string name)))
 
 (defun octaspire/org-html--format-image (source attributes info)
-  (format "<img src=\"%s\" %s />"
+  (format "<img src='%s' alt='%s'/>"
 	  (octaspire/get-data-url source)
 	  (file-name-nondirectory source)))
 
@@ -72,7 +73,7 @@ Your browser does not support the video tag.\n</%s>"
 	  "</textarea>\n"))
 
 (defun octaspire/html-copy-script (id)
-  (concat "<script type='text/javascript'>\n"
+  (concat "<script>\n"
 	  "  var button = document.querySelector('#button_" id "');\n"
 	  "  button.addEventListener('click', function(event) {\n"
 	  "    var area = document.querySelector('#area_" id "');\n"
@@ -140,7 +141,7 @@ Your browser does not support the video tag.\n</%s>"
 
 (defun octaspire/org-html-toc-advice (orig-fun &rest args)
   (concat "<button title='toggle table of contents' class='toc-toggle-button' id='button_toc_toggle'>toggle table of contents</button>"
-	  "<script type='text/javascript'>\n"
+	  "<script>\n"
 	  "  var button = document.querySelector('#button_toc_toggle');\n"
 	  "  button.addEventListener('click', function(event) {\n"
 	  "    var elem = document.querySelector('#table-of-contents');\n"
