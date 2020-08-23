@@ -38,6 +38,11 @@ body {
     color: black;
 }
 
+.toc-toggle-button {
+    font-family: 'IBM Plex Mono', monospace;
+    margin: 0px;
+}
+
 nav, #footnotes, #postamble, #preamble {
     max-width: 60ch;
     line-height: 1.4;
@@ -47,7 +52,6 @@ nav, #footnotes, #postamble, #preamble {
 }
 
 nav {
-    margin-top: 2em;
     border-top: 0.25em solid black;
     border-bottom: 0.25em solid black;
 }
@@ -81,7 +85,7 @@ nav {
     font-size: smaller;
 }
 
-.outline-1, .outline-2, .outline-3, .outline-4 {
+body, .outline-1, .outline-2, .outline-3, .outline-4 {
     max-width: 60ch;
     line-height: 1.4;
     display: block;

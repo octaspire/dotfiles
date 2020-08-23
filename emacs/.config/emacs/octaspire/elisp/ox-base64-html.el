@@ -138,6 +138,19 @@ Your browser does not support the video tag.\n</%s>"
     (cl-letf (((symbol-function 'org-html--format-image) 'octaspire/org-html--format-image))
       (org-export-to-file 'octaspire/html-base64 file async subtreep visible-only body-only ext-plist))))
 
+(defun octaspire/org-html-toc-advice (orig-fun &rest args)
+  (concat "<button title='toggle table of contents' class='toc-toggle-button' id='button_toc_toggle'>toggle table of contents</button>"
+	  "<script type='text/javascript'>\n"
+	  "  var button = document.querySelector('#button_toc_toggle');\n"
+	  "  button.addEventListener('click', function(event) {\n"
+	  "    var elem = document.querySelector('#table-of-contents');\n"
+	  "    if (elem.style.display === 'none') { elem.style.display = 'block'; } else { elem.style.display = 'none'; }"
+          "  });\n"
+          "</script>"
+	  (apply orig-fun args)))
+
+(advice-add 'org-html-toc :around #'octaspire/org-html-toc-advice)
+
 (org-export-define-derived-backend 'octaspire/html-base64 'html
   :translate-alist '((link                   . octaspire/ox-base64-html-link)
                      (org-html-special-block . octaspire/org-html-special-block)
