@@ -352,7 +352,8 @@ See also `counsel-git-grep'."
       org-replace-disputed-keys      t
       org-src-preserve-indentation   t
       org-html-checkbox-type         'html
-      global-hl-line-sticky-flag     t)
+      global-hl-line-sticky-flag     t
+      org-html-postamble             "Exported %T.  Modified %C.")
 
 (global-hl-line-mode)
 
