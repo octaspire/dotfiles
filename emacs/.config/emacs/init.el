@@ -353,7 +353,7 @@ See also `counsel-git-grep'."
       org-src-preserve-indentation   t
       org-html-checkbox-type         'html
       global-hl-line-sticky-flag     t
-      org-html-postamble             "Exported %T.  Modified %C.")
+      org-html-postamble             "Exported %T.  Modified %C.</br>%c<br/>%a %e")
 
 (global-hl-line-mode)
 
