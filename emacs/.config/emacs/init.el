@@ -353,7 +353,9 @@ See also `counsel-git-grep'."
       org-src-preserve-indentation   t
       org-html-checkbox-type         'html
       global-hl-line-sticky-flag     t
-      org-html-postamble             "Exported %T.  Modified %C.</br>%c<br/>%a %e")
+      org-html-doctype               "html5"
+      org-html-html5-fancy           t
+      org-html-postamble             "Exported %T.  Modified %C.<br/>%c")
 
 (global-hl-line-mode)
 
@@ -377,6 +379,11 @@ See also `counsel-git-grep'."
 (when (string= user-mail-address "")
   (setq user-mail-address
 	(read-string "No email address configured. Give address to be used: ")))
+
+(unless (or (s-blank? user-full-name)
+	    (s-blank? user-mail-address))
+  (setq org-html-postamble
+	(concat org-html-postamble "<br/>%a %e")))
 
 (defun octaspire/whitespace-mode ()
   "Enable whitespace mode."

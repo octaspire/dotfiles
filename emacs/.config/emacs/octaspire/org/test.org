@@ -65,10 +65,10 @@ pulvinar nibh.  Nam a sapien.
 #+END_aside
 
 
-| Name | Age | Phone | Description                                                                                                                                                     |
-|------+-----+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| aaa  | bbb | ccc   | Pellentesque tristique imperdiet tortor.  Pellentesque condimentum, magna ut suscipit hendrerit, ipsum augue ornare nulla, non luctus diam neque sit amet urna. |
-| skd  | ddd | djd   | abc                                                                                                                                                             |
+| Name | Age | Phone | Description                                                                                                                                                       |
+|------+-----+-------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| aaa  | bbb | ccc   | =Pellentesque tristique imperdiet tortor.  Pellentesque condimentum, magna ut suscipit hendrerit, ipsum augue ornare nulla, non luctus diam neque sit amet urna.= |
+| skd  | ddd | djd   | abc                                                                                                                                                               |
 
 ** Cras Placerat Accumsan Nulla
 

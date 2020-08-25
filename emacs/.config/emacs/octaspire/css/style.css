@@ -102,6 +102,11 @@ body, .outline-1, .outline-2, .outline-3, .outline-4 {
     margin-right: auto;
 }
 
+video {
+    max-width: 60ch;
+    height: auto;
+}
+
 p {
     text-align: justify;
     text-justify: inter-word;

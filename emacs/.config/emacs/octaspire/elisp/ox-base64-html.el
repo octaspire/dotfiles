@@ -153,9 +153,9 @@ Your browser does not support the video tag.\n</%s>"
 (advice-add 'org-html-toc :around #'octaspire/org-html-toc-advice)
 
 (org-export-define-derived-backend 'octaspire/html-base64 'html
-  :translate-alist '((link                   . octaspire/ox-base64-html-link)
-                     (org-html-special-block . octaspire/org-html-special-block)
-		     (src-block              . octaspire/org-src-block))
+  :translate-alist '((link          . octaspire/ox-base64-html-link)
+                     (special-block . octaspire/org-html-special-block)
+		     (src-block     . octaspire/org-src-block))
   :menu-entry
   '(?b "As base64 data URL HTML"
        ((?H "As HTML buffer"
