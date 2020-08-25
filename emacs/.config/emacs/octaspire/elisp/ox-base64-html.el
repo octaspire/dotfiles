@@ -169,3 +169,10 @@ Your browser does not support the video tag.\n</%s>"
 		(org-open-file
 		 (octaspire/org-html-export-to-base64-html-file nil s v b))))
 	    octaspire/org-html-export-to-base64-html-file))))
+
+(defun octaspire/ox-base64-html-publish (plist filename pub-dir)
+  (org-publish-org-to 'octaspire/html-base64 filename
+		      (concat "." (or (plist-get plist :html-extension)
+				      org-html-extension
+				      "html"))
+		      plist pub-dir))

@@ -372,16 +372,8 @@ See also `counsel-git-grep'."
   :config (setq elfeed-feeds
 		octaspire/elfeed/feeds))
 
-(when (string= user-full-name "")
-  (setq user-full-name
-	(read-string "No full name configured. Give name to be used: ")))
-
-(when (string= user-mail-address "")
-  (setq user-mail-address
-	(read-string "No email address configured. Give address to be used: ")))
-
-(unless (or (s-blank? user-full-name)
-	    (s-blank? user-mail-address))
+(unless (or (< (length user-full-name) 2)
+	    (< (length user-mail-address) 2))
   (setq org-html-postamble
 	(concat org-html-postamble "<br/>%a %e")))
 
@@ -406,6 +398,9 @@ See also `counsel-git-grep'."
 (add-hook 'org-mode-hook  'octaspire/whitespace-mode)
 (add-hook 'nxml-mode-hook 'octaspire/whitespace-mode)
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+
+(require 'org)
+(define-key org-mode-map (kbd "C-c C-p") nil)
 
 (global-set-key (kbd "C-c i")   'octaspire/init-file-open)
 (global-set-key (kbd "C-c m")   'recompile) ; build with 'make -k'
