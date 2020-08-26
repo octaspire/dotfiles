@@ -1,12 +1,13 @@
 #!/bin/bash
 
 function usage {
-    echo "Usage: -i filename [-s|--silent] [-w|--width] [-h|--help]"
+    echo "Convert movie files (for example mov) into mp4 videos."
+    echo "Usage: -i filename [-s|--silent] [-d|--dimensions w h] [-h|--help]"
     echo ""
-    echo "  -i filename  read and convert filename"
-    echo "  -s, --silent no audio in the result"
-    echo "  -w, --width  resize to given width maintaining the aspect ratio"
-    echo "  -h, --help   show this usage information and quit"
+    echo "  -i filename           read and convert filename"
+    echo "  -s, --silent          no audio in the result"
+    echo "  -d, --dimensions  w h resize to given width and height"
+    echo "  -h, --help            show this usage information and quit"
     exit 1
 }
 
@@ -17,6 +18,7 @@ fi
 SILENT=false
 INFILE=""
 WIDTH="-1"
+HEIGHT="-1"
 
 while [ $# -ge 1 ]; do
     case "$1" in
@@ -24,9 +26,10 @@ while [ $# -ge 1 ]; do
 	    SILENT=true
 	    shift
 	    ;;
-	-w|--width)
+	-d|--dimensions)
 	    WIDTH="$2"
-	    shift 2
+	    HEIGHT="$3"
+	    shift 3
 	    ;;
 	-i)
 	    INFILE="$2"
@@ -49,11 +52,11 @@ fi
 OUTFILE=${INFILE%.*}.mp4
 if $SILENT
 then
-    echo "Converting to silent mp4..."
-    ffmpeg -loglevel warning -i "$INFILE" -an -vcodec libx264 -crf 28 -vf "scale=${WIDTH}:-1" "$OUTFILE"
+    echo "Converting to silent ${WIDTH}x${HEIGHT} mp4..."
+    ffmpeg -loglevel warning -i "$INFILE" -an -vcodec libx264 -crf 28 -vf "scale=${WIDTH}:${HEIGHT}" "$OUTFILE"
 else
-    echo "Converting to mp4..."
-    ffmpeg -loglevel warning -i "$INFILE" -acodec aac  -vcodec libx264 -crf 28 -vf "scale=${WIDTH}:-1" "$OUTFILE"
+    echo "Converting to ${WIDTH}x${HEIGHT} mp4..."
+    ffmpeg -loglevel warning -i "$INFILE" -acodec aac  -vcodec libx264 -crf 28 -vf "scale=${WIDTH}:${HEIGHT}" "$OUTFILE"
 fi
 
 echo "Done."

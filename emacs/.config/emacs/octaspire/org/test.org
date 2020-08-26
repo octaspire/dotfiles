@@ -33,9 +33,9 @@
 Test.
 #+end_example
 
-#+ATTR_HTML: :controls controls :width 100%
+#+ATTR_HTML: :controls controls
 #+BEGIN_video
-#+HTML: <source src="test.mp4" type="video/mp4">
+#+HTML: <source src="intro.mp4" type="video/mp4">
 #+END_video
 
  Nullam eu ante vel est convallis[fn:1] dignissim.  Fusce suscipit, wisi nec

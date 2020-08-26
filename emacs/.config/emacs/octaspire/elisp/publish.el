@@ -19,6 +19,6 @@
 
 (defun octaspire/publish ()
   (interactive)
-  (org-publish "octaspire"))
+  (org-publish "octaspire" t))
 
 (global-set-key (kbd "C-c C-p") 'octaspire/publish)
