@@ -11,7 +11,7 @@ function usage {
     exit 1
 }
 
-if [[ $# -gt 5 || $# -lt 1 ]]; then
+if [[ $# -gt 6 || $# -lt 1 ]]; then
     usage
 fi
 
