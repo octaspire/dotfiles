@@ -260,7 +260,7 @@ tr, td, th {
     font-family: 'IBM Plex Mono', monospace;
 }
 
-@media (max-width: 640) {
+@media (max-width: 640px) {
     nav, #footnotes, #postamble, #preamble {
         max-width: 40ch;
         margin-left: 10px;
