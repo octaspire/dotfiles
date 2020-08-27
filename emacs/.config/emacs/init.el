@@ -355,7 +355,7 @@ See also `counsel-git-grep'."
       global-hl-line-sticky-flag     t
       org-html-doctype               "html5"
       org-html-html5-fancy           t
-      org-html-postamble             "Exported %T.  Modified %C.<br/>%c")
+      org-html-postamble             "Exported %T. &nbsp; | &nbsp; Modified %C.<br/>%c")
 
 (global-hl-line-mode)
 

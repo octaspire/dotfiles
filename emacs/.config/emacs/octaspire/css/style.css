@@ -78,7 +78,10 @@ nav {
 
 #postamble {
     color: gray;
-    border-top: 0.25em solid black;
+    border-top: 0.3125em solid black;
+    padding-top: 0.125em;
+    font-size: 0.75em;
+    max-width: 105em;
 }
 
 #table-of-contents {
@@ -92,6 +95,8 @@ nav {
 li, ul {
     margin-bottom: 0.5em;
     margin-top: 0.5em;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 body, .outline-1, .outline-2, .outline-3, .outline-4 {
@@ -105,6 +110,7 @@ body, .outline-1, .outline-2, .outline-3, .outline-4 {
 video {
     max-width: 60ch;
     height: auto;
+    border: 0.125em solid black;
 }
 
 p {
@@ -220,6 +226,8 @@ table {
     min-width: 100%;
     line-height: 1.4;
     border-collapse: collapse;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 th {
@@ -250,4 +258,19 @@ tr, td, th {
     color: darkgreen;
     font-weight: bold;
     font-family: 'IBM Plex Mono', monospace;
+}
+
+@media (max-width: 640) {
+    nav, #footnotes, #postamble, #preamble {
+        max-width: 40ch;
+        margin-left: 10px;
+    }
+    body, .outline-1, .outline-2, .outline-3, .outline-4 {
+        max-width: 40ch;
+        margin-left: 10px;
+    }
+    video {
+        max-width: 40ch;
+        margin-left: 10px;
+    }
 }
