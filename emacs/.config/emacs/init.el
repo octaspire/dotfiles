@@ -44,6 +44,9 @@
 (setq octaspire/elisp-dir (concat octaspire/root-dir
 				  (file-name-as-directory "elisp")))
 
+(load (concat octaspire/elisp-dir
+	      "octaspire-dern-mode.el"))
+
 (setq octaspire/private-config-file (concat octaspire/elisp-dir
 					    "octaspire-private.el"))
 
@@ -346,6 +349,7 @@ See also `counsel-git-grep'."
       org-src-fontify-natively       1
       org-export-with-smart-quotes   1
       org-html-htmlize-output-type   'inline-css
+      org-html-head-include-default-style nil
       user-full-name                 ""
       user-mail-address              ""
       octaspire/elfeed/feeds         '()
@@ -414,9 +418,6 @@ See also `counsel-git-grep'."
 (global-set-key (kbd "s-u")     'up-list)
 (global-set-key (kbd "C-x M-f") 'counsel-file-jump) ; or find-name-dired, counsel-fzf
 (global-set-key (kbd "C-c M-f") 'counsel-git-grep)
-
-(load (concat octaspire/elisp-dir
-	      "octaspire-dern-mode.el"))
 
 (put 'narrow-to-region 'disabled nil)
 

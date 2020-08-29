@@ -1,6 +1,7 @@
+(load "~/.config/emacs/octaspire/elisp/octaspire-dern-mode.el")
+(load "~/.config/emacs/octaspire/elisp/ox-base64-html.el")
 (require 'ob-css)
 (require 'ox-publish)
-(load "~/.config/emacs/octaspire/elisp/ox-base64-html.el")
 
 (setq org-publish-project-alist
       '(("org"

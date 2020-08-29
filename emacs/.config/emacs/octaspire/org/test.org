@@ -106,7 +106,7 @@ int main(void)
    (* x x))
 #+END_SRC
 
-#+BEGIN_SRC dern
+#+BEGIN_SRC octaspire-dern
 (+ 1 2 3)
 #+END_SRC
 

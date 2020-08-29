@@ -1,5 +1,6 @@
 (require 'org)
 (require 'ox-html)
+(load "~/.config/emacs/octaspire/elisp/octaspire-dern-mode.el")
 
 (defun octaspire/get-mime-type (name)
   "Get the mime type for the given file NAME."
@@ -13,7 +14,8 @@
 	  ((string= ext "tar") "application/x-tar")
 	  ((string= ext "gz") "application/gzip")
 	  ((or (string= ext "txt")
-	       (string= ext "patch")) "text/plain")
+	       (string= ext "patch")
+	       (string= ext "asc")) "text/plain")
 	  (t "application/octet-stream"))))
 
 (defun octaspire/get-data-url-prefix (name)
@@ -108,8 +110,12 @@ Your browser does not support the video tag.\n</%s>"
 		path
 		(octaspire/get-data-url path)
 		path)
-      (cl-letf (((symbol-function 'org-html--format-image) 'octaspire/org-html--format-image))
-	(org-export-with-backend 'html link desc info)))))
+      (if (string= type "fuzzy")
+	  (format "<a href=\"%s\">%s</a>"
+		  path
+		  desc)
+	(cl-letf (((symbol-function 'org-html--format-image) 'octaspire/org-html--format-image))
+	  (org-export-with-backend 'html link desc info))))))
 
 (defun octaspire/org-html-export-to-base64-html-buffer (&optional async subtreep visible-only body-only ext-plist)
   (interactive)
