@@ -1,8 +1,10 @@
-#+SETUPFILE: base64-style.org
+#+SETUPFILE: ~/.config/emacs/octaspire/css/base64-style.org
 
 #+BEGIN_COMMENT
-#+SETUPFILE: file-style.org
+#+SETUPFILE: ~/.config/emacs/octaspire/css/file-style.org
 #+END_COMMENT
+
+#+TITLE: Aenean in Sem ac Leo Mollis Blandit
 
 * Nunc Aliquet Augue Nec Adipiscing
 
@@ -30,7 +32,8 @@
  dui dignissim bibendum.  Vivamus id enim.  Phasellus neque orci,
 
 #+begin_example
-Test.
+Line 1.
+Line 2.
 #+end_example
 
 #+ATTR_HTML: :controls controls
@@ -44,8 +47,8 @@ Test.
  Sed bibendum.  Aliquam posuere.  Nunc aliquet, augue nec adipiscing
  interdum, lacus tellus malesuada massa, quis varius mi purus non odio.
  Pellentesque condimentum, magna ut suscipit hendrerit, ipsum augue
- ornare nulla, non luctus diam neque sit amet urna.  Curabitur
- vulputate vestibulum lorem.  Fusce sagittis, libero non molestie
+ ornare nulla, non *luctus* diam neque sit amet urna.  Curabitur
+ vulputate vestibulum lorem.  /Fusce/ sagittis, libero non molestie
  mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia
  eros.  Sed id ligula quis est convallis tempor[fn:2].  Curabitur lacinia
  pulvinar nibh.  Nam a sapien.
@@ -100,11 +103,22 @@ int main(void)
 }
 #+END_SRC
 
+#+begin_src cpp
+int main(void)
+{
+    return 0;
+}
+#+end_src
+
 #+BEGIN_SRC lisp
 ;; This is a comment
 (defun square (x)
    (* x x))
 #+END_SRC
+
+#+begin_src scm
+(and 1 2 #f)
+#+end_src
 
 #+BEGIN_SRC octaspire-dern
 (+ 1 2 3)
@@ -133,6 +147,39 @@ cd ~/Documents
 }
 #+END_SRC
 
+#+begin_src yaml
+date: 2020-08-31
+#+end_src
+
+#+begin_src js
+var button = document.querySelector('#button_toc_toggle');
+button.addEventListener('click', function(event) {
+    var s = document.querySelector('#table-of-contents').style;
+    if (s.display == 'none' || s.display == '') {
+	s.display = 'block';
+    } else {
+	s.display = 'none';
+    }
+});
+#+end_src
+
+#+begin_src java
+public class Hello {
+    public static void main(String[] args) {
+        // This is a comment.
+        System.out.println("Hello World!");
+    }
+}
+#+end_src
+
+#+begin_src clj
+(def a 42)
+#+end_src
+
+#+begin_src python
+print('Hello World!')
+#+end_src
+
 #+BEGIN_SRC make
 all: test
 
@@ -154,10 +201,13 @@ clean:
 > b
 #+END_SRC
 
-
 #+BEGIN_SRC s
 movl -4(%abp), %eax   # This is a comment.
 #+END_SRC
+
+#+begin_src asm
+mov ah, 0x9
+#+end_src
 
 ** TODO Donec Vitae Dolor.
 

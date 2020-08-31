@@ -161,6 +161,10 @@ pre {
     content: "C";
 }
 
+.src-cpp::before {
+    content: "C++";
+}
+
 .src-elisp::before {
     content: "Emacs Lisp";
 }
@@ -169,12 +173,20 @@ pre {
     content: "Common Lisp";
 }
 
-.src-dern::before {
+.src-scm::before {
+    content: "Scheme";
+}
+
+.src-octaspire-dern::before {
     content: "Dern";
 }
 
 .src-s::before {
-    content: "GNU Assembler";
+    content: "GNU Assembly";
+}
+
+.src-asm::before {
+    content: "Intel Assembly";
 }
 
 .src-diff::before {
@@ -197,8 +209,32 @@ pre {
     content: "JSON"
 }
 
+.src-yaml::before {
+    content: "YAML"
+}
+
+.src-js::before {
+    content: "JavaScript"
+}
+
+.src-java::before {
+    content: "Java"
+}
+
+.src-clj::before {
+    content: "Clojure"
+}
+
+.src-python::before {
+    content: "Python"
+}
+
 .src-xml::before {
     content: "XML"
+}
+
+.example {
+    padding-top: 0.5em;
 }
 
 pre {

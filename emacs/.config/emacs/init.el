@@ -134,6 +134,15 @@ See also `counsel-git-grep'."
 (use-package nhexl-mode
   :ensure t)
 
+(use-package yaml-mode
+  :ensure t)
+
+(use-package clojure-mode
+  :ensure t)
+
+(use-package cider
+  :ensure t)
+
 (use-package lorem-ipsum
   :ensure t)
 

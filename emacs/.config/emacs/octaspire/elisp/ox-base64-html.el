@@ -51,7 +51,7 @@
 	   (regexp "src=\".*\" ")
 	   (start (string-match regexp contents))
 	   (end (match-end 0)))
-      (if (and start end)
+      (if (and (string= block-type "video") (and start end))
 	  (format "<%s%s>\n<source src=\"%s\" type=\"video/mp4\">\n\
 Your browser does not support the video tag.\n</%s>"
 		  block-type
@@ -59,7 +59,7 @@ Your browser does not support the video tag.\n</%s>"
 		  (octaspire/get-data-url
 		   (substring contents (+ start 5) (- end 2)))
 		  block-type)
-	""))))
+	(org-html-special-block special-block contents info)))))
 
 (defun octaspire/html-copy-button (id text)
   (concat "<button title='copy to clipboard' class='src-copy-button' id='button_"
