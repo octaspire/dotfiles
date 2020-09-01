@@ -176,7 +176,12 @@ See also `counsel-git-grep'."
 						  (company-capf)
 						  (company-dabbrev-code)
 						  (company-dabbrev)))
-	    (global-company-mode))
+	    (global-company-mode)
+	    (define-key company-active-map (kbd "M-n") nil)
+	    (define-key company-active-map (kbd "M-p") nil)
+	    (define-key company-active-map (kbd "C-n") #'company-select-next)
+	    (define-key company-active-map (kbd "C-p") #'company-select-previous)
+	    (define-key company-active-map (kbd "C-j") #'company-complete-selection))
   :bind (("C-c c" . company-complete-common)))
 
 (use-package remember
