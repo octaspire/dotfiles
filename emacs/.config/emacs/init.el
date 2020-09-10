@@ -329,7 +329,10 @@ See also `counsel-git-grep'."
 
 (when (and module-file-suffix (executable-find "cmake"))
   (use-package vterm
-    :ensure t))
+    :ensure t
+    :bind (:map vterm-mode-map ("C-]" . (lambda ()
+					  (interactive)
+					  (vterm-send-key "]" nil nil t))))))
 
 (use-package yasnippet
   :ensure t
