@@ -36,7 +36,7 @@ Line 1.
 Line 2.
 #+end_example
 
-#+ATTR_HTML: :controls controls
+#+ATTR_HTML: :controls controls :poster intro_poster.png
 #+BEGIN_video
 #+HTML: <source src="intro.mp4" type="video/mp4">
 #+END_video
