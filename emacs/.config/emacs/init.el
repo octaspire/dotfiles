@@ -426,7 +426,7 @@ See also `counsel-git-grep'."
 (global-set-key (kbd "C-c i")   'octaspire/init-file-open)
 (global-set-key (kbd "C-c m")   'recompile) ; build with 'make -k'
 (global-set-key (kbd "C-c j")   'octaspire/open-and-goto-line-below)
-(global-set-key (kbd "C-c !")   'octaspire/terminal-launch)
+(global-set-key (kbd "C-c v")   'octaspire/terminal-launch)
 (global-set-key (kbd "C-c e")   'eval-buffer)
 (global-set-key (kbd "C-c M-.") 'swiper-isearch-thing-at-point)
 (global-set-key (kbd "C-c t")   'octaspire/cl/form-to-1am-test)
