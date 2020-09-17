@@ -257,7 +257,8 @@ See also `counsel-git-grep'."
 			     (lambda ()
 			       (lispy-mode 1)
 			       (define-key slime-mode-map (kbd "C-c e") 'slime-eval-buffer)
-			       (define-key slime-mode-map (kbd "C-c C-l") nil)))
+			       (define-key slime-mode-map (kbd "C-c C-l") nil)
+			       (define-key slime-mode-map (kbd "M-p")     nil)))
 		   (add-hook 'slime-repl-mode-hook (lambda () (lispy-mode 1)))
 		   (add-hook 'slime-editing-mode-hook
 			     (lambda ()
