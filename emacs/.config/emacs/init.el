@@ -423,6 +423,7 @@ See also `counsel-git-grep'."
 
 (require 'org)
 (define-key org-mode-map (kbd "C-c C-p") nil)
+(define-key org-mode-map (kbd "M-p")     nil)
 
 (global-set-key (kbd "C-c i")   'octaspire/init-file-open)
 (global-set-key (kbd "C-c m")   'recompile) ; build with 'make -k'
