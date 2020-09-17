@@ -287,6 +287,10 @@ See also `counsel-git-grep'."
   :ensure t
   :bind (("C-c n" . operate-on-number-at-point)))
 
+(use-package ace-window
+  :ensure t
+  :bind (("M-p" . ace-window)))
+
 (use-package dumb-jump
   :ensure t
   :bind (("M-g j" . dumb-jump-go)
@@ -350,7 +354,6 @@ See also `counsel-git-grep'."
 (global-auto-revert-mode 1)
 (electric-pair-mode 1)
 (defalias 'yes-or-no-p 'y-or-n-p)
-(windmove-default-keybindings)
 
 (setq inhibit-startup-message        t
       browse-url-browser-function    'eww-browse-url
@@ -361,8 +364,6 @@ See also `counsel-git-grep'."
       tags-add-tables                t
       backup-directory-alist         `((".*" . ,temporary-file-directory))
       auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
-      ;; Make windmove keys S-up, S-down, etc. to work also in Org-mode.
-      windmove-wrap-around           t
       org-src-fontify-natively       1
       org-export-with-smart-quotes   1
       org-html-htmlize-output-type   'inline-css
