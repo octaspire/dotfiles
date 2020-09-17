@@ -257,8 +257,7 @@ See also `counsel-git-grep'."
 			     (lambda ()
 			       (lispy-mode 1)
 			       (define-key slime-mode-map (kbd "C-c e") 'slime-eval-buffer)
-			       (define-key slime-mode-map (kbd "C-c C-l") nil)
-			       (define-key slime-mode-map (kbd "M-p")     nil)))
+			       (define-key slime-mode-map (kbd "C-c C-l") nil)))
 		   (add-hook 'slime-repl-mode-hook (lambda () (lispy-mode 1)))
 		   (add-hook 'slime-editing-mode-hook
 			     (lambda ()
@@ -290,7 +289,7 @@ See also `counsel-git-grep'."
 
 (use-package ace-window
   :ensure t
-  :bind (("M-p" . ace-window)))
+  :bind (("C-c a" . ace-window)))
 
 (use-package dumb-jump
   :ensure t
@@ -424,7 +423,6 @@ See also `counsel-git-grep'."
 
 (require 'org)
 (define-key org-mode-map (kbd "C-c C-p") nil)
-(define-key org-mode-map (kbd "M-p")     nil)
 
 (global-set-key (kbd "C-c i")   'octaspire/init-file-open)
 (global-set-key (kbd "C-c m")   'recompile) ; build with 'make -k'
