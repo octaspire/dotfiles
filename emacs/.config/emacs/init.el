@@ -277,7 +277,9 @@ See also `counsel-git-grep'."
 			       (lispy-mode 1)
 			       (define-key slime-mode-map (kbd "C-c e") 'slime-eval-buffer)
 			       (define-key slime-mode-map (kbd "C-c C-l") nil)))
-		   (add-hook 'slime-repl-mode-hook (lambda () (lispy-mode 1)))
+		   (add-hook 'slime-repl-mode-hook (lambda ()
+						     (lispy-mode 1)
+						     (define-key slime-repl-mode-map (kbd "C-j") 'slime-repl-return)))
 		   (add-hook 'slime-editing-mode-hook
 			     (lambda ()
 			       (define-key slime-editing-map (kbd "C-c C-l") nil))))))
@@ -542,4 +544,5 @@ See also `counsel-git-grep'."
      (projects . 8)
      (agenda . 5)
      (recents . 10)))
- '(mode-require-final-newline 'ask))
+ '(mode-require-final-newline 'ask)
+ '(truncate-lines t))
