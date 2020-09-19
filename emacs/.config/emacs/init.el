@@ -54,7 +54,7 @@
 					    "ox-base64-html.el"))
 
 (defun octaspire/stringify-region-or-symbol-at-point (&optional argument)
-  "Convert region (if active) into string, otherwise convert word at point.
+  "Convert region (if active) into string, otherwise convert symbol at point.
 If invoked with optional prefix ARGUMENT, ask for the two delimiter strings
 to be used."
   (interactive "P")
