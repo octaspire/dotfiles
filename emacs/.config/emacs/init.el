@@ -53,6 +53,25 @@
 (setq octaspire/ox-base64-html-file (concat octaspire/elisp-dir
 					    "ox-base64-html.el"))
 
+(defun octaspire/stringify-region-or-symbol-at-point (&optional argument)
+  "Convert region (if active) into string, otherwise convert word at point.
+If invoked with optional prefix ARGUMENT, ask for the two delimiter strings
+to be used."
+  (interactive "P")
+  (let* (
+	 (delim1 (if argument (read-string "first delimiter: ") "\""))
+	 (delim2 (if argument (read-string "second delimiter: ") "\""))
+	 (bounds (if mark-active
+		     (car (region-bounds))
+		   (bounds-of-thing-at-point 'symbol)))
+	 (pos1 (car bounds))
+	 (pos2 (cdr bounds)))
+    (save-excursion
+      (goto-char pos2)
+      (insert delim2)
+      (goto-char pos1)
+      (insert delim1))))
+
 (defun octaspire/init-file-open (arg)
   "Visit Emacs initialization file."
   (interactive "P")
@@ -428,6 +447,7 @@ See also `counsel-git-grep'."
 (define-key dashboard-mode-map (kbd "C-j") 'dashboard-return)
 
 (global-set-key (kbd "C-c i")   'octaspire/init-file-open)
+(global-set-key (kbd "C-c \"")  'octaspire/stringify-region-or-symbol-at-point)
 (global-set-key (kbd "C-c m")   'recompile) ; build with 'make -k'
 (global-set-key (kbd "C-c j")   'octaspire/open-and-goto-line-below)
 (global-set-key (kbd "C-c v")   'octaspire/terminal-launch)
