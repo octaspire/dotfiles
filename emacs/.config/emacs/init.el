@@ -377,7 +377,8 @@ See also `counsel-git-grep'."
       global-hl-line-sticky-flag     t
       org-html-doctype               "html5"
       org-html-html5-fancy           t
-      org-html-postamble             "Exported %T. &nbsp; | &nbsp; Modified %C.<br/>%c")
+      org-html-postamble             "Exported %T. &nbsp; | &nbsp; Modified %C.<br/>%c"
+      require-final-newline          'ask)
 
 (global-hl-line-mode)
 
@@ -423,6 +424,8 @@ See also `counsel-git-grep'."
 
 (require 'org)
 (define-key org-mode-map (kbd "C-c C-p") nil)
+(require 'dashboard)
+(define-key dashboard-mode-map (kbd "C-j") 'dashboard-return)
 
 (global-set-key (kbd "C-c i")   'octaspire/init-file-open)
 (global-set-key (kbd "C-c m")   'recompile) ; build with 'make -k'
@@ -518,4 +521,5 @@ See also `counsel-git-grep'."
    '((bookmarks . 10)
      (projects . 8)
      (agenda . 5)
-     (recents . 10))))
+     (recents . 10)))
+ '(mode-require-final-newline 'ask))
