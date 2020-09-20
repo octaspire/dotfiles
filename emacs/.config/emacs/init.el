@@ -249,7 +249,9 @@ See also `counsel-git-grep'."
     :ensure t
     :config (progn
 	      (setq-default lispy-no-space t)
-	      (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))))
+	      (add-hook 'emacs-lisp-mode-hook (lambda ()
+						(lispy-mode 1)
+						(define-key lispy-mode-map (kbd "M-m") nil)))))
 
 (when (octaspire/lisp-found-p)
   (let ((style "sbcl"))
