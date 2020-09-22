@@ -17,5 +17,5 @@ tasks:
     - show-result: |
         cat ~/result.txt
     - check-result: |
-        echo '~/.config/emacs/octaspire/' > expected.txt
+        echo '~/.emacs.d/octaspire/' > expected.txt
         diff expected.txt result.txt
