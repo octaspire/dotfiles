@@ -1,0 +1,19 @@
+image: debian/bullseye
+packages:
+    - build-essential
+    - emacs
+sources:
+    - https://git.sr.ht/~octaspire/dotfiles
+tasks:
+    - setup: |
+        cd dotfiles
+        stow -t ~/ emacs
+    - show-version: |
+        emacs --version
+    - run-emacs: |
+        emacs --batch --eval '(progn (load "~/.config/emacs/init.el") (let ((str (format "%s\n" octaspire/root-dir))) (append-to-file str nil "~/result.txt")) (kill-emacs))'
+    - show-result: |
+        cat ~/result.txt
+    - check-result: |
+        echo '~/.config/emacs/octaspire/' > expected.txt
+        diff expected.txt result.txt
