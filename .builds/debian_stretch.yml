@@ -9,6 +9,7 @@ tasks:
     - setup: |
         cd dotfiles
         stow -t ~/ emacs
+        ln -s .config/emacs ~/.emacs.d
     - show-version: |
         emacs --version
     - run-emacs: |
