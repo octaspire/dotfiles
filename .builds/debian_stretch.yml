@@ -1,6 +1,7 @@
 image: debian/bullseye
 packages:
     - build-essential
+    - stow
     - emacs
 sources:
     - https://git.sr.ht/~octaspire/dotfiles
