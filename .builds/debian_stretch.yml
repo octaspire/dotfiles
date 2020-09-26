@@ -13,9 +13,9 @@ tasks:
     - show-version: |
         emacs --version
     - run-emacs: |
-        emacs --batch --eval '(progn (load "~/.config/emacs/init.el") (let ((str (format "%s\n" octaspire/root-dir))) (append-to-file str nil "~/result.txt")) (kill-emacs))'
+        emacs --batch --eval '(progn (load "~/.config/emacs/init.el") (let ((str (format "%s\n%s\n" octaspire/root-dir (featurep '\''octaspire-init-el)))) (append-to-file str nil "~/result.txt")) (kill-emacs))'
     - show-result: |
         cat ~/result.txt
     - check-result: |
-        echo '~/.emacs.d/octaspire/' > expected.txt
+        printf '~/.emacs.d/octaspire/\nt\n' > expected.txt
         diff expected.txt result.txt

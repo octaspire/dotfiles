@@ -548,3 +548,5 @@ See also `counsel-git-grep'."
      (recents . 10)))
  '(mode-require-final-newline 'ask)
  '(truncate-lines t))
+
+(provide 'octaspire-init-el)
