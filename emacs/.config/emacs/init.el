@@ -282,7 +282,8 @@ See also `counsel-git-grep'."
 			       (define-key slime-mode-map (kbd "C-c C-l") nil)))
 		   (add-hook 'slime-repl-mode-hook (lambda ()
 						     (lispy-mode 1)
-						     (define-key slime-repl-mode-map (kbd "C-j") 'slime-repl-return)))
+						     (define-key slime-repl-mode-map (kbd "<return>") 'slime-repl-newline-and-indent)
+						     (define-key slime-repl-mode-map (kbd "C-j")      'slime-repl-return)))
 		   (add-hook 'slime-editing-mode-hook
 			     (lambda ()
 			       (define-key slime-editing-map (kbd "C-c C-l") nil))))))
