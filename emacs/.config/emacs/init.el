@@ -181,10 +181,11 @@ See also `counsel-git-grep'."
   (when name
     (setq ispell-program-name name)))
 
-(use-package smart-mode-line
-  :ensure t)
+(use-package telephone-line
+  :ensure t
+  :config (telephone-line-mode 1))
 
- (use-package company
+(use-package company
   :ensure t
   :config (progn
 	    (setq company-idle-delay            0.5
