@@ -3,6 +3,8 @@ packages:
     - build-essential
     - stow
     - emacs
+    - cmake
+    - sbcl
 sources:
     - https://git.sr.ht/~octaspire/dotfiles
 tasks:

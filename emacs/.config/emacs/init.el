@@ -359,6 +359,9 @@ See also `counsel-git-grep'."
 (when (and module-file-suffix (executable-find "cmake"))
   (use-package vterm
     :ensure t
+    :custom
+    (vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=no" "Ensure build succeeds")
+    (vterm-always-compile-module t "Compile module without asking")
     :bind (:map vterm-mode-map ("C-]" . (lambda ()
 					  (interactive)
 					  (vterm-send-key "]" nil nil t))))))
@@ -491,6 +494,10 @@ See also `counsel-git-grep'."
 (add-hook 'vterm-mode-hook
 	  (lambda ()
 	    (setq-local global-hl-line-mode nil)))
+
+(add-hook 'dired-mode-hook
+	  (lambda ()
+	    (define-key dired-mode-map (kbd "C-j") 'dired-find-file)))
 
 (add-hook 'dashboard-mode-hook
 	  (lambda ()
