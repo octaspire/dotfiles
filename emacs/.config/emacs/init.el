@@ -188,7 +188,7 @@ See also `counsel-git-grep'."
 (use-package company
   :ensure t
   :config (progn
-	    (setq company-idle-delay            0.5
+	    (setq company-idle-delay            1.0
 		  company-minimum-prefix-length 2
 		  company-dabbrev-other-buffers 'all
 		  company-dabbrev-downcase      nil
