@@ -153,6 +153,9 @@ See also `counsel-git-grep'."
 (use-package nhexl-mode
   :ensure t)
 
+(use-package lua-mode
+  :ensure t)
+
 (use-package yaml-mode
   :ensure t)
 
