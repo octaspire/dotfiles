@@ -9,6 +9,7 @@
 	 :base-extension "org"
 	 :htmlized-source t
 	 :recursive t
+	 :exclude "README.org\\|base64-style.org\\|file-style.org"
 	 :publishing-directory "~/www/"
 	 :publishing-function octaspire/ox-base64-html-publish)
 	("assets"
