@@ -1,0 +1,25 @@
+# Configuration file for the Interception framework's
+# Dual Function Keys plugin. To be saved into
+# ~/.config/dual-function-keys/config.yaml
+#
+# To install Interception Framework and Dual
+# Function Keys plugin in GNU/Linux system:
+#
+# sudo apt install libudev-dev libyaml-cpp-dev libevdev-dev cmake
+# git clone https://gitlab.com/interception/linux/tools.git
+# git clone https://gitlab.com/interception/linux/plugins/dual-function-keys.git
+# Build tools with cmake+make and dual-function-keys with make.
+# Install both with sudo. Add required configuration files:
+# 'udevmon.service' and 'udevmon.yaml'.
+
+TIMING:
+  TAP_MILLISEC: 200
+  DOUBLE_TAP_MILLISEC: 150
+
+MAPPINGS:
+  - KEY: KEY_ENTER
+    TAP: KEY_ENTER
+    HOLD: KEY_RIGHTCTRL
+  - KEY: KEY_CAPSLOCK
+    TAP: [KEY_LEFTSHIFT, KEY_9, ]
+    HOLD: KEY_LEFTCTRL
