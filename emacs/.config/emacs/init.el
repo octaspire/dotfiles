@@ -331,13 +331,6 @@ See also `counsel-git-grep'."
 	     :ensure t
 	     :bind (("C-c C-/" . goto-last-change)))
 
-(use-package buffer-move
-  :ensure t
-  :bind (("<C-S-up>"    . buf-move-up)
-	 ("<C-S-down>"  . buf-move-down)
-	 ("<C-S-left>"  . buf-move-left)
-	 ("<C-S-right>" . buf-move-right)))
-
 (when (and (executable-find "pkg-config")
            (string-prefix-p
             "-I"
@@ -455,6 +448,8 @@ See also `counsel-git-grep'."
 
 (require 'org)
 (define-key org-mode-map (kbd "C-c C-p") nil)
+(define-key org-mode-map (kbd "C-c w")   (lambda () (interactive) (org-table-insert-row)))
+(define-key org-mode-map (kbd "C-c s")   (lambda () (interactive) (org-table-insert-row t)))
 (require 'dashboard)
 (define-key dashboard-mode-map (kbd "C-j") 'dashboard-return)
 
