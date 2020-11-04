@@ -1,0 +1,55 @@
+* Dotfiles
+
+Various configuration files and helper scripts to be managed with GNU Stow.
+
+These dotfiles are licensed under the Apache License, Version 2.0.
+Some content (for example some Emacs packages included) have separate licenses.
+Those files are included here as a convenience and do not belong under this license.
+
+** Usage
+
+*** Setting Things Up
+
+To generate the =ox-octaspire-css= CSS and Org files,
+you will need a Common Lisp implementation and
+Quicklisp. The included =Makefile= in the submodule uses SBCL,
+so if you are using another ANSI conforming implementation, please change
+the name of your implementation into the correct variable in the =Makefile=.
+
+#+begin_src shell
+git clone --recursive <url>
+make -C emacs/.config/emacs/octaspire/submodules/ox-octaspire-css
+#+end_src
+
+*** When =dotfiles= resides in ~$HOME~
+
+#+begin_src shell
+cd ~/dotfiles
+stow bash
+stow emacs
+stow git
+stow tmux
+stow vi
+stow vim
+stow zsh
+stow fish
+stow bin
+# and so on...
+#+end_src
+
+*** When =dotfiles= resides in ~$HOME/some/path~
+
+#+begin_src shell
+cd ~/some/path/dotfiles
+stow -t ~/ bash
+stow -t ~/ emacs
+stow -t ~/ git
+stow -t ~/ tmux
+stow -t ~/ vi
+stow -t ~/ vim
+stow -t ~/ zsh
+stow -t ~/ fish
+stow -t ~/ bin
+# and so on...
+#+end_src
+
