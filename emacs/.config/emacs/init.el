@@ -186,7 +186,9 @@ See also `counsel-git-grep'."
 
 (use-package telephone-line
   :ensure t
-  :config (telephone-line-mode 1))
+  :config (progn
+	    (setq telephone-line-lhs '((nil . (telephone-line-buffer-segment))))
+	    (telephone-line-mode 1)))
 
 (use-package company
   :ensure t
@@ -402,7 +404,8 @@ See also `counsel-git-grep'."
       org-html-doctype               "html5"
       org-html-html5-fancy           t
       org-html-postamble             "Exported %T. &nbsp; | &nbsp; Modified %C.<br/>%c"
-      require-final-newline          'ask)
+      octaspire-require-final-nl     'ask
+      require-final-newline          octaspire-require-final-nl)
 
 (global-hl-line-mode)
 
@@ -553,7 +556,7 @@ See also `counsel-git-grep'."
      (projects . 8)
      (agenda . 5)
      (recents . 10)))
- '(mode-require-final-newline 'ask)
+ '(mode-require-final-newline octaspire-require-final-nl)
  '(truncate-lines t))
 
 (provide 'octaspire-init-el)
