@@ -1,5 +1,5 @@
-(load "~/.config/emacs/octaspire/elisp/octaspire-dern-mode.el")
-(load "~/.config/emacs/octaspire/elisp/ox-base64-html.el")
+(load "~/.config/emacs/octaspire/submodules/dern/release/tool-support/emacs/syntax/octaspire-dern-mode.el")
+(load "~/.config/emacs/octaspire/submodules/ox-base64-html/ox-base64-html.el")
 (require 'ob-css)
 (require 'ox-publish)
 
@@ -13,7 +13,7 @@
 	 :publishing-directory "~/www/"
 	 :publishing-function octaspire/ox-base64-html-publish)
 	("assets"
-	 :base-directory "~/.config/emacs/octaspire/css/"
+	 :base-directory "~/.config/emacs/octaspire/submodules/ox-octaspire-css/"
 	 :base-extension "css"
 	 :publishing-directory "~/www/assets/"
 	 :publishing-function org-publish-attachment)

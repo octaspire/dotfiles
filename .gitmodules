@@ -1,0 +1,9 @@
+[submodule "emacs/.config/emacs/octaspire/submodules/dern"]
+	path = emacs/.config/emacs/octaspire/submodules/dern
+	url = https://github.com/octaspire/dern.git
+[submodule "emacs/.config/emacs/octaspire/submodules/ox-base64-html"]
+	path = emacs/.config/emacs/octaspire/submodules/ox-base64-html
+	url = https://github.com/octaspire/ox-base64-html.git
+[submodule "emacs/.config/emacs/octaspire/submodules/ox-octaspire-css"]
+	path = emacs/.config/emacs/octaspire/submodules/ox-octaspire-css
+	url = https://github.com/octaspire/ox-octaspire-css.git

@@ -44,13 +44,25 @@
 (setq octaspire/elisp-dir (concat octaspire/root-dir
 				  (file-name-as-directory "elisp")))
 
-(load (concat octaspire/elisp-dir
+(setq octaspire/submodule-dir (concat octaspire/root-dir
+				      (file-name-as-directory "submodules")))
+
+(load (concat octaspire/submodule-dir
+	      (file-name-as-directory "dern")
+	      (file-name-as-directory "release")
+	      (file-name-as-directory "tool-support")
+	      (file-name-as-directory "emacs")
+	      (file-name-as-directory "syntax")
 	      "octaspire-dern-mode.el"))
 
 (setq octaspire/private-config-file (concat octaspire/elisp-dir
 					    "octaspire-private.el"))
 
-(setq octaspire/ox-base64-html-file (concat octaspire/elisp-dir
+(setq octaspire/publish-config-file (concat octaspire/elisp-dir
+					    "publish.el"))
+
+(setq octaspire/ox-base64-html-file (concat octaspire/submodule-dir
+					    (file-name-as-directory "ox-base64-html")
 					    "ox-base64-html.el"))
 
 (defun octaspire/stringify-region-or-symbol-at-point (&optional argument)
@@ -416,6 +428,7 @@ See also `counsel-git-grep'."
 
 (octaspire/load-if-exists octaspire/private-config-file)
 (octaspire/load-if-exists octaspire/ox-base64-html-file)
+(octaspire/load-if-exists octaspire/publish-config-file)
 
 (use-package elfeed
   :ensure t
