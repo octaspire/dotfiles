@@ -4,12 +4,17 @@ packages:
     - stow
     - emacs
     - cmake
+    - curl
     - sbcl
 sources:
     - https://git.sr.ht/~octaspire/dotfiles
 tasks:
     - setup: |
         cd dotfiles
+        git submodule update --init --recursive
+        curl -O https://beta.quicklisp.org/quicklisp.lisp
+        sbcl --load quicklisp.lisp --eval '(quicklisp-quickstart:install)' --eval '(ql-util:without-prompting (ql:add-to-init-file))' --eval '(quit)'
+        make -C emacs/.config/emacs/octaspire/submodules/ox-octaspire-css
         stow -t ~/ emacs
         ln -s .config/emacs ~/.emacs.d
     - show-version: |
