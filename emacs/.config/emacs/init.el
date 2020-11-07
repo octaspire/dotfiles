@@ -283,6 +283,9 @@ See also `counsel-git-grep'."
     :ensure t
     :after (slime company)
     :config (setq slime-company-completion 'fuzzy))
+  (use-package slime-repl-ansi-color
+    :ensure t
+    :after (slime))
   (use-package slime
     :ensure t
     :config (progn (slime-setup '(slime-fancy
@@ -299,6 +302,7 @@ See also `counsel-git-grep'."
 			       (define-key slime-mode-map (kbd "C-c C-l") nil)))
 		   (add-hook 'slime-repl-mode-hook (lambda ()
 						     (lispy-mode 1)
+						     (slime-repl-ansi-color-mode)
 						     (define-key slime-repl-mode-map (kbd "<return>") 'slime-repl-newline-and-indent)
 						     (define-key slime-repl-mode-map (kbd "C-j")      'slime-repl-return)))
 		   (add-hook 'slime-editing-mode-hook
