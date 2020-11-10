@@ -121,6 +121,22 @@ See also `counsel-git-grep'."
   (end-of-line)
   (newline-and-indent))
 
+(defun octaspire/utf-8-region-byte-length (arg)
+  "Echo and, if prefix ARG isn't true, copy the length of the active region
+as UTF-8 bytes. If given a prefix argument ARG, only echo the result without
+adding it to the kill ring as a new kill."
+  (interactive "P")
+  (let* ((str (encode-coding-region
+	       (region-beginning)
+	       (region-end)
+	       'utf-8
+	       t))
+	 (len (length str))
+	 (res (format "%d" len)))
+    (message "%s" res)
+    (unless arg
+      (kill-new res))))
+
 (defun octaspire/kill-path-of-buffer ()
   "Copy path of current buffer into kill ring"
   (interactive)
@@ -478,6 +494,7 @@ See also `counsel-git-grep'."
 (global-set-key (kbd "C-c m")   'recompile) ; build with 'make -k'
 (global-set-key (kbd "C-c j")   'octaspire/open-and-goto-line-below)
 (global-set-key (kbd "C-c v")   'octaspire/terminal-launch)
+(global-set-key (kbd "C-c u")   'octaspire/utf-8-region-byte-length)
 (global-set-key (kbd "C-c e")   'eval-buffer)
 (global-set-key (kbd "C-c M-.") 'swiper-isearch-thing-at-point)
 (global-set-key (kbd "C-c t")   'octaspire/cl/form-to-1am-test)
