@@ -573,12 +573,13 @@ adding it to the kill ring as a new kill."
 
 (when (or (file-exists-p "~/.fonts/IBMPlexMono-Regular.ttf")
 	  (file-exists-p "~/Library/Fonts/IBMPlexMono-Regular.ttf"))
-  (custom-set-faces
-   '(default ((t (:family "IBM Plex Mono"))))
-   '(bold ((t (:weight bold :family "IBM Plex Mono"))))
-   '(bold-italic ((t (:slant italic :weight bold :family "IBM Plex Mono"))))
-   '(italic ((t (:slant italic :family "IBM Plex Mono"))))
-   '(variable-pitch ((t (:family "IBM Plex Sans"))))))
+  (let ((h 100))
+    (custom-set-faces
+     `(default ((t (:family "IBM Plex Mono" :height ,h))))
+     `(bold ((t (:weight bold :family "IBM Plex Mono" :height ,h))))
+     `(bold-italic ((t (:slant italic :weight bold :family "IBM Plex Mono" :height ,h))))
+     `(italic ((t (:slant italic :family "IBM Plex Mono" :height ,h))))
+     `(variable-pitch ((t (:family "IBM Plex Sans" :height ,h)))))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
