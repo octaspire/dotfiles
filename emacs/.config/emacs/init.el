@@ -178,6 +178,11 @@ adding it to the kill ring as a new kill."
     :ensure t
     :bind (("C-c M-s" . magit-status))))
 
+(when (executable-find "rg")
+  (use-package rg
+    :ensure t
+    :config (rg-enable-default-bindings)))
+
 (use-package nhexl-mode
   :ensure t)
 
@@ -573,7 +578,7 @@ adding it to the kill ring as a new kill."
 
 (when (or (file-exists-p "~/.fonts/IBMPlexMono-Regular.ttf")
 	  (file-exists-p "~/Library/Fonts/IBMPlexMono-Regular.ttf"))
-  (let ((h 100))
+  (let ((h 120))
     (custom-set-faces
      `(default ((t (:family "IBM Plex Mono" :height ,h))))
      `(bold ((t (:weight bold :family "IBM Plex Mono" :height ,h))))
