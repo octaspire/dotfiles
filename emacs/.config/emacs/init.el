@@ -30,6 +30,9 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(setq octaspire/dark-mode
+      (getenv "OCTASPIRE_EMACS_DARK_MODE"))
+
 ;; Package 'exec-path-from-shell' should be installed as early as possible,
 ;; because without it all the tests using 'executable-find' might fail to find
 ;; existing executables in macOS.
@@ -379,8 +382,9 @@ adding it to the kill ring as a new kill."
     :config (progn (when (eq system-type 'darwin)
 		     (setq pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo"))
 		   (pdf-tools-install)
-		   (setq pdf-view-midnight-colors '("#000000" . "#ffffea"))
-		   (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode)
+		   (setq pdf-view-midnight-colors (if octaspire/dark-mode
+						      '("#b0c09f" . "#303030")
+						    '("#686b93" . "#fdfde7")))
 		   (add-hook 'doc-view-mode-hook (lambda ()
 						   (when (eq doc-view-doc-type 'pdf)
 						     (pdf-view-mode)))))))
@@ -511,9 +515,9 @@ adding it to the kill ring as a new kill."
 
 (put 'narrow-to-region 'disabled nil)
 
-(use-package acme-theme
+(use-package moe-theme
   :ensure t
-  :config (load-theme 'acme t))
+  :config (load-theme (if octaspire/dark-mode 'moe-dark 'moe-light) t))
 
 (when (eq system-type 'darwin)
   (setq mac-option-key-is-meta  nil
