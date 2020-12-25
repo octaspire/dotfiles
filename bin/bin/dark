@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# This file must be sourced:
+# '. dark' or 'source dark'
+
+export OCTASPIRE_EMACS_DARK_MODE="1"
