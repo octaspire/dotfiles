@@ -47,6 +47,9 @@
 (setq octaspire/elisp-dir (concat octaspire/root-dir
 				  (file-name-as-directory "elisp")))
 
+(setq octaspire/desktop-dir (concat octaspire/root-dir
+				    (file-name-as-directory "desktop")))
+
 (setq octaspire/submodule-dir (concat octaspire/root-dir
 				      (file-name-as-directory "submodules")))
 
@@ -502,6 +505,8 @@ adding it to the kill ring as a new kill."
 (global-set-key (kbd "s-u")     'up-list)
 (global-set-key (kbd "C-x M-f") 'counsel-file-jump) ; or find-name-dired, counsel-fzf
 (global-set-key (kbd "C-c M-f") 'counsel-git-grep)
+(global-set-key (kbd "C-c d")   (lambda () (interactive) (desktop-save octaspire/desktop-dir)))
+(global-set-key (kbd "C-c M-d") (lambda () (interactive) (desktop-read octaspire/desktop-dir)))
 
 (put 'narrow-to-region 'disabled nil)
 

@@ -68,3 +68,19 @@ permit nopass octaspire as root cmd sh args /etc/netstart iwm0
 permit nopass octaspire as root cmd syspatch args
 permit nopass octaspire as root cmd pkg_add args -ui
 #+end_src
+
+**** Advanced Power Management Daemon (APMD)
+
+Before doing this, command ~dmesg | grep cpu0~
+should be used to verify that the processor
+supports frequency scaling.
+
+If it does (listing shows for example for Intel processor
+~Enhanced SpeedStep~ speeds), the following commands can
+be used to turn =APMD= on.
+
+#+begin_src shell
+rcctl enable apmd
+rcctl set apmd flags -A
+rcctl start apmd
+#+end_src
