@@ -382,9 +382,15 @@ adding it to the kill ring as a new kill."
   (use-package exwm
     :ensure t
     :config (progn
+	      (unless (server-running-p)
+		(server-start))
+	      (setenv "EDITOR" "emacsclient")
 	      (require 'exwm)
 	      (require 'exwm-config)
 	      (exwm-config-default))))
+
+(unless (server-running-p)
+  (server-start))
 
 (when (and module-file-suffix (executable-find "cmake"))
   (use-package vterm
@@ -561,9 +567,6 @@ adding it to the kill ring as a new kill."
 
 (advice-add 'yank :around #'octaspire/indenting-advice)
 (advice-add 'yank-pop :around #'octaspire/indenting-advice)
-
-(unless (server-running-p)
-  (server-start))
 
 (when (or (file-exists-p "~/.fonts/IBMPlexMono-Regular.ttf")
 	  (file-exists-p "~/Library/Fonts/IBMPlexMono-Regular.ttf"))
