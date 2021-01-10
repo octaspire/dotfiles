@@ -195,12 +195,6 @@ adding it to the kill ring as a new kill."
 (use-package yaml-mode
   :ensure t)
 
-(use-package clojure-mode
-  :ensure t)
-
-(use-package cider
-  :ensure t)
-
 (use-package lorem-ipsum
   :ensure t)
 
@@ -254,9 +248,6 @@ adding it to the kill ring as a new kill."
   :ensure t
   :bind (("C-c M-e" . er/expand-region)))
 
-(use-package speed-type
-  :ensure t)
-
 (use-package which-key
   :ensure t
   :config (which-key-mode))
@@ -265,14 +256,6 @@ adding it to the kill ring as a new kill."
   (use-package xcscope
     :ensure t
     :config (cscope-setup)))
-
-(when (executable-find "go")
-  (use-package go-mode
-    :ensure t))
-
-(when (executable-find "drracket")
-  (use-package racket-mode
-    :ensure t))
 
 (when (executable-find "gforth")
   (use-package forth-mode
@@ -445,7 +428,6 @@ adding it to the kill ring as a new kill."
       org-html-head-include-default-style nil
       user-full-name                 ""
       user-mail-address              ""
-      octaspire/elfeed/feeds         '()
       org-replace-disputed-keys      t
       org-src-preserve-indentation   t
       org-html-checkbox-type         'html
@@ -466,11 +448,6 @@ adding it to the kill ring as a new kill."
 (octaspire/load-if-exists octaspire/private-config-file)
 (octaspire/load-if-exists octaspire/ox-base64-html-file)
 (octaspire/load-if-exists octaspire/publish-config-file)
-
-(use-package elfeed
-  :ensure t
-  :config (setq elfeed-feeds
-		octaspire/elfeed/feeds))
 
 (unless (or (< (length user-full-name) 2)
 	    (< (length user-mail-address) 2))
