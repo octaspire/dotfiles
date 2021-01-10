@@ -378,19 +378,18 @@ adding it to the kill ring as a new kill."
 (use-package htmlize
   :ensure t)
 
-(when (eq system-type 'berkeley-unix)
-  (use-package exwm
-    :ensure t
-    :config (progn
-	      (unless (server-running-p)
-		(server-start))
-	      (setenv "EDITOR" "emacsclient")
-	      (require 'exwm)
-	      (require 'exwm-config)
-	      (exwm-config-default))))
-
-(unless (server-running-p)
-  (server-start))
+(if (eq system-type 'berkeley-unix)
+    (use-package exwm
+      :ensure t
+      :config (progn
+		(unless (server-running-p)
+		  (server-start))
+		(setenv "EDITOR" "emacsclient")
+		(require 'exwm)
+		(require 'exwm-config)
+		(exwm-config-default)))
+  (unless (server-running-p)
+    (server-start)))
 
 (when (and module-file-suffix (executable-find "cmake"))
   (use-package vterm
