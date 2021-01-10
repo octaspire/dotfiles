@@ -53,3 +53,18 @@ stow -t ~/ bin
 # and so on...
 #+end_src
 
+
+** Settings not Suitable for Stow
+
+*** OpenBSD
+
+**** =/etc/doas.conf=
+
+#+begin_src shell
+permit nopass octaspire as root cmd /bin/cp args crates2 /usr/local/bin/
+permit nopass octaspire as root cmd /sbin/shutdown args -hp now
+permit nopass octaspire as root cmd /sbin/reboot args
+permit nopass octaspire as root cmd sh args /etc/netstart iwm0
+permit nopass octaspire as root cmd syspatch args
+permit nopass octaspire as root cmd pkg_add args -ui
+#+end_src
