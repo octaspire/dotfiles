@@ -7,3 +7,4 @@ emacs/.config/emacs/places
 emacs/.config/emacs/projectile-bookmarks.eld
 emacs/.config/emacs/recentf
 emacs/.config/emacs/transient
+emacs/.config/emacs/octaspire/desktop/.emacs*
