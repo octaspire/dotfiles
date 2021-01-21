@@ -33,6 +33,8 @@
 (setq octaspire/dark-mode
       (getenv "OCTASPIRE_EMACS_DARK_MODE"))
 
+(setq octaspire/projectile-main-project nil)
+
 ;; Package 'exec-path-from-shell' should be installed as early as possible,
 ;; because without it all the tests using 'executable-find' might fail to find
 ;; existing executables in macOS.
@@ -211,7 +213,10 @@ adding it to the kill ring as a new kill."
 	      (when (octaspire/lisp-found-p)
 		(setq projectile-project-search-path
 		      '("~/quicklisp/local-projects/"))))
-	    (projectile-mode +1)))
+	    (projectile-mode +1)
+	    (advice-add 'projectile-project-root :before-until
+			(lambda (&rest args)
+			  octaspire/projectile-main-project))))
 
 (let ((name (executable-find "aspell")))
   (when name
