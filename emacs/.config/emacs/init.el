@@ -448,7 +448,7 @@ adding it to the kill ring as a new kill."
       org-html-doctype               "html5"
       org-html-html5-fancy           t
       org-html-postamble             "Exported %T. &nbsp; | &nbsp; Modified %C.<br/>%c"
-      octaspire-require-final-nl     'ask
+      octaspire-require-final-nl     nil ;; Change nil to 'ask to ask every time.
       require-final-newline          octaspire-require-final-nl)
 
 (global-hl-line-mode)
@@ -471,7 +471,7 @@ adding it to the kill ring as a new kill."
   "Enable whitespace mode."
   (set-face-background 'trailing-whitespace "yellow")
   (setq show-trailing-whitespace 1
-	whitespace-style         '(trailing))
+	whitespace-style         '(face trailing tabs))
   (whitespace-mode))
 
 (defun octaspire/terminal-launch ()
@@ -579,7 +579,7 @@ adding it to the kill ring as a new kill."
 
 (when (or (file-exists-p "~/.fonts/IBMPlexMono-Regular.ttf")
 	  (file-exists-p "~/Library/Fonts/IBMPlexMono-Regular.ttf"))
-  (let ((h 120))
+  (let ((h 90))
     (custom-set-faces
      `(default ((t (:family "IBM Plex Mono" :height ,h))))
      `(bold ((t (:weight bold :family "IBM Plex Mono" :height ,h))))
@@ -599,5 +599,7 @@ adding it to the kill ring as a new kill."
      (recents . 10)))
  '(mode-require-final-newline octaspire-require-final-nl)
  '(truncate-lines t))
+
+(put 'downcase-region 'disabled nil)
 
 (provide 'octaspire-init-el)
