@@ -304,6 +304,7 @@ adding it to the kill ring as a new kill."
   (use-package slime
     :ensure t
     :config (progn (slime-setup '(slime-fancy
+				  slime-cl-indent
 				  slime-asdf
 				  slime-quicklisp
 				  slime-scratch
@@ -371,7 +372,9 @@ adding it to the kill ring as a new kill."
   (use-package pdf-tools
     :ensure t
     :config (progn (when (eq system-type 'darwin)
-		     (setq pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo"))
+		     (setq pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo")
+		     (setq pdf-view-use-scaling t
+			   pdf-view-use-imagemagick nil))
 		   (pdf-tools-install)
 		   (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode)
 		   (setq pdf-view-midnight-colors (if octaspire/dark-mode
@@ -579,7 +582,7 @@ adding it to the kill ring as a new kill."
 
 (when (or (file-exists-p "~/.fonts/IBMPlexMono-Regular.ttf")
 	  (file-exists-p "~/Library/Fonts/IBMPlexMono-Regular.ttf"))
-  (let ((h 90))
+  (let ((h 140))
     (custom-set-faces
      `(default ((t (:family "IBM Plex Mono" :height ,h))))
      `(bold ((t (:weight bold :family "IBM Plex Mono" :height ,h))))
