@@ -284,7 +284,8 @@ adding it to the kill ring as a new kill."
 	      (setq-default lispy-no-space t)
 	      (add-hook 'emacs-lisp-mode-hook (lambda ()
 						(lispy-mode 1)
-						(define-key lispy-mode-map (kbd "M-m") nil)))))
+						(define-key lispy-mode-map (kbd "M-m")      nil)
+						(define-key lispy-mode-map (kbd "<return>") 'lispy-alt-line)))))
 
 (when (octaspire/lisp-found-p)
   (let ((style "sbcl"))
