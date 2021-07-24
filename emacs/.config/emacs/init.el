@@ -437,6 +437,7 @@ adding it to the kill ring as a new kill."
       calendar-week-start-day        1
       large-file-warning-threshold   nil
       tags-add-tables                t
+      tags-revert-without-query      t
       backup-directory-alist         `((".*" . ,temporary-file-directory))
       auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
       org-src-fontify-natively       1
