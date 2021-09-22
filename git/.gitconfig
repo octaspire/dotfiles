@@ -28,6 +28,7 @@
 	br = branch
 	ci = commit
 	st = status
+	root = rev-parse --show-toplevel
 [color]
         diff   = always
         status = always
