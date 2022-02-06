@@ -118,6 +118,7 @@
 (defun octaspire/programming-mode-hook ()
   "Setup programming modes"
   (paredit-mode +1)
+  (flyspell-prog-mode)
   (octaspire/whitespace-mode))
 
 (global-set-key (kbd "C-S-s") 'isearch-forward-symbol-at-point)
