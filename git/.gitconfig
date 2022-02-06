@@ -20,7 +20,8 @@
 	signingkey = 9BD2CCD560E9E29C
 [core]
 	editor = emacsclient
-        autocrlf = input     # Use 'input' in UNIX, 'true' in Windows.
+	autocrlf = input     # Use 'input' in UNIX, 'true' in Windows.
+	whitespace = trailing-space,space-before-tab,tab-in-indent,cr-at-eol
 [push]
 	default = simple
 [alias]
