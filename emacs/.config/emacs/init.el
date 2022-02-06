@@ -127,10 +127,12 @@
 (global-set-key (kbd "C-C s") 'slime)
 (global-set-key (kbd "C-C t") 'eshell)
 
-(add-hook 'c-mode-common-hook         #'octaspire/programming-mode-hook)
-(add-hook 'emacs-lisp-mode-hook       #'octaspire/programming-mode-hook)
-(add-hook 'lisp-mode-hook             #'octaspire/programming-mode-hook)
-(add-hook 'lisp-interaction-mode-hook #'octaspire/programming-mode-hook)
+(add-hook 'prog-mode-hook       'octaspire/programming-mode-hook)
+(add-hook 'slime-repl-mode-hook 'octaspire/programming-mode-hook)
+
+(use-package gruvbox-theme
+  :ensure t
+  :config  (load-theme 'gruvbox-dark-medium t))
 
 (unless (server-running-p)
   (server-start))
