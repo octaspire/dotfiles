@@ -28,13 +28,18 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; Package 'exec-path-from-shell' should be installed as early as possible,
-;; because without it all the tests using 'executable-find' might fail to
-;; find existing executables in macOS.
-(use-package exec-path-from-shell
-  :ensure t
-  :config (when (memq window-system '(mac ns x))
-            (exec-path-from-shell-initialize)))
+(when (eq system-type 'darwin)
+  ;; Package 'exec-path-from-shell' should be installed as early as possible,
+  ;; because without it all the tests using 'executable-find' might fail to
+  ;; find existing executables in macOS.
+  (use-package exec-path-from-shell
+    :ensure t
+    :config (when (memq window-system '(mac ns x))
+              (exec-path-from-shell-initialize)))
+  (setq mac-option-key-is-meta  nil
+        mac-command-key-is-meta t
+        mac-command-modifier    'meta
+        mac-option-modifier     nil))
 
 (use-package goto-last-change
   :ensure t
@@ -48,12 +53,6 @@
 (use-package paredit
   :ensure t
   :config (require 'paredit))
-
-(when (eq system-type 'darwin)
-  (setq mac-option-key-is-meta  nil
-        mac-command-key-is-meta t
-        mac-command-modifier    'meta
-        mac-option-modifier     nil))
 
 (let ((path "~/quicklisp/slime-helper.el"))
   (if (file-exists-p path)
@@ -119,7 +118,8 @@
   "Setup programming modes"
   (paredit-mode +1)
   (flyspell-prog-mode)
-  (octaspire/whitespace-mode))
+  (unless (string= major-mode "slime-repl-mode")
+    (octaspire/whitespace-mode)))
 
 (global-set-key (kbd "C-S-s") 'isearch-forward-symbol-at-point)
 (global-set-key (kbd "C-c i") 'octaspire/init-file-open)
@@ -130,9 +130,11 @@
 (add-hook 'prog-mode-hook       'octaspire/programming-mode-hook)
 (add-hook 'slime-repl-mode-hook 'octaspire/programming-mode-hook)
 
-(use-package gruvbox-theme
+(use-package color-theme-sanityinc-tomorrow
   :ensure t
-  :config  (load-theme 'gruvbox-dark-medium t))
+  :config (load-theme 'sanityinc-tomorrow-night))
+
+(set-face-attribute 'default nil :height 120)
 
 (unless (server-running-p)
   (server-start))
