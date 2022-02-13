@@ -50,6 +50,16 @@
     :ensure t
     :bind (("C-c M-s" . magit-status))))
 
+(when (and module-file-suffix (executable-find "cmake"))
+  (use-package vterm
+    :ensure t
+    :custom
+    (vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=no" "Ensure build succeeds")
+    (vterm-always-compile-module t "Compile module without asking")
+    :bind (:map vterm-mode-map ("C-]" . (lambda ()
+                                          (interactive)
+                                          (vterm-send-key "]" nil nil t))))))
+
 (use-package paredit
   :ensure t
   :config (require 'paredit))
@@ -121,11 +131,18 @@
   (unless (string= major-mode "slime-repl-mode")
     (octaspire/whitespace-mode)))
 
+(defun octaspire/terminal-launch ()
+  "Launch vterm if installed, otherwise eshell."
+  (interactive)
+  (if (featurep 'vterm)
+      (vterm)
+    (eshell)))
+
 (global-set-key (kbd "C-S-s") 'isearch-forward-symbol-at-point)
 (global-set-key (kbd "C-c i") 'octaspire/init-file-open)
 (global-set-key (kbd "C-C m") 'recompile)
 (global-set-key (kbd "C-C s") 'slime)
-(global-set-key (kbd "C-C t") 'eshell)
+(global-set-key (kbd "C-C t") 'octaspire/terminal-launch)
 
 (add-hook 'prog-mode-hook       'octaspire/programming-mode-hook)
 (add-hook 'slime-repl-mode-hook 'octaspire/programming-mode-hook)
