@@ -149,9 +149,19 @@
 
 (use-package color-theme-sanityinc-tomorrow
   :ensure t
-  :config (load-theme 'sanityinc-tomorrow-night))
+  :config (load-theme 'sanityinc-tomorrow-night t))
 
 (set-face-attribute 'default nil :height 120)
 
-(unless (server-running-p)
-  (server-start))
+(if (eq system-type 'berkeley-unix)
+    (use-package exwm
+      :ensure t
+      :config (progn
+                (unless (server-running-p)
+                  (server-start))
+                (setenv "EDITOR" "emacsclient")
+                (require 'exwm-config)
+                (exwm-config-default)))
+  (unless (server-running-p)
+    (server-start)))
+
