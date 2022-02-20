@@ -1,11 +1,3 @@
-
-if [ -f $HOME/.xprofile ]; then
-    . $HOME/.xprofile
-fi
-
-if [ -f $HOME/.Xmodmap ]; then
-    /usr/bin/xmodmap $HOME/.Xmodmap
-fi
-
+setxkbmap -option ctrl:nocaps
+setxkbmap -option lv3:lalt_modifier
 exec emacs
-
