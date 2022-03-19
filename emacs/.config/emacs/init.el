@@ -146,6 +146,7 @@
 
 (add-hook 'prog-mode-hook       'octaspire/programming-mode-hook)
 (add-hook 'slime-repl-mode-hook 'octaspire/programming-mode-hook)
+(add-hook 'shell-mode-hook      'ansi-color-for-comint-mode-on)
 
 (use-package color-theme-sanityinc-tomorrow
   :ensure t
@@ -161,7 +162,13 @@
                   (server-start))
                 (setenv "EDITOR" "emacsclient")
                 (require 'exwm-config)
+                (require 'exwm-randr)
+                (setq exwm-randr-workspace-output-plist '(1 "HDMI-2"))
+                (setq exwm-randr-screen-change-hook
+                      (lambda ()
+                        (start-process-shell-command
+                         "xrandr" nil "xrandr --output HDMI-2 --auto")))
+                (exwm-randr-enable)
                 (exwm-config-default)))
   (unless (server-running-p)
     (server-start)))
-
