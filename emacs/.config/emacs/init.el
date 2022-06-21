@@ -45,17 +45,6 @@
   :ensure t
   :bind (("C-c C-/" . goto-last-change)))
 
-(let ((quicklisp-locals "~/quicklisp/local-projects/"))
-  (when (file-directory-p quicklisp-locals)
-    (push quicklisp-locals octaspire-projectile-paths)))
-
-(use-package projectile
-  :ensure t
-  :bind (("C-c p" . projectile-command-map))
-  :config (progn
-            (setq projectile-project-search-path octaspire-projectile-paths)
-            (projectile-mode +1)))
-
 (let ((name (executable-find "aspell")))
   (when name
     (setq ispell-program-name name)))
@@ -186,6 +175,16 @@
 
 (add-hook 'c-mode-common-hook 'octaspire/c-mode-hook)
 
+(let ((quicklisp-locals "~/quicklisp/local-projects/"))
+  (when (file-directory-p quicklisp-locals)
+    (push quicklisp-locals octaspire-projectile-paths)))
+
+(use-package projectile
+  :ensure t
+  :bind (("C-c p" . projectile-command-map))
+  :config (progn
+            (setq projectile-project-search-path octaspire-projectile-paths)
+            (projectile-mode +1)))
 
 (load-theme 'leuven)
 
