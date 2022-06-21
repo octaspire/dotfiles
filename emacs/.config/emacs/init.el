@@ -45,6 +45,21 @@
   :ensure t
   :bind (("C-c C-/" . goto-last-change)))
 
+(let ((quicklisp-locals "~/quicklisp/local-projects/"))
+  (when (file-directory-p quicklisp-locals)
+    (push quicklisp-locals octaspire-projectile-paths)))
+
+(use-package projectile
+  :ensure t
+  :bind (("C-c p" . projectile-command-map))
+  :config (progn
+            (setq projectile-project-search-path octaspire-projectile-paths)
+            (projectile-mode +1)))
+
+(let ((name (executable-find "aspell")))
+  (when name
+    (setq ispell-program-name name)))
+
 (when (executable-find "git")
   (use-package magit
     :ensure t
@@ -110,7 +125,8 @@
       ring-bell-function             'ignore
       show-paren-delay               0
       tags-add-tables                t
-      tags-revert-without-query      t)
+      tags-revert-without-query      t
+      octaspire-projectile-paths     (list))
 
 (defun octaspire/init-file-open ()
   "Visit Emacs initialization file."
@@ -148,11 +164,38 @@
 (add-hook 'slime-repl-mode-hook 'octaspire/programming-mode-hook)
 (add-hook 'shell-mode-hook      'ansi-color-for-comint-mode-on)
 
-(use-package color-theme-sanityinc-tomorrow
-  :ensure t
-  :config (load-theme 'sanityinc-tomorrow-night t))
+;; C coding style
+(defun octaspire/c-mode-hook ()
+  (define-key c-mode-base-map (kbd "C-j") 'newline)
+  (define-key c-mode-base-map (kbd "C-c C-l") nil)
+  ;(paredit-mode)
+  (let ((spaces 4))
+    (setq c-default-style  "bsd"
+          indent-tabs-mode nil
+          tab-width        spaces
+          c-basic-offset   spaces)
+    ;; Indent 'case' labels in switch statements.
+    (c-set-offset 'case-label '+)
+    ;; Don't indent '{' after 'if' (when on its own line).
+    (c-set-offset 'substatement-open 0)
+    ;; Continued lines should be indented by one depth.
+    (c-set-offset 'statement-cont spaces)
+    (c-set-offset 'arglist-cont-nonempty '+)
+    (c-set-offset 'arglist-intro '+)
+    (c-set-offset 'statement-block-intro '+)))
+
+(add-hook 'c-mode-common-hook 'octaspire/c-mode-hook)
+
+
+(load-theme 'leuven)
 
 (set-face-attribute 'default nil :height 120)
+
+(defun octaspire/exwm-logout ()
+  (interactive)
+  (recentf-save-list)
+  (save-some-buffers)
+  (start-process-shell-command "logout" nil "lxsession-logout"))
 
 (if (eq system-type 'berkeley-unix)
     (use-package exwm
