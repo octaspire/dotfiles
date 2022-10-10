@@ -1,16 +1,47 @@
+" Octaspire dotfiles - Various configuration files
+" Copyright 2017, 2018, 2020, 2022  www.octaspire.com
+"
+" Licensed under the Apache License, Version 2.0 (the "License");
+" you may not use this file except in compliance with the License.
+" You may obtain a copy of the License at
+"
+"    http://www.apache.org/licenses/LICENSE-2.0
+"
+" Unless required by applicable law or agreed to in writing, software
+" distributed under the License is distributed on an "AS IS" BASIS,
+" WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+" See the License for the specific language governing permissions and
+" limitations under the License.
+"
+" Pair with the following additions into .bashrc:
+" -----------------------------------------------
+" export FZF_DEFAULT_COMMAND='rg --files'
+" export PATH=$PATH:$HOME/Library/Python/3.10/bin:$HOME/.roswell/bin
+" export VISUAL="nvr -cc split --remote-wait +'set bufhidden=wipe'"
+"
+" install nvr using:
+" pip3 install neovim-remote
+"
+" and remove any possible editor names from .gitconfig, so that
+" git uses $VISUAL as the default commit editor.
+"
+" Server for vlime can be started with command:
+" sbcl --load $HOME/.config/nvim/pack/minpac/start/vlime/lisp/start-vlime.lisp
 set nocompatible
 filetype plugin indent on
 set mouse=a
-let mapleader = ','
 
 let c_space_errors = 1
+set listchars=tab:>-,trail:\\u2423
+set list
+set tabstop=2
+set shiftwidth=2
+set expandtab
 
 packadd minpac
 call minpac#init()
 
 call minpac#add('k-takata/minpac', {'type': 'opt'})
-" export FZF_DEFAULT_COMMAND='rg --files'
-" export PATH=$PATH:$HOME/Library/Python/3.10/bin:$HOME/.roswell/bin
 call minpac#add('junegunn/fzf')
 call minpac#add('junegunn/fzf.vim')
 call minpac#add('tpope/vim-projectionist')
@@ -20,16 +51,11 @@ call minpac#add('w0rp/ale')
 call minpac#add('mhinz/vim-grepper')
 call minpac#add('janko-m/vim-test')
 call minpac#add('editorconfig/editorconfig-vim')
+call minpac#add('morhetz/gruvbox')
+call minpac#add('tpope/vim-obsession')
+call minpac#add('vlime/vlime')
 
 let test#strategy = "dispatch"
-
-" This function is from book Modern Vim: Craft Your Development Environment
-" with Vim 8 and Neovim:
-function! SetupCommandAlias(input, output)
-	exec 'cabbrev <expr> '.a:input.' ((getcmdtype() is# ":" && getcmdline() is# "'.a:input.'")'.'?("'.a:output.'") : ("'.a:input.'"))'
-endfunction
-
-call SetupCommandAlias("grep", "GrepperGrep")
 
 command! PackUpdate call minpac#update()
 command! EditInit   execute "edit ~/.config/nvim/init.vim"
@@ -41,7 +67,13 @@ if has('nvim')
   tnoremap <C-v><Esc> <Esc>
   highlight! link TermCursor Cursor
   highlight! TermCursorNC guibg=red guifg=white ctermbg=1 ctermfg=15
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
+
+set bg=dark
+let g:gruvbox_contrast_dark = "hard"
+let g:gruvbox_transparent_bg = '1'
+colorscheme gruvbox
 
 " Grepping
 nnoremap <Leader>g :Grepper -tool rg<CR>

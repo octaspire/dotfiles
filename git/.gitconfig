@@ -15,28 +15,28 @@
 #  limitations under the License.
 #-----------------------------------------------------------------------------
 [user]
-	email = octaspire@octaspire.com
-	name  = octaspire
-	signingkey = 9BD2CCD560E9E29C
+  email = octaspire@octaspire.com
+  name  = octaspire
+  signingkey = 9BD2CCD560E9E29C
 [core]
-	editor = emacsclient
-        autocrlf = input     # Use 'input' in UNIX, 'true' in Windows.
+  autocrlf = input     # Use 'input' in UNIX, 'true' in Windows.
 [push]
-	default = simple
+  default = simple
 [alias]
-	co = checkout
-	br = branch
-	ci = commit
-	st = status
-	root = rev-parse --show-toplevel
+  co = checkout
+  br = branch
+  ci = commit
+  st = status
+  root = rev-parse --show-toplevel
 [color]
-        diff   = always
-        status = always
-        branch = always
-        ui     = always
+  diff   = always
+  status = always
+  branch = always
+  ui     = always
 [commit]
-	gpgsign = true
+  gpgsign = true
 [gpg]
-	program = gpg2
+  program = gpg2
 [init]
-	defaultBranch = main
+  defaultBranch = main
+
