@@ -27,9 +27,15 @@
 "
 " Server for vlime can be started with command:
 " sbcl --load $HOME/.config/nvim/pack/minpac/start/vlime/lisp/start-vlime.lisp
+"
+" To partially remedy missing GNU Emacs Calc, "qalc" can be installed.
+" It might be available, for example, as "libqalculate" package.
 set nocompatible
 filetype plugin indent on
 set mouse=a
+set cursorline!
+set number          " real line number on current line...
+set relativenumber  " ...relative line number on all other lines
 
 let c_space_errors = 1
 set listchars=tab:>-,trail:\\u2423
@@ -54,6 +60,8 @@ call minpac#add('editorconfig/editorconfig-vim')
 call minpac#add('morhetz/gruvbox')
 call minpac#add('tpope/vim-obsession')
 call minpac#add('vlime/vlime')
+call minpac#add('mtth/scratch.vim')
+call minpac#add('farmergreg/vim-lastplace')
 
 let test#strategy = "dispatch"
 
