@@ -1,0 +1,18 @@
+# Top level editorconfig.org configuration intended for user's home directory.
+
+# Topmost configuration, don't look further in directory tree.
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+indent_style = space
+indent_size = 2
+tab_width = 2
+insert_final_newline = true
+max_line_length = 100
+trim_trailing_whitespace = true
+
+[{Makefile,*.mk}]
+indent_style = tab
+
