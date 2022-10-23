@@ -46,6 +46,7 @@
   :config
   (require 'evil)
   (evil-mode)
+  (evil-set-undo-system 'undo-redo)
   (add-hook 'evil-insert-state-entry-hook (lambda () (hl-line-mode -1)))
   (add-hook 'evil-insert-state-exit-hook  (lambda () (hl-line-mode +1)))
   (add-hook 'evil-normal-state-entry-hook (lambda () (hl-line-mode +1))))
