@@ -123,6 +123,11 @@
   :ensure nil
   :load-path "~/src/octaspire/ox-base64-html")
 
+(use-package octaspire-publish
+  :ensure nil
+  :after ox-base64-html
+  :load-path "~/src/octaspire/")
+
 (setq
   vc-handled-backends                     nil
   column-number-mode                      t
@@ -158,12 +163,13 @@
    ring-bell-function                    'ignore
    display-time-24hr-format              t
    calendar-week-start-day               1
-   large-file-warning-treshold           nil
+   large-file-warning-threshold          nil
    tags-add-tables                       t
    tags-revert-without-query             t
    display-line-numbers-current-absolute t
    show-trailing-whitespace              1
-   whitespace-style                      '(face trailing tabs))
+   whitespace-style                      '(face trailing tabs)
+   evil-symbol-word-search               t)
 
 (global-display-line-numbers-mode)
 (menu-bar-mode -1)
@@ -178,6 +184,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (whitespace-mode +1)
+(global-subword-mode +1)
 
 (defun octaspire/init-file-open ()
   "Visit Emacs initialization file."
@@ -212,9 +219,15 @@
 (global-set-key (kbd "C-c i") 'octaspire/init-file-open)
 (global-set-key (kbd "C-c t") 'octaspire/terminal-launch)
 
+(defun octaspire/snake-lisp-symbols-as-words ()
+  "Treat snake_case and lisp-case symbols as words."
+  (interactive)
+  (modify-syntax-entry ?_ "w")
+  (modify-syntax-entry ?- "w"))
+
 (add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'prog-mode-hook 'flyspell-mode)
-(add-hook 'prog-mode-hook 'subword-mode)
+(add-hook 'prog-mode-hook (lambda () (flyspell-mode 1) (octaspire/snake-lisp-symbols-as-words)))
+(add-hook 'vterm-mode-hook 'octaspire/snake-lisp-symbols-as-words)
 
 (provide 'octaspire-init-el)
 
